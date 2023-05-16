@@ -1,0 +1,13 @@
+.dialogue-box {
+    background-color: black;
+    color: white;
+    padding: 20px;
+    border-radius: 15px;
+    width: 300px; /* adjust to your needs */
+    height: 200px; /* adjust to your needs */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    overflow-wrap: break-word;
+}

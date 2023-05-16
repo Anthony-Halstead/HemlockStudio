@@ -1,0 +1,14 @@
+.background-container {
+    display: flex;
+    align-items: center;
+    height: 100%;
+    
+  }
+  .image-container-left{
+    display: flex;
+    align-items: left;
+    height: 100%;
+    margin-left: 0;
+    padding-left: 0;
+
+  }

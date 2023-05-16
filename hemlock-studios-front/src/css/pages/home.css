@@ -1,0 +1,10 @@
+.home-content {
+    display: flex;
+    color: rgb(255, 251, 251);
+    background-color: black;
+    /*background-image: url('../../SnoweyMountains.png');*/
+    background-size:contain;
+    background-repeat: no-repeat;
+    background-position:top;
+    overflow: hidden; 
+}

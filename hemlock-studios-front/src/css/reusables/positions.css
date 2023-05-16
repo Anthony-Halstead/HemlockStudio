@@ -1,0 +1,50 @@
+/* positions.css */
+.relative {
+    position: relative;
+  }
+  
+  .absolute {
+    position: absolute;
+  }
+  
+  .fixed {
+    position: fixed;
+  }
+  
+  .sticky {
+    position: sticky;
+  }
+  
+  .center {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  
+  .top-left {
+    display: flex;
+    justify-content: flex-start;
+    align-items: flex-start;
+  }
+  
+  .top-right {
+    display: flex;
+    justify-content: flex-end;
+    align-items: flex-start;
+  }
+  
+  .bottom-left {
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    overflow: 'hidden'
+  }
+  
+  .bottom-right {
+    display: flex;
+    justify-content: flex-end;
+    align-items: flex-end;
+  }
+  .move-left {
+    transform: translateX(-100%);
+  }

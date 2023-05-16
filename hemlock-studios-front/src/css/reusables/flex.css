@@ -1,0 +1,21 @@
+/* flex.css */
+.flex-container-row {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between; /* Adjust the alignment of items horizontally */
+    align-items: center; /* Adjust the alignment of items vertically */
+    flex-wrap: nowrap; /* Change to 'wrap' if you want the items to wrap to the next line */
+  }
+  
+  .flex-container-column {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between; /* Adjust the alignment of items vertically */
+    align-items: center; /* Adjust the alignment of items horizontally */
+    flex-wrap: nowrap; /* Change to 'wrap' if you want the items to wrap to the next column */
+  }
+  
+  .flex-item {
+    flex: 1; /* Change this value to adjust the item's proportion in the container */
+    margin: 10px; /* Add some margin around the items */
+  }
