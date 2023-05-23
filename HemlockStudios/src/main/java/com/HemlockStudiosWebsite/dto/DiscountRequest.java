@@ -3,7 +3,7 @@ package com.HemlockStudiosWebsite.dto;
 public class DiscountRequest {
     private Integer cartId;
     private String couponCode;
-    private Integer customerId;
+    private Integer userId;
 
     public Integer getCartId() {
         return cartId;
@@ -17,8 +17,8 @@ public class DiscountRequest {
     public void setCouponCode(String couponCode) {
         this.couponCode = couponCode;
     }
-    public Integer getCustomerId() {
-        return customerId;
+    public Integer getUserId() {
+        return userId;
     }
   
 

@@ -1,7 +1,7 @@
 package com.HemlockStudiosWebsite.dto;
 
 public class CreditCardRequest {
-    private Integer customerId;
+    private Integer userId;
     private String cardNumber;
     private Integer expirationMonth;
     private Integer expirationYear;
@@ -9,11 +9,11 @@ public class CreditCardRequest {
     private String cvv;
 
 
-    public Integer getCustomerId() {
-        return customerId;
+    public Integer getUserId() {
+        return userId;
     }
-    public void setCustomerId(Integer customerId) {
-        this.customerId = customerId;
+    public void setUserId(Integer userId) {
+        this.userId = userId;
     }
     public String getCardNumber() {
         return cardNumber;

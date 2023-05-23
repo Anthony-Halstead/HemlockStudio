@@ -5,7 +5,7 @@ import org.springframework.stereotype.Service;
 
 import com.HemlockStudiosWebsite.entity.Cart;
 import com.HemlockStudiosWebsite.entity.Coupon;
-import com.HemlockStudiosWebsite.entity.Customer;
+import com.HemlockStudiosWebsite.entity.User;
 import com.HemlockStudiosWebsite.entity.Product;
 import com.HemlockStudiosWebsite.repo.CouponRepo;
 
@@ -17,7 +17,7 @@ public class CouponService {
     @Autowired
     CartService cartService;
     @Autowired
-    CustomerService customerService;
+    UserService userService;
 
     public Double applyCouponDiscount(Integer cartId, String couponCode) {
         Cart cart = cartService.getCartById(cartId);
@@ -43,15 +43,15 @@ public class CouponService {
         return newTotal;
     }
     
-    public Double applySignInDiscount(Integer cartId, Integer customerId) {
+    public Double applySignInDiscount(Integer cartId, Integer userId) {
         Cart cart = cartService.getCartById(cartId);
-        Customer customer = customerService.getCustomerById(customerId);
+        User user = userService.getUserById(userId);
     
         Double originalTotal = cartService.calculateCartTotal(cartId);
         Double discountValue = 0.0;
     
-        // Apply a 5% discount if the customer is signed in
-        if (customer.getIsSignedUp()) {
+        // Apply a 5% discount if the user is signed in
+        if (user.getIsSignedUp()) {
             discountValue += originalTotal * 0.05;
         }
     

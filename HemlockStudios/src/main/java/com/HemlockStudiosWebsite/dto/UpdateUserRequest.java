@@ -1,6 +1,6 @@
 package com.HemlockStudiosWebsite.dto;
 
-public class UpdateCustomerRequest {
+public class UpdateUserRequest {
     private String username;
     private String email;
     private Integer id;

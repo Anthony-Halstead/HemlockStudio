@@ -1,14 +1,14 @@
 package com.HemlockStudiosWebsite.dto;
 
 public class UpdateFavoritesRequest {
-    private Integer customerId;
+    private Integer userId;
     private Integer productId;
     
-    public Integer getCustomerId() {
-        return customerId;
+    public Integer getUserId() {
+        return userId;
     }
-    public void setCartId(Integer customerId) {
-        this.customerId = customerId;
+    public void setCartId(Integer userId) {
+        this.userId = userId;
     }
     public Integer getProductId() {
         return productId;

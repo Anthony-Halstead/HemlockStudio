@@ -2,6 +2,18 @@ import React from 'react';
 import '../../../css/pages/header.css';
 import '../../../css/reusables/dimensions.css';
 
+
+const signOut = () => {
+    localStorage.removeItem("token");
+    props.setUser({
+      id: undefined,
+      username: "",
+      email: "",
+      roles: []
+    });
+    navigator("/");
+  };
+
 function Header() {
     return (
 

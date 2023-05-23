@@ -35,7 +35,7 @@ public class Cart {
         inverseJoinColumns=
         @JoinColumn(name="products_id", referencedColumnName="id")
     )
-
+    private List<Product> itemsInCart;
 
 public Double getDiscountedTotal() {
     return discountedTotal;
@@ -44,7 +44,7 @@ public Double getDiscountedTotal() {
 public void setDiscountedTotal(Double discountedTotal) {
     this.discountedTotal = discountedTotal;
 }
-    private List<Product> itemsInCart;
+   
 
     public Integer getId() {
         return id;

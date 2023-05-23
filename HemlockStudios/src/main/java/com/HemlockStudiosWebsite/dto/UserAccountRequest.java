@@ -1,10 +1,12 @@
 package com.HemlockStudiosWebsite.dto;
 
-public class AdminAccountRequest {
+
+
+public class UserAccountRequest{
     private String username;
     private String email;
     private String password;
-    private String predefinedAdminId;
+    private Boolean isSignedUp;
 
     public String getUsername() {
         return username;
@@ -24,18 +26,21 @@ public class AdminAccountRequest {
     public void setPassword(String password) {
         this.password = password;
     }
-    public String getPredefinedAdminId() {
-        return predefinedAdminId;
+
+    public Boolean getIsSignedUp() {
+        return isSignedUp;
     }
-    public void setPredefinedAdminId(String predefinedAdminId) {
-        this.predefinedAdminId = predefinedAdminId;
+    public void setIsSignedUp(Boolean isSignedUp) {
+        this.isSignedUp = isSignedUp;
     }
     
     @Override
     public String toString() {
-        return "AdminAccountRequest [username=" + username + ", email=" + email + ", password=" + password
-                + ", predefinedAdminId=" + predefinedAdminId + "]";
-    }   
+        return "UserAccountRequest [username=" + username + ", email=" + email + ", password=" + password
+                + "]";
+    }
+
+   
 
     
 }

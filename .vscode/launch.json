@@ -1,0 +1,14 @@
+{
+    "configurations": [
+        {
+            "type": "java",
+            "name": "Spring Boot-HemlockStudiosApplication<HemlockStudios>",
+            "request": "launch",
+            "cwd": "${workspaceFolder}",
+            "mainClass": "com.HemlockStudiosWebsite.HemlockStudios.HemlockStudiosApplication",
+            "projectName": "HemlockStudios",
+            "args": "",
+            "envFile": "${workspaceFolder}/.env"
+        }
+    ]
+}

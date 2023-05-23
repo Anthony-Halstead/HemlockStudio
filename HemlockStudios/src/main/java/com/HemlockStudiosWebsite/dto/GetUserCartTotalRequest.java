@@ -1,14 +1,14 @@
 package com.HemlockStudiosWebsite.dto;
 
-public class GetCustomerCartTotalRequest {
+public class GetUserCartTotalRequest {
     private Integer cartId;
-    private Integer customerId;
+    private Integer userId;
 
     public Integer getCartId() {
         return cartId;
     }
-    public Integer getCustomerId() {
-        return customerId;
+    public Integer getUserId() {
+        return userId;
     }
   
 }
