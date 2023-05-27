@@ -1,0 +1,9 @@
+.button-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  width: 100%;
+  color: white;
+  align-items: center;
+  overflow: hidden; /* Add this line */
+}

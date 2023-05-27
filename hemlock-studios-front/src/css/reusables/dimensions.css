@@ -25,3 +25,8 @@
   .third-width{
     width: 33%;
 }
+.icon-dimensions{
+  width:33%;
+align-items:right;
+  justify-content:right;
+}

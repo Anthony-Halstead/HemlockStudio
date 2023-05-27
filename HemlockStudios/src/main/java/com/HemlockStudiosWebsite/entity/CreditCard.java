@@ -14,6 +14,8 @@ public class CreditCard {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
+
+
     @Column(name = "card_number")
     private String cardNumber;
 

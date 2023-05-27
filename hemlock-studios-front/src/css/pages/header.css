@@ -29,6 +29,13 @@
     color: rgb(255, 255, 255);
     font-size: 30px;
 }
+.header-link-icon{
+    margin: auto;
+    cursor: pointer;
+    align-items: flex-end;
+    justify-content:flex-end;
+    
+}
 .cart-icon{
     height: 50px;
     width: 50px;

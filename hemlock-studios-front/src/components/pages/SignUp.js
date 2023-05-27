@@ -1,4 +1,4 @@
-import '../../css/pages/signupsignin.css'
+//
 import '../../css/reusables/positions.css'
 import axios from 'axios';
 import { useNavigate } from 'react-router';
@@ -13,7 +13,7 @@ function SignUp(props) {
         const errors = {}
         const emailRegex = /(?:[a-z0-9+!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*|"(?:[\x01-\x08\x0b\x0c\x0e-\x1f\x21\x23-\x5b\x5d-\x7f]|\\[\x01-\x09\x0b\x0c\x0e-\x7f])*")@(?:(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?|\[(?:(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.){3}(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?|[a-z0-9-]*[a-z0-9]:(?:[\x01-\x08\x0b\x0c\x0e-\x1f\x21-\x5a\x53-\x7f]|\\[\x01-\x09\x0b\x0c\x0e-\x7f])+)\])/i;
         const usernameRegex = /^[A-Za-z][A-Za-z0-9_]{7,29}$/i;
-        const passwordRegex = /^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*[@#$%^&-+=()])(?=\\S+$).{8, 20}$/i;
+        const passwordRegex = /^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*[@#$%^&\-+=()])(?=\S+$).{8,20}$/i;
 
         if (!emailRegex.test(user.email)) {
             errors.email = "Invalid email";
@@ -44,7 +44,7 @@ function SignUp(props) {
         if (validate(props.user)) {
             axios.post("http://localhost:8080/auth/register", props.user)
                 .then(() => {
-                    navigator("/EmailConfirmation");
+                    navigator("/");
                 })
                 .catch((e) => {
                     console.log(e);
