@@ -48,14 +48,14 @@
 .accordion-header h4 {
  
     transition: 0.2s ease-in-out;
-    font-size: 15px;
-    font-weight: 400;
+    font-size: 18px;
+    font-weight: 500;
     margin-bottom: 10px;
   
 }
 
 .accordion-header:hover h4 {
-    color: #10d6f5!important;
+    color: black!important;
 }
 
 .accordion-content {
@@ -123,3 +123,5 @@
     height: 100%;
     background-color: rgba(0,0,0,.3);
  }
+
+ 

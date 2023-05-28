@@ -1,13 +1,16 @@
-//
+import '../../css/pages/signinsignup.css'
 import '../../css/reusables/positions.css'
 import axios from 'axios';
 import { useNavigate } from 'react-router';
 import { useState } from 'react';
+import SnowMask from '../reusables/SnowMask'
+
+
 
 function SignUp(props) {
     const navigator = useNavigate()
-    const[isValid, setIsValid] = useState(false)
-    const[errors,setErrors] = useState({})
+    const [isValid, setIsValid] = useState(false)
+    const [errors, setErrors] = useState({})
 
     const validate = (user) => {
         const errors = {}
@@ -44,7 +47,7 @@ function SignUp(props) {
         if (validate(props.user)) {
             axios.post("http://localhost:8080/auth/register", props.user)
                 .then(() => {
-                    navigator("/");
+                    navigator("/SignIn");
                 })
                 .catch((e) => {
                     console.log(e);
@@ -53,31 +56,30 @@ function SignUp(props) {
     };
 
     return (
-        <div className='signup-signin-content'>
-            <div className='sign-up-box'>
-                <div>
-                    New User? Sign-up Today!
-                </div>
+        <div className='content'>
+            <SnowMask />
+            <div className='sign-up-sign-in-box'>
                 <h1>Sign-Up</h1>
-                <div className='flex-row justify-content-left'>
-                    EMAIL
-                    <input className='input-container' value={props.user.email} name='email' type='email' onChange={signUpChangeHandler} ></input>
-                    <div className='flex-row justify-content-left'>{errors.email}</div>
+                <div className='input-container'>
+                    <input className='input-field' value={props.user.email} name='email' type='email' onChange={signUpChangeHandler} placeholder='EMAIL'></input>
+                    <div className='invalid-input'>{errors.email}</div>
                 </div>
-                <div className='flex-row justify-content-left'>
-                    USERNAME
-                    <input className='input-container' value={props.user.username} name='username' type='username' onChange={signUpChangeHandler} ></input>
-                    <div className='flex-row justify-content-left'>{errors.username}</div>
+                <div className='input-container'>
+                    <input className='input-field' value={props.user.username} name='username' type='username' onChange={signUpChangeHandler} placeholder='USERNAME'></input>
+                    <div className='invalid-input'>{errors.username}</div>
                 </div>
-                <div className='flex-row justify-content-left'>
-                    PASSWORD
-                    <input className='input-container' value={props.user.password} name='password' type='password' onChange={signUpChangeHandler} ></input>
-                    <div className='flex-row justify-content-left'>{errors.password}</div>
+                <div className='input-container'>
+                    <input className='input-field' value={props.user.password} name='password' type='password' onChange={signUpChangeHandler} placeholder='PASSWORD'></input>
+                    <div className='invalid-input'>{errors.password}</div>
                 </div>
-                <div className='flex-row justify-content-center'>
-                    <button onClick={signUpSubmitHandler}>SUBMIT</button>
+                <div >
+                    <button className='submit-button' onClick={signUpSubmitHandler}>SUBMIT</button>
+                   
                 </div>
+                <div>already have an account? <a href="/SignIn">Click here</a></div>
             </div>
+            <div className='logo-box'>              
+        </div>
         </div>
     )
 }

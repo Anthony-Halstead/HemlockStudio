@@ -4,7 +4,7 @@ import { useSpring, animated } from "react-spring";
 function Accordion({ id, title, content, isOpen, toggleAccordion }) {
   const styles = {
     accordionTitle: {
-      color: isOpen ? "#10d6f5" : "#fff",
+      color: isOpen ? "#000000" : "#fff",
     },
   };
 

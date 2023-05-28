@@ -1,0 +1,100 @@
+.content {
+    display: flex;
+    flex-direction: row;
+    height: 100vh;
+    width: 100vw;
+    justify-content: center;
+    align-items: center;
+    background-image: url('../../images/SnowMountains.png');
+    background-repeat: no-repeat;
+    background-position: center bottom;
+    background-size:cover;
+    flex-wrap: nowrap; 
+}
+.sign-in-content{
+    display: flex;
+    flex-direction: row;
+    height: 100vh;
+    width: 100vw;
+    justify-content: center;
+    align-items: center;
+    background-image: url('../../images/Lava.png');
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size:cover;
+    flex-wrap: nowrap; 
+}
+.sign-up-sign-in-box{
+    background-color: rgba(3, 68, 81, 0.785);
+    border: 1px solid black;
+    color: whitesmoke;
+    padding: 1%;
+    margin-left: 13%;
+    width:20%;
+    height:40%;
+   
+}
+.logo-box{
+background-position-y: center;
+background-position-x: center;
+   margin-right: 13%;
+border: 1px solid black;
+   
+   width:15%;
+   height:40%;
+   padding: 1%;
+  
+}
+.input-container{
+    width: 100%;
+    padding: 1%;
+}
+.input-field{
+    color:black;
+    font-weight: 600;
+    font-size:medium;
+    width:70%;
+    padding: 1.5%;
+    border-radius: 10px;
+    text-align: center;
+    margin-left: 13%;
+    font-family: 'Poppins';
+}
+.invalid-input{
+    color: red;
+   text-align: center;
+}
+.sign-up-sign-in-box, .logo-box {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+.submit-button{
+    margin-top: 13px;
+    margin-bottom: 10px;
+    border-radius: 5px;
+    color: white;
+    background-color: black;
+    height: 35px;
+    width: 170px;
+    font-family: 'Poppins';
+    font-size: large;
+    font-weight: 500;
+}
+.submit-button:active {
+    transform: scale(0.9); /* reduce size to 90% */
+    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.9); /* reduce box-shadow */
+}
+  .submit-button:hover {
+     /*The text-shadow property takes four parameters: horizontal offset, vertical offset, blur radius, and color. change the alpha for a darker shadow */
+    box-shadow: 0 1px 10px rgb(245, 245, 245, .7),
+    0 1px 20px rgb(245, 245, 245, .5);
+    scale:1.1;
+  }
+  a {
+    text-decoration: none;
+    color: purple;
+    font-size: large;
+    font-weight: 500;
+  }

@@ -1,9 +1,10 @@
 import React from 'react'
 import jwt_decode from "jwt-decode";
-
+import '../../css/pages/signinsignup.css'
 import '../../css/reusables/positions.css'
 import axios from 'axios';
 import { useNavigate } from 'react-router';
+import EmberMask from '../reusables/EmberMask'
 
 function SignIn(props) {
 
@@ -45,23 +46,23 @@ function SignIn(props) {
   };
 
     return (
-        <div className='signup-signin-content'>
-            <div className='sign-up-box'>
-                <div>Already A User?</div>
+        <div className='sign-in-content'>
+            <EmberMask />
+            <div className='sign-up-sign-in-box'>
                 <h1>Sign-In</h1>
-                <div className='flex-row justify-content-left'>
-                    USERNAME
-                    <input className='input-container' value={props.user.username} name='username' type='username' onChange={signInChangeHandler} ></input>
+                <div className='input-container'>             
+                    <input className='input-field'  value={props.user.username} name='username' type='username' onChange={signInChangeHandler} placeholder='USERNAME'></input>
                 </div>
-                <div className='flex-row justify-content-left'>
-                    PASSWORD
-                    <input className='input-container' value={props.user.password} name='password' type='password' onChange={signInChangeHandler} ></input>
+                <div className='input-container'>
+                    <input className='input-field' value={props.user.password} name='password' type='password' onChange={signInChangeHandler} placeholder='PASSWORD'></input>
                 </div>
-                <div className='flex-row justify-content-center'>
-                    <button onClick={signInSubmitHandler}>SUBMIT</button>
+                <div >
+                    <button className= 'submit-button'onClick={signInSubmitHandler}>SUBMIT</button>
                 </div>
+                <div>Don't have an account? <a href="/SignUp">Click here</a></div>
             </div>
-
+            <div className='logo-box'>              
+        </div>
         </div>
     )
 }

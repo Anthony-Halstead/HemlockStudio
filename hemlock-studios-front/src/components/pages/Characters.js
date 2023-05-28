@@ -14,7 +14,8 @@ import LogOne from '../../images/SwampLogOne.png'
 import { Parallax, ParallaxLayer } from '@react-spring/parallax'
 import '../../css/reusables/dialogbox.css'
 import '../../css/reusables/positions.css'
-
+import SnowMask from '../reusables/SnowMask'
+import FireflyMask from '../reusables/FireflyMask'
 
 function Characters() {
 
@@ -22,21 +23,34 @@ function Characters() {
     return (
         <div className="characters-container">
             <div className="parallax-container">
+          
                 <Parallax pages={10} >
                     <ParallaxLayer offset={1.13} speed={.2} className='center'>
+                 
                         <img src={BackgroundSwamp} />
                     </ParallaxLayer>
                     <ParallaxLayer offset={1.3} speed={.1}>
+                    <FireflyMask />
+                  
                         <img src={Landscape} />
+                      
                     </ParallaxLayer>
+                  
                     <ParallaxLayer offset={1.2} speed={1} className='center' factor={1}>
                         <img src={Crystals} />
+                     
+
                     </ParallaxLayer>
                     <ParallaxLayer offset={1.2} speed={-.1} className='center'>
+
                         <img src={Elf} style={{ transform: 'scale(1)' }} />
+
                     </ParallaxLayer>
                     <ParallaxLayer offset={1.3} speed={0} style={{ position: 'absolute' }}>
-                        <img src={TreeOne} style={{ position: 'absolute', left: '-250px', transform: 'scale(3)' }} />
+                        <div >
+                      
+                            <img src={TreeOne} style={{ position: 'absolute', left: '-250px', transform: 'scale(3)' }} />
+                        </div>
                     </ParallaxLayer>
                     <ParallaxLayer offset={1.3} speed={0} style={{ position: 'absolute' }}>
                         <img src={LogOne} style={{ position: 'absolute', right: '-500px', transform: 'scale(3)' }} />
@@ -45,6 +59,7 @@ function Characters() {
                         <img src={BackgroundSnowMountains} />
                     </ParallaxLayer>
                     <ParallaxLayer offset={2.5} speed={.1} className='center'>
+
                         <img src={VikingBlackTrees} />
                     </ParallaxLayer>
                     <ParallaxLayer offset={2.1} speed={.1} className='center'>
@@ -54,7 +69,11 @@ function Characters() {
                         <img src={Viking} style={{ transform: 'scale(1.2)' }} />
                     </ParallaxLayer>
                     <ParallaxLayer offset={2.2} speed={0} style={{ position: 'absolute' }}>
-                        <img src={SnowTree} style={{ position: 'absolute', left: '-550px' }} />
+                    <SnowMask />
+                            
+                            <img src={SnowTree} style={{ position: 'absolute', left: '-550px' }} />
+                           
+                     
                     </ParallaxLayer>
                     <ParallaxLayer offset={2.1} speed={0} style={{ position: 'absolute' }}>
                         <img src={SnowTree} style={{ position: 'absolute', right: '-700px' }} />

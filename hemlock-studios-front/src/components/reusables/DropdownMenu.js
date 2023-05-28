@@ -14,7 +14,7 @@ function DropdownMenu() {
   return (
    <div className="menu-container">
   
-        <FontAwesomeIcon onClick={onClick} className ="menu-trigger" icon={faBars} />
+  <FontAwesomeIcon onClick={onClick} className ="menu-trigger" icon={faBars} />
    
     <nav ref={dropdownRef} className={`menu ${isActive ? 'active' : 'inactive'}`}>
         <ul>

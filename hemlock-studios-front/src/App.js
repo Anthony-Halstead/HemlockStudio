@@ -11,6 +11,7 @@ import Checkout from './components/pages/Checkout';
 import Account from './components/pages/Account';
 import Favorites from './components/reusables/Favorites';
 import Admin from './components/pages/Admin';
+import News from './components/pages/News';
 
 
 function App() {
@@ -45,6 +46,7 @@ useEffect(() => {
         <Route path="/" element={<Home user={user} setUser={setUser}/>} />
         <Route path="/store" element={<Store user={user} setUser={setUser}/>} />
         <Route path="/about" element={<About/>} />
+        <Route path="/news" element={<News />} />
         <Route path="/SignIn" element={<SignIn user={user} setUser={setUser}/>} />
         <Route path="/SignUp" element={<SignUp user={user} setUser={setUser}/>} />
         <Route path="/Account" element={<Account user={user} setUser={setUser}/>} />

@@ -1,20 +1,21 @@
 import { v4 as uuidv4 } from "uuid";
 import Card from "../reusables/Card";
 import Carousel from "../reusables/Carousel";
-
+import TropicalRuins from "../../images/TropicalRuins.png"
+import DwarfStatues from "../../images/DwarfStatues.png"
 
 function World() {
   let cards = [
     {
       key: uuidv4(),
       content: (
-        <Card imagen="https://www.wallpaperup.com/uploads/wallpapers/2014/11/09/511460/ed3730a5a6e1ecda1ed3729b8348cb54-700.jpg" />
+        <Card imagen={TropicalRuins}/>
       )
     },
     {
       key: uuidv4(),
       content: (
-        <Card imagen="https://i.pinimg.com/originals/d1/a2/46/d1a246a5bde9dee179c3f13f6d9474b6.jpg" />
+        <Card imagen={DwarfStatues}/>
       )
     },
     {
