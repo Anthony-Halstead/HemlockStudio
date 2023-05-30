@@ -1,6 +1,6 @@
-import React,{useRef, useState, useEffect} from 'react'
+import React,{useRef} from 'react'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import {faBars, faCircleUser} from '@fortawesome/free-solid-svg-icons'
+import {faBars} from '@fortawesome/free-solid-svg-icons'
 import '../../css/reusables/dropdown.css'
 import { UseDetectOutsideClick } from './UseDetectOutsideClick';
 
@@ -16,7 +16,7 @@ function DropdownMenu() {
   
   <FontAwesomeIcon onClick={onClick} className ="menu-trigger" icon={faBars} />
    
-    <nav ref={dropdownRef} className={`menu ${isActive ? 'active' : 'inactive'}`}>
+    <nav ref={dropdownRef} className={`menu ${isActive ? 'active' : 'inactive'}`}>    
         <ul>
             <li><a href="/SignIn">Sign-In</a></li>
             <li><a href="/SignUp">Sign-Up</a></li>

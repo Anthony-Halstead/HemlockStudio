@@ -31,7 +31,7 @@ Role adminRole = roleRepo.save(new Role("ADMIN"));
 roleRepo.save(new Role("USER"));
 Set<Role> roles = new HashSet<>();
 roles.add(adminRole);
-User admin = new User(1, "admin", passwordEncoder.encode("password"), "admin@realestatehomes.com", roles);
+User admin = new User(1, "admin", passwordEncoder.encode("password"), "admin@HemlockStudios.com", roles);
 
 admin.setEmailConfirmed(true);
 userRepo.save(admin);

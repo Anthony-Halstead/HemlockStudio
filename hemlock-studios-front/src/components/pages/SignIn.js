@@ -38,7 +38,17 @@ function SignIn(props) {
               };
   
               props.setUser(updatedUser);
-              navigator("/");
+              console.log("roles:",props.user.roles)
+              if(props.user.roles.includes('ADMIN'))
+              {
+                console.log("navigated to admin page")
+                navigator("/Analytics");
+              }
+            else {
+            console.log("navigated to the home page")
+            navigator("/")
+            }
+
           })
           .catch((e) => {
               console.log(e)

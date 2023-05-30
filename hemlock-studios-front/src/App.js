@@ -10,7 +10,7 @@ import SignUp from './components/pages/SignUp';
 import Checkout from './components/pages/Checkout';
 import Account from './components/pages/Account';
 import Favorites from './components/reusables/Favorites';
-import Admin from './components/pages/Admin';
+import Admin from './components/pages/Analytics';
 import News from './components/pages/News';
 
 
@@ -52,7 +52,7 @@ useEffect(() => {
         <Route path="/Account" element={<Account user={user} setUser={setUser}/>} />
         <Route path="/Checkout" element={<Checkout user={user} setUser={setUser}/>} />
         <Route path="/Favorites" element={<Favorites user={user} setUser={setUser}/>} />
-        <Route path="/Admin" element={<Admin user={user} setUser={setUser}/>} />
+        <Route path="/Analytics" element={<Admin user={user} setUser={setUser}/>} />
       </Routes>
     </PageWrapper>
   );
