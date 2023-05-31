@@ -3,17 +3,8 @@ import '../../css/pages/header.css';
 import DropdownMenu from "./DropdownMenu";
 
 
-function Header(props) {
-    const signOut = () => {
-        localStorage.removeItem("token");
-        props.setUser({
-            id: undefined,
-            username: "",
-            email: "",
-            roles: []
-        });
-        navigator("/");
-    };
+function Header({props}) {
+
     return (
         <div>
             <div className="header">
@@ -33,7 +24,7 @@ function Header(props) {
                     <a className=' header-link' href="/about" >ABOUT</a>
                 </div>
                 <div className='icon-dimensions'>
-                    <div className=' header-link-icon'><DropdownMenu /></div>
+                    <div className=' header-link-icon'><DropdownMenu props={props}/></div>
                 </div>
             </div>
         </div>

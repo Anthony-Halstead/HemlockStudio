@@ -1,4 +1,4 @@
-.admin-content{
+.news-content{
     display:flex;
     flex-direction: column;
     width: 100vw;
@@ -6,9 +6,4 @@
     background-color: white;
     justify-content: center;
     color: black;
-}
-.draggable-wrapper{
-    display: flex;
-    flex-direction: row;
-    max-width:826px;
 }

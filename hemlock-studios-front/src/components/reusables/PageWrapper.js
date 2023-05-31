@@ -3,11 +3,11 @@ import Header from './Header';
 
 
 
-function PageWrapper({ children }) {
+function PageWrapper(props) {
   return (
     <div>
-      <Header />
-      <div>{children}</div>
+      <Header props={props}/>
+      <div>{props.children}</div>
     </div>
   )
 }

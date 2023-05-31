@@ -63,8 +63,9 @@ public SecurityFilterChain filterChain(HttpSecurity http) throws Exception{
             .csrf(csrf -> csrf.disable())
             .authorizeHttpRequests(auth -> {
                 auth.requestMatchers("/auth/**").permitAll();
-                auth.requestMatchers("/property/**").permitAll();
                 auth.requestMatchers("/admin/**").hasRole("ADMIN");
+                auth.requestMatchers("/product/createProduct", "/product/updateProduct", "/product/deleteProduct").hasRole("ADMIN");
+                auth.requestMatchers("/product/findProducts").permitAll();
                 auth.requestMatchers("/user/**").hasAnyRole("ADMIN", "USER");
                 auth.anyRequest().authenticated();
             });

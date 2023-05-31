@@ -44,13 +44,12 @@
 
   .menu ul li a:hover {
     transform: scale(1.1);
-    color:  rgba(0,0,0,.7);
+    color:  rgba(0,0,0);
     background-color: #f0f0f0; 
     border-radius: 5px; 
     border: 1px solid black;
     padding: 5px;
     box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
-   text-shadow: 0 0 2px rgba(0,0,0,.6)
   }
 
   .menu-trigger {

@@ -1,36 +1,91 @@
 .admin-panel-content{
     display:flex;
-    flex-direction: column;
-    align-items: center;
-    width:12%;
-    height:60%;
+    flex-direction: row;
+    max-width:824px;
+    height:auto;
     background-color: rgba(3, 68, 81, 0.785);
-    border: 2px solid black;
+    border-top: 2px solid black;
+    border-bottom: 2px solid black;
+    border-left: 2px solid black;
     color:white;
     font-size: larger;
     font-weight: 500;
+    position: relative; 
 }
-.admin-panel-elements{
-    margin-top:30px;
-margin-bottom: 5px;
 
-}
 .admin-panel-header{
     display: flex;
-border-top: 2px solid black;
-border-bottom: 2px solid black;
-justify-content: center;
+    align-items: center;
+    padding-left: 10px;
+    padding-right: 10px;
+    border-right: 2px solid black;
+    font-size: larger;
+    color: black;
+}
+.admin-panel-header:hover{
+    background-color: crimson;
+}
+.admin-panel-header:hover{
+    cursor: pointer;
 }
 
-.admin-elements{
-    display:flex;
-    justify-content: center;
-    margin-top: 30px;
+.admin-elements {
+    display: flex;
+    flex-direction: column;
+    border-right: 2px solid black;
+    padding: 10px;
+    margin-left: 7px;
+    position: relative; 
 }
-
 
 .admin-elements:hover{
-    transform: scale(1.3);
+    transform: scale(1.1);
+    color:  rgba(0,0,0,.7);
+    background-color: #f0f0f0; 
+    border: 1px solid black;
+    cursor: pointer;
+    
+}
+.scrolling {
+    position: fixed;
+    z-index: 9999;
+}
+
+/* Dropdown menu styles */
+
+.admin-panel-dropdown {
+    display: none; 
+    position: absolute;
+    top: 100%;
+    left: 0;
+    background: rgba(3, 68, 81, 0.785);
+    border: 1px solid black;
+    width: 200px;
+    box-shadow: 0 1px 8px rgba(0, 0, 0, 0.3);
+    transition: opacity 0.4s ease, transform 0.4s ease, visibility 0.4s;
+    z-index: 1;
+    font-weight: 700;
+}
+.admin-panel-dropdown ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.admin-panel-dropdown li {
+    border-bottom: 1px solid black;
+}
+
+.admin-panel-dropdown li a {
+    text-decoration: none;
+    color: white;
+    padding: 15px 20px;
+    display: block;
+    transition: all 0.3s ease;
+}
+
+.admin-panel-dropdown ul li a:hover {
+    transform: scale(1.1);
     color:  rgba(0,0,0,.7);
     background-color: #f0f0f0; 
     border-radius: 5px; 
@@ -39,3 +94,17 @@ justify-content: center;
     box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
    
 }
+
+.admin-elements:hover .admin-panel-dropdown {
+    display: block;
+}
+
+.display-modal {
+    display: flex;
+    flex-direction: row;
+    max-width:824px;
+    max-height: 500px;
+    height:auto;
+    border: 2px solid black;
+    overflow-y: auto;
+  }

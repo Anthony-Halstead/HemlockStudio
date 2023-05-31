@@ -10,7 +10,7 @@ import SignUp from './components/pages/SignUp';
 import Checkout from './components/pages/Checkout';
 import Account from './components/pages/Account';
 import Favorites from './components/reusables/Favorites';
-import Admin from './components/pages/Analytics';
+import Admin from './components/reusables/Analytics';
 import News from './components/pages/News';
 
 
@@ -45,8 +45,8 @@ useEffect(() => {
       <Routes>
         <Route path="/" element={<Home user={user} setUser={setUser}/>} />
         <Route path="/store" element={<Store user={user} setUser={setUser}/>} />
-        <Route path="/about" element={<About/>} />
-        <Route path="/news" element={<News />} />
+        <Route path="/about" element={<About user={user} setUser={setUser}/>} />
+        <Route path="/news" element={<News user={user} setUser={setUser}/>} />
         <Route path="/SignIn" element={<SignIn user={user} setUser={setUser}/>} />
         <Route path="/SignUp" element={<SignUp user={user} setUser={setUser}/>} />
         <Route path="/Account" element={<Account user={user} setUser={setUser}/>} />

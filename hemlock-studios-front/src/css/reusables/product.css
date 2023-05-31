@@ -1,0 +1,28 @@
+.product {
+    border: 1px solid #ccc;
+    padding: 20px;
+    margin: 20px;
+    width: 200px; /* Adjust as needed */
+    text-align: center;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  }
+  
+  .product img {
+    width: 100%;
+    height: auto;
+  }
+  
+  .product h2 {
+    margin-top: 20px;
+    font-size: 18px;
+  }
+  
+  .product p {
+    margin-top: 10px;
+    font-size: 14px;
+  }
+  
+  .product p:last-child {
+    margin-top: 20px;
+    font-weight: bold;
+  }
