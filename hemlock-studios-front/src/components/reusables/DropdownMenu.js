@@ -32,6 +32,7 @@ function DropdownMenu({props}) {
           <ul>
             {props.user.id ? (
               <>
+                <li><a href="/Cart">Cart</a></li>
                 <li><a href="/Favorites">Favorites</a></li>
                 <li><a href="/Account">Account Settings</a></li>
                 <li><a href="/" onClick={handleSignOut}>Sign Out</a></li>

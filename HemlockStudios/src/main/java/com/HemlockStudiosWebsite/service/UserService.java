@@ -20,8 +20,7 @@ import org.springframework.stereotype.Service;
 
 @Service
 public class UserService implements UserDetailsService{
-    // YOU ONLY AUTOWIRE YOUR REPO OF YOUR OBJECT IN YOUR SERVIES!!!
-	// NOTHING ELSE!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+
     @Autowired
     private UserRepo userRepo;
 

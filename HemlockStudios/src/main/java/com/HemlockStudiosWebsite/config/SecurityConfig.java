@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import static org.springframework.security.config.Customizer.withDefaults;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.Import;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.ProviderManager;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
@@ -63,9 +64,9 @@ public SecurityFilterChain filterChain(HttpSecurity http) throws Exception{
             .csrf(csrf -> csrf.disable())
             .authorizeHttpRequests(auth -> {
                 auth.requestMatchers("/auth/**").permitAll();
+                auth.requestMatchers("/enums/**").permitAll();
+                auth.requestMatchers("/product/**").permitAll();
                 auth.requestMatchers("/admin/**").hasRole("ADMIN");
-                auth.requestMatchers("/product/createProduct", "/product/updateProduct", "/product/deleteProduct").hasRole("ADMIN");
-                auth.requestMatchers("/product/findProducts").permitAll();
                 auth.requestMatchers("/user/**").hasAnyRole("ADMIN", "USER");
                 auth.anyRequest().authenticated();
             });

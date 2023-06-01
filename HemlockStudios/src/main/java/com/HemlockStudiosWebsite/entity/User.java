@@ -131,8 +131,6 @@ private Integer id;
         this.wallet = wallet;
     }
 
-
-
     public boolean getIsEmailConfirmed() {
         return emailConfirmed;
     }
