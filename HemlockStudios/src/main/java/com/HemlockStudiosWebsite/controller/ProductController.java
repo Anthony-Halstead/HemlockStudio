@@ -63,6 +63,37 @@ public ResponseEntity<Object> createProduct(@RequestBody CreateProductRequest re
 
 
 @RequestMapping(
+    value = "/update",
+    consumes = MediaType.APPLICATION_JSON_VALUE,
+    produces = MediaType.APPLICATION_JSON_VALUE,
+    method = RequestMethod.PUT
+)
+public ResponseEntity<Object> updateProduct(@RequestBody UpdateProductRequest request) {
+    try {
+        if (request.getId() == null || request.getDescription() == null || request.getPrice() == null || request.getName() == null || request.getImgUrls() == null) {
+            throw new IllegalArgumentException("Missing required field: id");
+        }
+
+       productService.updateProduct(
+            request.getId(),
+            request.getDescription(), request.getPrice(),  request.getName(), 
+            request.getImgUrls(), request.getCategory(), request.getSubcategory(), request.getSize(), request.getDiscount()
+        );
+
+        CreateProductResponse response = new CreateProductResponse();
+response.setMessage("Product was updated");
+        return new ResponseEntity<>(response, HttpStatus.OK);
+    } catch (Exception e) {
+        return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
+    } catch (Error e) {
+        return new ResponseEntity<>(e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
+    }
+}
+
+
+
+
+@RequestMapping(
     value="/delete",
     method = RequestMethod.DELETE,
     consumes = MediaType.APPLICATION_JSON_VALUE,
@@ -84,100 +115,12 @@ public ResponseEntity<Object> deleteProduct(@RequestBody DeleteRequest request) 
     }
 }   
 
-// @RequestMapping(
-//     value = "/update",
-//     consumes = MediaType.APPLICATION_JSON_VALUE,
-//     produces = MediaType.APPLICATION_JSON_VALUE,
-//     method = RequestMethod.PUT
-// )
-// public ResponseEntity<Object> updateProduct(@RequestBody UpdateProductRequest request) {
-//     try {
-//         if (request.getId() == null) {
-//             throw new IllegalArgumentException("Missing required field: id");
-//         }
-
-//         Product updatedProduct = productService.updateProduct(
-//             request.getId(),
-//             request.getDescription(),
-//             request.getPrice(),
-//             request.getName(),
-//             request.getImgUrl(),
-//             request.getDiscount()
-//         );
-
-//         CreateProductResponse response = new CreateProductResponse();
-//         response.setDescription(updatedProduct.getDescription());
-//         response.setPrice(updatedProduct.getPrice());
-//         response.setName(updatedProduct.getName());
-//         response.setImgUrl(updatedProduct.getImgUrl());
-
-//         return new ResponseEntity<>(response, HttpStatus.OK);
-//     } catch (Exception e) {
-//         return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
-//     } catch (Error e) {
-//         return new ResponseEntity<>(e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
-//     }
-// }
 
 @GetMapping("/findAll")
     public ResponseEntity<List<Product>> findProducts() {
         System.out.println("in the find products endpoint");
         List<Product> products = productService.getAll();
-        return ResponseEntity.ok(products); // returns a 200 OK response with the products in the body
+        return ResponseEntity.ok(products); 
     }
-
-
-//     @RequestMapping(
-//         value="/addPhoto/{id}",
-//         consumes = MediaType.APPLICATION_JSON_VALUE,
-//         produces = MediaType.APPLICATION_JSON_VALUE,
-//         method = RequestMethod.POST
-//     )
-//     public ResponseEntity<Object> addPhoto (@RequestBody Photo photo, @PathVariable Integer id) {
-
-//         try {
-//             photoService.save(photo);
-//             Product foundProduct = productService.findById(id);
-//             foundProduct.addProductPhoto(photo);
-//             productService.update(foundProduct);
-           
-            
-            
-            
-//             return new ResponseEntity<Object>(foundProduct, HttpStatus.OK);
-//         } catch (Exception e) {
-//             System.out.println(e);
-//             return new ResponseEntity<Object>(e.getMessage(), HttpStatus.BAD_REQUEST);
-//         } catch (Error e) {
-//             System.out.println(e);
-//             return new ResponseEntity<Object>(e, HttpStatus.INTERNAL_SERVER_ERROR);
-//         }
-
-//     }
-// @RequestMapping(
-//         value="/deletePhoto/{id}",
-//         consumes = MediaType.APPLICATION_JSON_VALUE,
-//         produces = MediaType.APPLICATION_JSON_VALUE,
-//         method = RequestMethod.DELETE
-//     )
-//     public ResponseEntity<Object> deltePhoto (@RequestBody Photo photo, @PathVariable Integer id) {
-
-//         try {
-            
-//             Product foundProduct = productService.findById(id);
-//             foundProduct.deleteProductPhoto(photo);
-//             productService.update(foundProduct);
-//             photoService.deleteById(photo.getId());
-           
-//             return new ResponseEntity<Object>(foundProduct, HttpStatus.OK);
-//         } catch (Exception e) {
-//             System.out.println(e);
-//             return new ResponseEntity<Object>(e.getMessage(), HttpStatus.BAD_REQUEST);
-//         } catch (Error e) {
-//             System.out.println(e);
-//             return new ResponseEntity<Object>(e, HttpStatus.INTERNAL_SERVER_ERROR);
-//         }
-
-//     }
 }
 

@@ -1,5 +1,7 @@
 package com.HemlockStudiosWebsite.controller;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -13,6 +15,10 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.HemlockStudiosWebsite.dto.CreateNewsRequest;
 import com.HemlockStudiosWebsite.dto.CreateNewsResponse;
+import com.HemlockStudiosWebsite.dto.DeleteRequest;
+import com.HemlockStudiosWebsite.dto.DeleteResponse;
+import com.HemlockStudiosWebsite.dto.UpdateNewsRequest;
+import com.HemlockStudiosWebsite.entity.News;
 import com.HemlockStudiosWebsite.service.NewsService;
 
 @RestController
@@ -23,8 +29,6 @@ public class NewsController {
 
     @Autowired
     NewsService newsService;
-    
-        
     
     
     @RequestMapping(
@@ -38,7 +42,7 @@ public class NewsController {
             if (request.getTitle() == null || request.getDescription() == null || request.getBody() == null || request.getAnouncement() == null) {
                 throw new IllegalArgumentException("Missing required fields in the request.");
             }
-    
+            System.out.println("in the create news path");
              newsService.createNews(request.getTitle(), request.getDescription(),  request.getBody(), 
              request.getAnouncement(), request.getImgUrls());
                   
@@ -54,32 +58,58 @@ public class NewsController {
         }
     }
     
+    @RequestMapping(
+        value="/update",
+        consumes = MediaType.APPLICATION_JSON_VALUE,
+        produces = MediaType.APPLICATION_JSON_VALUE,
+        method = RequestMethod.PUT
+    )
+    public ResponseEntity<Object> updateNews(@RequestBody UpdateNewsRequest request) {
+        try {
+            if (request.getId() == null || request.getTitle() == null || request.getDescription() == null || request.getBody() == null || request.getAnouncement() == null) {
+                throw new IllegalArgumentException("Missing required fields in the request.");
+            }
     
-    // @RequestMapping(
-    //     value="/delete",
-    //     method = RequestMethod.DELETE,
-    //     consumes = MediaType.APPLICATION_JSON_VALUE,
-    //     produces = MediaType.APPLICATION_JSON_VALUE
-    // )
-    // public ResponseEntity<Object> deleteNews(@RequestBody DeleteRequest request) {
-    //     try {
-    //         newsService.deleteNewsById(request.getId());
+             newsService.updateNews(request.getId(), request.getTitle(), request.getDescription(),  request.getBody(), 
+             request.getAnouncement(), request.getImgUrls());
+                  
+             CreateNewsResponse response = new CreateNewsResponse();
+              response.setMessage("news was updated");
+              
+        
+            return new ResponseEntity<Object>(response, HttpStatus.OK);
+        } catch (Exception e) {
+            return new ResponseEntity<Object>(e, HttpStatus.BAD_REQUEST);
+        } catch (Error e) {
+            return new ResponseEntity<Object>(e, HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
     
-    //         DeleteResponse response = new DeleteResponse();
-    //         response.setMessage("News deleted successfully.");
+    @RequestMapping(
+        value="/delete",
+        method = RequestMethod.DELETE,
+        consumes = MediaType.APPLICATION_JSON_VALUE,
+        produces = MediaType.APPLICATION_JSON_VALUE
+    )
+    public ResponseEntity<Object> deleteNews(@RequestBody DeleteRequest request) {
+        try {
+            newsService.deleteNewsById(request.getId());
     
-    //         return new ResponseEntity<Object>(response, HttpStatus.OK);
-    //     } catch (Exception e) {
-    //         return new ResponseEntity<Object>(e, HttpStatus.BAD_REQUEST);
-    //     } catch (Error e) {
-    //         return new ResponseEntity<Object>(e, HttpStatus.INTERNAL_SERVER_ERROR);
-    //     }
-    // }   
+            DeleteResponse response = new DeleteResponse();
+            response.setMessage("News deleted successfully.");
     
-    // @GetMapping("/findAll")
-    //     public ResponseEntity<List<News>> findNewss() {
-    //         System.out.println("in the find newss endpoint");
-    //         List<News> newss = newsService.getAll();
-    //         return ResponseEntity.ok(newss); // returns a 200 OK response with the newss in the body
-    //     }
+            return new ResponseEntity<Object>(response, HttpStatus.OK);
+        } catch (Exception e) {
+            return new ResponseEntity<Object>(e, HttpStatus.BAD_REQUEST);
+        } catch (Error e) {
+            return new ResponseEntity<Object>(e, HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }   
+    
+    @GetMapping("/findAll")
+        public ResponseEntity<List<News>> findNews() {
+            System.out.println("in the find news endpoint");
+            List<News> news = newsService.getAll();
+            return ResponseEntity.ok(news); // returns a 200 OK response with the newss in the body
+        }
 }

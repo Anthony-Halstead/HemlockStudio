@@ -21,9 +21,9 @@ function Get({ entityType }) {
   }, [entityType]);
 
   const entityFields = {
-    product: ['id', 'name', 'price', 'category', 'subcategory', 'size', 'description'],
+    product: ['id', 'name', 'price', 'category', 'subcategory', 'size', 'discount', 'description'],
     user: ['id', 'username', 'email'],
-    news: ['id', 'title', 'description', 'announcement', 'body', 'datepublished'],
+    news: ['id', 'title', 'description', 'announcement', 'body', 'datePublished'],
   };
 
   const handleDelete = (id) => {
@@ -52,13 +52,26 @@ function Get({ entityType }) {
   const handleCancelUpdate = () => {
     setSelectedItem(null);
   };
-
+  
   const handleUpdateSubmit = (updatedItem) => {
-    // Perform update request and update the data state
-    // ...
-
-    // Clear the selected item
-    setSelectedItem(null);
+    axios
+      .put(`http://localhost:8080/${entityType}/update`, updatedItem)
+      .then(() => {
+        axios
+          .get(`http://localhost:8080/${entityType}/findAll`)
+          .then((response) => {
+            setData(response.data);
+          })
+          .catch((error) => {
+            console.error('Error fetching data', error);
+          });
+      })
+      .catch((error) => {
+        console.error('Error updating object', error);
+      })
+      .finally(() => {
+        setSelectedItem(null);
+      });
   };
 
   return (

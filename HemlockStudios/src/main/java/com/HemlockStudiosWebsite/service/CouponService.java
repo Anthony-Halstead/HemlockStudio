@@ -63,9 +63,10 @@ public class CouponService {
     
         return newTotal;
     }
-    public Coupon createCoupon(String couponCode) {
+    public Coupon createCoupon(String couponCode, Double discountValue) {
         Coupon coupon = new Coupon();
         coupon.setCouponCode(couponCode);
+        coupon.setDiscountValue(discountValue);
         return couponRepo.save(coupon);
     }
 

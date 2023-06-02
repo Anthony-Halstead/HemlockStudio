@@ -85,7 +85,7 @@ public class UserController {
             if (request.getId() == null || request.getUsername() == null || request.getEmail() == null) {
                 throw new IllegalArgumentException("Missing required fields in the request.");
             }
-            User updatedUser = userService.updateUser(request.getId(), request.getUsername(), request.getEmail());
+           userService.updateUser(request.getId(), request.getUsername(), request.getEmail());
 
             UserAccountResponse response = new UserAccountResponse();
             return new ResponseEntity<Object>(response, HttpStatus.OK);

@@ -8,7 +8,7 @@ import jakarta.persistence.Id;
 import jakarta.persistence.Table;
 
 @Entity
-@Table(name = "discount")
+@Table(name = "coupon")
 public class Coupon {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -18,7 +18,7 @@ public class Coupon {
     private String couponCode;
 
     @Column(name = "discount_value", nullable = false)
-private Double discountValue;
+    private Double discountValue;
 
 
 public Double getDiscountValue() {

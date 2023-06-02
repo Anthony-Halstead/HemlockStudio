@@ -32,9 +32,9 @@ CouponService couponService;
     consumes = MediaType.APPLICATION_JSON_VALUE,
     produces = MediaType.APPLICATION_JSON_VALUE
 )
-public ResponseEntity<Object> createCoupon(@RequestBody CreateCouponRequest createCouponRequest) {
+public ResponseEntity<Object> createCoupon(@RequestBody CreateCouponRequest request) {
     try {
-        couponService.createCoupon(createCouponRequest.getCouponCode());
+        couponService.createCoupon(request.getCouponCode(), request.getDiscountValue());
 
         CreateCouponResponse response = new CreateCouponResponse ();
         response.setMessage("Coupon created Successfully.");

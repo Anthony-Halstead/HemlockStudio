@@ -38,6 +38,13 @@ authenticationService.sendEmailConfirmation(user);
 return ResponseEntity.ok("User registered successfully");
 }
 
+@PostMapping("/registerAdmin")
+public ResponseEntity<?> registerAdmin(@RequestBody RegistrationDTO body){
+    System.out.println("You are in the reg path");
+    authenticationService.registerAdmin(body.getUsername(),body.getPassword(), body.getEmail());
+    return ResponseEntity.ok("Admin registered successfully");
+    }
+
 @GetMapping("/confirm")
 public ResponseEntity<?> confirmEmail(@RequestParam String token) {
     Optional<EmailVerificationToken> optionalToken = emailVerificationTokenService.findByToken(token);

@@ -40,7 +40,7 @@ function AdminPanel() {
         <div className='admin-elements'>
           <div className='admin-element-text'>Manage Users</div>
           <AdminPanelDropdown
-            options={["Add User", "Update Users"]}
+            options={["Add Admin", "Update Users"]}
             onOptionClick={setSelectedOption}
           />
         </div>

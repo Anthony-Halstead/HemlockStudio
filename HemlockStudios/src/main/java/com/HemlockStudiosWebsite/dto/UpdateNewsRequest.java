@@ -1,7 +1,7 @@
 package com.HemlockStudiosWebsite.dto;
 
-public class CreateNewsRequest {
-    
+public class UpdateNewsRequest {
+    private Integer id;
     private String anouncement;
     private String title;
     private String description;
@@ -39,6 +39,11 @@ public class CreateNewsRequest {
     public void setImgUrls(String[] imgUrls) {
         this.imgUrls = imgUrls;
     }
+    public Integer getId() {
+        return id;
+    }
+    public void setId(Integer id) {
+        this.id = id;
+    }
 
-    
 }

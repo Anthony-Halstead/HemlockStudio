@@ -1,4 +1,3 @@
-import AddUser from "./AddUser";
 import UpdateUsers from "./UpdateUsers";
 import Analytics from "./Analytics"
 import AddProduct from "./AddProduct";
@@ -7,6 +6,7 @@ import AddNews from "./AddNews";
 import UpdateNews from "./UpdateNews";
 import CreateCoupon from "./CreateCoupon";
 import "../../css/reusables/adminpanel.css"
+import AddAdmin from "./AddAdmin";
 
 function AdminModal({ option }) {
     if (option === 'View Analytics') {
@@ -16,8 +16,8 @@ function AdminModal({ option }) {
     {
         return <CreateCoupon />;
     }
-    else if (option === 'Add User') {
-        return <AddUser />;
+    else if (option === 'Add Admin') {
+        return <AddAdmin />;
     }
     else if (option === 'Update Users') {
         return <UpdateUsers />;

@@ -8,7 +8,10 @@ public class CreateProductRequest {
     private String category;
     private String subcategory;
     private String size;
+ 
 
+
+    
     public String getDescription() {
         return description;
     }
@@ -64,5 +67,7 @@ public class CreateProductRequest {
     public void setSize(String size) {
         this.size = size;
     }
+
+
 
 }

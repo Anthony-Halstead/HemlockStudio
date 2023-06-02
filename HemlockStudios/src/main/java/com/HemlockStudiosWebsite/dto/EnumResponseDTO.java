@@ -4,6 +4,9 @@ public class EnumResponseDTO {
     private String[] categories;
     private String[] subcategories;
     private String[] sizes;
+    private String[] anouncements;
+
+    
     public String[] getCategories() {
         return categories;
     }
@@ -21,6 +24,12 @@ public class EnumResponseDTO {
     }
     public void setSizes(String[] sizes) {
         this.sizes = sizes;
+    }
+    public String[] getAnouncements() {
+        return anouncements;
+    }
+    public void setAnouncements(String[] anouncements) {
+        this.anouncements = anouncements;
     }
 
     

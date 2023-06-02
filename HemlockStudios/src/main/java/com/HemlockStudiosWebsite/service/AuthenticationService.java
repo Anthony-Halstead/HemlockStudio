@@ -51,6 +51,21 @@ public User registerUser(String username, String password, String email){
     return userRepo.save(user);
 }
 
+public User registerAdmin(String username, String password, String email){
+    String encodedPassword = passwordEncoder.encode(password);
+    Role adminRole = roleRepo.findByAuthority("ADMIN").get();
+    Role userRole = roleRepo.findByAuthority("USER").get();
+    Set<Role> authorities = new HashSet<>();
+    authorities.add(adminRole);
+    authorities.add(userRole);
+
+    User user = new User(0, username, encodedPassword, email, authorities);
+    user.setEmailConfirmed(true);
+
+    return userRepo.save(user);
+}
+
+
 public void sendEmailConfirmation(User user) {
     // create token
     String token = UUID.randomUUID().toString();

@@ -1,0 +1,78 @@
+import axios from 'axios';
+import React, { useState } from 'react'
+import '../../css/pages/signinsignup.css'
+
+function AddAdmin() {
+    const [errors, setErrors] = useState({})
+    const [admin, setAdmin] = useState({
+        username: "",
+        email: "",
+        password: "",
+    });
+
+    const validate = (admin) => {
+        const errors = {}
+        const emailRegex = /(?:[a-z0-9+!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*|"(?:[\x01-\x08\x0b\x0c\x0e-\x1f\x21\x23-\x5b\x5d-\x7f]|\\[\x01-\x09\x0b\x0c\x0e-\x7f])*")@(?:(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?|\[(?:(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.){3}(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?|[a-z0-9-]*[a-z0-9]:(?:[\x01-\x08\x0b\x0c\x0e-\x1f\x21-\x5a\x53-\x7f]|\\[\x01-\x09\x0b\x0c\x0e-\x7f])+)\])/i;
+        const usernameRegex = /^[A-Za-z][A-Za-z0-9_]{7,29}$/i;
+        const passwordRegex = /^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*[@#$%^&\-+=()])(?=\S+$).{8,20}$/i;
+
+        if (!emailRegex.test(admin.email)) {
+            errors.email = "Invalid email";
+        }
+        if (!usernameRegex.test(admin.username)) {
+            errors.username = "Invalid username";
+        }
+        if (!passwordRegex.test(admin.password)) {
+            errors.password = "Invalid password";
+        }
+
+        setErrors(errors);
+        return Object.keys(errors).length === 0;
+
+    }
+
+    const signUpChangeHandler = (event) => {
+        const name = event.target.name;
+        const value = event.target.value;
+        const tempAdmin = { admin };
+        tempAdmin[name] = value;
+        setAdmin(tempAdmin);
+        validate(tempAdmin);
+    };
+
+
+    const signUpSubmitHandler = () => {
+        if (validate(admin)) {
+            axios.post("http://localhost:8080/auth/registerAdmin", admin)
+                .then((response) => {
+                    console.log(response.data)
+                })
+                .catch((e) => {
+                    console.log(e);
+                });
+        }
+    };
+    return (
+        <div >
+            <div className='sign-up-sign-in-box'>
+                <h1>Add Admin</h1>
+                <div className='input-container'>
+                    <input className='input-field' value={admin.email} name='email' type='email' onChange={signUpChangeHandler} placeholder='EMAIL'></input>
+                    <div className='invalid-input'>{errors.email}</div>
+                </div>
+                <div className='input-container'>
+                    <input className='input-field' value={admin.username} name='username' type='username' onChange={signUpChangeHandler} placeholder='USERNAME'></input>
+                    <div className='invalid-input'>{errors.username}</div>
+                </div>
+                <div className='input-container'>
+                    <input className='input-field' value={admin.password} name='password' type='password' onChange={signUpChangeHandler} placeholder='PASSWORD'></input>
+                    <div className='invalid-input'>{errors.password}</div>
+                </div>
+                <div >
+                    <button className='submit-button' onClick={signUpSubmitHandler}>SUBMIT</button>
+                </div>
+            </div>
+        </div>
+    )
+}
+export default AddAdmin

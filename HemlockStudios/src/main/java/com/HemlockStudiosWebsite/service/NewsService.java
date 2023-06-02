@@ -1,6 +1,8 @@
 package com.HemlockStudiosWebsite.service;
 
+import java.time.LocalDate;
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -33,8 +35,8 @@ public class NewsService {
             news.setTitle(title);
             news.setBody(body);
             NewsEnums.Anouncement anouncementEnum = NewsEnums.Anouncement.valueOf(anouncement);
-        
             news.setAnouncement(anouncementEnum);
+            news.setDatePublished(LocalDate.now());
             for(String imgUrl : imgUrls)
             {
                System.out.println("Creating photo for url: " + imgUrl);
@@ -49,40 +51,61 @@ public class NewsService {
         }
     }
     
+
+    public void updateNews(Integer id, String title, String description, String body, String anouncement, String[] imgUrls) {
+        try {
+            System.out.println("In the backend update News service start");
+            Optional<News> optionalNews = newsRepo.findById(id);
+            if (optionalNews.isPresent()) {
+                News news = optionalNews.get();
+
+            news.setDescription(description);
+            news.setTitle(title);
+            news.setBody(body);
+            NewsEnums.Anouncement anouncementEnum = NewsEnums.Anouncement.valueOf(anouncement);
+            news.setAnouncement(anouncementEnum);
+
+                List<Photo> currentPhotos = news.getPhotoReal();
+                for (Photo photo : currentPhotos) {
+                    // Remove the photo from the news photo real
+                    news.getPhotoReal().remove(photo);
+                    // Delete the photo from the photo repository
+                    photoService.deleteById(photo.getId());
+                }
+                
+                for (String imgUrl : imgUrls) {
+                    System.out.println("Creating photo for url: " + imgUrl);
+                    Photo newPhoto = photoService.createPhoto(imgUrl);
+                    news.getPhotoReal().add(newPhoto);
+                }
+                
+                // Save the updated product
+                newsRepo.save(news);
+                System.out.println("News saved successfully");
+            }
+        } catch (Exception e) {
+            System.out.println("Error during product creation: " + e.getMessage());
+            e.printStackTrace();
+        }
+    }
+    
+
+
     public News save(News news){
          return newsRepo.save(news);
     }
 
-    // public News updateNews(Integer id, String description, Double price, String name, String imgUrl, Double discount) {
-    //     News news = newsRepo.findById(id).orElseThrow(() -> new RuntimeException("News not found"));
-    
-    //     if (description != null) {
-    //         news.setDescription(description);
-    //     }
-    
-    //     if (price != null) {
-    //         news.setPrice(price);
-    //     }
-    
-    //     if (name != null) {
-    //         news.setName(name);
-    //     }
-    
-    //     if (imgUrl != null) {
-    //         news.setImgUrl(imgUrl);
-    //     }
-    
-    //     if (discount != null) {
-    //         news.setDiscount(discount);
-    //     }
-    
-    //     return newsRepo.save(news);
-    // }
-   
+ 
+    public void deleteNewsById(Integer id) {
+       newsRepo.findById(id)
+                .orElseThrow(() -> new RuntimeException("Product not found"));
+
+        newsRepo.deleteById(id);
+    }
+
     public News getNewsById(Integer id) {
         return newsRepo.findById(id)
         .orElseThrow(() -> new RuntimeException("News not found"));
-
     }
 
   
