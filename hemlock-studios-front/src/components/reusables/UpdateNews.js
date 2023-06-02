@@ -1,8 +1,9 @@
 import React from 'react'
+import Get from './Get';
 
 function UpdateNews() {
   return (
-    <div>UpdateNews</div>
+    <Get entityType="news" />
   )
 }
 

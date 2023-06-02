@@ -31,9 +31,9 @@ function AdminPanel() {
           ADMIN PANEL
         </div>
         <div className='admin-elements'>
-          <div className='admin-element-text'>Analytics</div>
+          <div className='admin-element-text'>Other</div>
           <AdminPanelDropdown
-            options={["View Analytics"]}
+            options={["View Analytics", "Create Coupon"]}
             onOptionClick={setSelectedOption}
           />
         </div>

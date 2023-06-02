@@ -3,13 +3,16 @@ import Draggable from 'react-draggable';
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import Product from '../reusables/Product';
+import ProductOverlay from '../reusables/ProductOverlay';
 
 function Store(props) {
 
   const [products, setProducts] = useState([]);
+  const [selectedProduct, setSelectedProduct] = useState(null);
 
   useEffect(() => {
-    axios.get('/product/products') 
+
+    axios.get("http://localhost:8080/product/findAll") 
       .then((response) => {
         setProducts(response.data);
       })
@@ -18,7 +21,13 @@ function Store(props) {
       });
   }, []);
 
+  const openOverlay = (product) => {
+    setSelectedProduct(product);
+  };
 
+  const closeOverlay = () => {
+    setSelectedProduct(null);
+  };
 
   if(props.user.roles.includes('ADMIN')){
     return (
@@ -34,14 +43,30 @@ function Store(props) {
           </div>
         </Draggable>
         </div>
+        <div>
+        {products.map((product) => (
+            <Product key={product.id} product={product} onClick={openOverlay} />
+          ))}
+       </div>
+       {selectedProduct && (
+          <ProductOverlay product={selectedProduct} onClose={closeOverlay} />
+        )}
       </div> 
     )
   }
   else{
     return (   
        <div className="shop">
-         {products.map(product => <Product key={product.id} product={product} />)}
-       </div>)
+        <div>
+         {products.map((product) => (
+            <Product key={product.id} product={product} onClick={openOverlay} />
+          ))}
+       </div>
+        {selectedProduct && (
+          <ProductOverlay product={selectedProduct} onClose={closeOverlay} />
+        )}
+        </div>
+       )
   }
 }
 

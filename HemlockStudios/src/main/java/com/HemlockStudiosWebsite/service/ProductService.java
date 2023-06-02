@@ -1,6 +1,5 @@
 package com.HemlockStudiosWebsite.service;
 
-import java.util.Arrays;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -57,7 +56,6 @@ public class ProductService {
                Photo newPhoto = photoService.createPhoto(imgUrl);
                product.getPhotoAlbum().add(newPhoto);
             }
-            System.out.println("In the backend create product service two");
            productRepo.save(product);
            System.out.println("Product saved successfully");
         } catch (Exception e) {

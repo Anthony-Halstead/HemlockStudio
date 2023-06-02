@@ -32,8 +32,7 @@ public class ProductController  {
 ProductService productService;
 
 	
-@Autowired
-PhotoService photoService;
+
 
 @RequestMapping(
     value="/createProduct",
@@ -64,13 +63,14 @@ public ResponseEntity<Object> createProduct(@RequestBody CreateProductRequest re
 
 
 @RequestMapping(
-    value="/deleteProduct",
+    value="/delete",
     method = RequestMethod.DELETE,
     consumes = MediaType.APPLICATION_JSON_VALUE,
     produces = MediaType.APPLICATION_JSON_VALUE
 )
 public ResponseEntity<Object> deleteProduct(@RequestBody DeleteRequest request) {
     try {
+        System.out.println("in the delete product endpoint"+request);
         productService.deleteProductById(request.getId());
 
         DeleteResponse response = new DeleteResponse();
@@ -85,7 +85,7 @@ public ResponseEntity<Object> deleteProduct(@RequestBody DeleteRequest request) 
 }   
 
 // @RequestMapping(
-//     value = "/updateProduct",
+//     value = "/update",
 //     consumes = MediaType.APPLICATION_JSON_VALUE,
 //     produces = MediaType.APPLICATION_JSON_VALUE,
 //     method = RequestMethod.PUT
@@ -119,8 +119,9 @@ public ResponseEntity<Object> deleteProduct(@RequestBody DeleteRequest request) 
 //     }
 // }
 
-@GetMapping("/findProducts")
+@GetMapping("/findAll")
     public ResponseEntity<List<Product>> findProducts() {
+        System.out.println("in the find products endpoint");
         List<Product> products = productService.getAll();
         return ResponseEntity.ok(products); // returns a 200 OK response with the products in the body
     }

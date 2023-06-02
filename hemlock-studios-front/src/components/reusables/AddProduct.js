@@ -16,7 +16,7 @@ function AddProduct() {
  
   useEffect(() => {
     axios
-      .get('http://localhost:8080/enums/all')
+      .get('http://localhost:8080/enums/findAll')
       .then((response) => {
         const { categories, subcategories, sizes } = response.data;
         setCategories(categories);

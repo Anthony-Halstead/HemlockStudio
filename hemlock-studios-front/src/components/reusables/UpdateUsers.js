@@ -1,29 +1,10 @@
 import React from 'react'
+import Get from './Get';
 
-function UpdateUsersComponent() {
-  return (<div>
-    <div>UpdateUsers</div>
-    <div>UpdateUsers</div>
-    <div>UpdateUsers</div>
-    <div>UpdateUsers</div>
-    <div>UpdateUsers</div>
-    <div>UpdateUsers</div>
-    <div>UpdateUsers</div>
-    <div>UpdateUsers</div>
-    <div>UpdateUsers</div>
-    <div>UpdateUsers</div>
-    <div>UpdateUsers</div>
-    <div>UpdateUsers</div>
-    <div>UpdateUsers</div>
-    <div>UpdateUsers</div>
-    <div>UpdateUsers</div>
-    <div>UpdateUsers</div>
-    <div>UpdateUsers</div>
-
-    <div>UpdateUsers</div>
-    <div>UpdateUsers</div>
-    </div>
+function UpdateUsers() {
+  return ( 
+       <Get entityType="user" />
   )
 }
 
-export default UpdateUsersComponent
+export default UpdateUsers

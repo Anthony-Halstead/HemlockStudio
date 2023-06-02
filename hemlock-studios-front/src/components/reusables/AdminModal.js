@@ -5,11 +5,16 @@ import AddProduct from "./AddProduct";
 import UpdateProducts from "./UpdateProducts";
 import AddNews from "./AddNews";
 import UpdateNews from "./UpdateNews";
+import CreateCoupon from "./CreateCoupon";
 import "../../css/reusables/adminpanel.css"
 
 function AdminModal({ option }) {
     if (option === 'View Analytics') {
         return <Analytics />;
+    }
+    else if(option === 'Create Coupon')
+    {
+        return <CreateCoupon />;
     }
     else if (option === 'Add User') {
         return <AddUser />;

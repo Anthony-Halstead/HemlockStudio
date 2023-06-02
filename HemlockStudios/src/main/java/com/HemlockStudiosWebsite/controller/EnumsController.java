@@ -22,7 +22,7 @@ public class EnumsController {
         this.enumService = enumService;
     }
 
-    @GetMapping("/all")
+    @GetMapping("/findAll")
     public EnumResponseDTO getAllEnums() {
         EnumResponseDTO response = new EnumResponseDTO();
         response.setCategories(enumService.getEnumValuesAsString(ProductEnums.Category.values()));

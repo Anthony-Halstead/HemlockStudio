@@ -22,7 +22,7 @@ import org.springframework.stereotype.Service;
 public class UserService implements UserDetailsService{
 
     @Autowired
-    private UserRepo userRepo;
+    UserRepo userRepo;
 
     @Autowired
     CartService cartService;
@@ -92,7 +92,11 @@ public class UserService implements UserDetailsService{
         userRepo.deleteById(id);
 	}
 
-    
+    public List<User> getAll()
+    {
+        return userRepo.findAll();
+    }
+
 	public User findByUsername(String username) throws UsernameNotFoundException {
 		return userRepo.findByUsername(username)
 			.orElseThrow(() -> new UsernameNotFoundException("User not found"));

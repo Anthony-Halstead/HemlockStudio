@@ -1,7 +1,5 @@
 package com.HemlockStudiosWebsite.dto;
 
-import java.util.List;
-
 
 
 public class CreateProductResponse {
