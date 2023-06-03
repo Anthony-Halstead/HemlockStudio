@@ -29,13 +29,19 @@ public void setDiscountValue(Double discountValue) {
     this.discountValue = discountValue;
 }
 
-    public Integer getCouponId() {
-        return id;
-    }
+  
     public String getCouponCode() {
         return couponCode;
     }
     public void setCouponCode(String couponCode) {
         this.couponCode = couponCode;
+    }
+
+    public Integer getId() {
+        return id;
+    }
+
+    public void setId(Integer id) {
+        this.id = id;
     }
 }

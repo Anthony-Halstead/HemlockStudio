@@ -31,18 +31,20 @@ function Store(props) {
 
   if(props.user.roles.includes('ADMIN')){
     return (
-      <div className='admin-content'>
-        <div className='draggable-wrapper'>
+<div>
+      <div className='draggable-wrapper'>
         <Draggable
 
      defaultPosition={{x: 0, y: 0}}
-     bounds={{top: -210, left: 0, right: 1000, bottom: 200}}
+     bounds={{ top: 0, left: 0, right: 1100, bottom: 900 }}
         >
           <div >
             <AdminPanel/>
           </div>
         </Draggable>
         </div>
+      <div className='admin-content'>
+       
         <div>
         {products.map((product) => (
             <Product key={product.id} product={product} onClick={openOverlay} />
@@ -52,6 +54,7 @@ function Store(props) {
           <ProductOverlay product={selectedProduct} onClose={closeOverlay} />
         )}
       </div> 
+      </div>
     )
   }
   else{

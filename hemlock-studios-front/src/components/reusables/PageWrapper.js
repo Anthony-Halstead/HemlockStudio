@@ -6,8 +6,10 @@ import Header from './Header';
 function PageWrapper(props) {
   return (
     <div>
+      
       <Header props={props}/>
       <div>{props.children}</div>
+      
     </div>
   )
 }

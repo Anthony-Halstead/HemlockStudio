@@ -6,8 +6,8 @@ import '../../css/pages/addproduct.css';
 function CreateCoupon() {
 
   const [newCoupon, setNewCoupon] = useState({
-    code: "",
-    discount: 0,
+    couponCode: "",
+    discountValue: 0,
   });
 
   const inputFieldChangeHandler = (event) => {
@@ -22,8 +22,8 @@ function CreateCoupon() {
   const handleAddNewsSubmit = (event) => {
     event.preventDefault();
     const couponData = {
-      code: newCoupon.code,
-      discount: parseFloat(newCoupon.discount)
+      couponCode: newCoupon.couponCode,
+      discountValue: parseFloat(newCoupon.discountValue)
     };
 
     axios
@@ -31,8 +31,8 @@ function CreateCoupon() {
       .then((response) => {
         console.log(response.data);
         setNewCoupon({
-          code: "",
-          discount: 0,
+          couponCode: "",
+          discountValue: 0,
         });
       })
       .catch((error) => {
@@ -44,11 +44,11 @@ function CreateCoupon() {
     <div className='add-product-content'> 
       <div>
         Code
-        <input value={newCoupon.code} name='code' type='text' onChange={inputFieldChangeHandler}></input>
+        <input value={newCoupon.couponCode} name='couponCode' type='text' onChange={inputFieldChangeHandler}></input>
       </div>
       <div>
         Discount %
-        <input value={newCoupon.discount} name='discount' type='number' onChange={inputFieldChangeHandler}></input>
+        <input value={newCoupon.discountValue} name='discountValue' type='number' onChange={inputFieldChangeHandler}></input>
       </div>
       <div>
         <button onClick={handleAddNewsSubmit}>SUBMIT</button>

@@ -38,30 +38,19 @@ public class News {
     @Column(name = "title")
     private String title;
 
-    @Column(name = "description")
+    @Column(name = "description", columnDefinition = "LONGTEXT")
     private String description;
 
-    @Column(name = "body")
+    @Column(name = "body", columnDefinition = "LONGTEXT")
     private String body;
 
     @OneToMany(cascade = CascadeType.ALL)     
-    @JoinColumn(name="product_Id")
+    @JoinColumn(name="news_Id")
     private List<Photo> photoReal = new ArrayList<>();
 
     public Integer getId() {
         return id;
     }
-
-  
-
-    public LocalDate getDateAdded() {
-        return datePublished;
-    }
-
-    public void setDateAdded(LocalDate datePublished) {
-        this.datePublished = datePublished;
-    }
-
  
     public LocalDate getDatePublished() {
         return datePublished;

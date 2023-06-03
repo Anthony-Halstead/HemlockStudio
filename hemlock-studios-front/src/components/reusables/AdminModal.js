@@ -7,6 +7,7 @@ import UpdateNews from "./UpdateNews";
 import CreateCoupon from "./CreateCoupon";
 import "../../css/reusables/adminpanel.css"
 import AddAdmin from "./AddAdmin";
+import UpdateCoupon from "./UpdateCoupon";
 
 function AdminModal({ option }) {
     if (option === 'View Analytics') {
@@ -15,6 +16,10 @@ function AdminModal({ option }) {
     else if(option === 'Create Coupon')
     {
         return <CreateCoupon />;
+    }
+    else if(option === 'Update Coupon')
+    {
+        return <UpdateCoupon />;
     }
     else if (option === 'Add Admin') {
         return <AddAdmin />;

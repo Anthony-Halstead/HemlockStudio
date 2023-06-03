@@ -21,7 +21,7 @@ public class Photo {
 @GeneratedValue(strategy = GenerationType.IDENTITY)
 private Integer id;
 
-@Column(name = "photoUrl", unique = true)
+@Column(name = "photoUrl", columnDefinition = "LONGTEXT", unique = true)
 String photoUrl;
 
 public Photo() {

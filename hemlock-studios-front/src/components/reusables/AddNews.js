@@ -23,11 +23,11 @@ function AddNews() {
     }, []);
   
     const [newNews, setNewNews] = useState({
-      title: "",
-      description: "",
-      body: "",
+      title: '',
+      description: '',
+      body: '',
       imgUrls: [],
-      anouncements: selectedAnouncement,
+      anouncement: selectedAnouncement,
     });
   
     const inputFieldChangeHandler = (event) => {
@@ -80,19 +80,23 @@ function AddNews() {
         description: newNews.description,
         body: newNews.body,
         imgUrls: newNews.imgUrls,
-        anouncements: selectedAnouncement,
+        anouncement: selectedAnouncement,
       };
-  
+  console.log(newNews.title)
+  console.log(newNews.description)
+  console.log(newNews.body)
+  console.log(selectedAnouncement)
+  console.log(newNews.imgUrls)
       axios
         .post('http://localhost:8080/news/createNews', newsData)
         .then((response) => {
           console.log(response.data);
           setNewNews({
-            title: "",
-            description: "",
-            body: "",
+            title: '',
+            description: '',
+            body: '',
             imgUrls: [],
-            anouncements: selectedAnouncement,
+            anouncement: selectedAnouncement,
           });
         })
         .catch((error) => {
@@ -103,7 +107,7 @@ function AddNews() {
     return (
       <div className='add-product-content'>
        {/* Anouncement dropdown */}
-  <select value={selectedAnouncement} onChange={handleAnouncementChange} name='anouncement'>
+  <select value={selectedAnouncement} onChange={handleAnouncementChange} name='anouncements'>
     {anouncements.map((anouncement) => (
       <option key={anouncement} value={anouncement}>
         {anouncement}

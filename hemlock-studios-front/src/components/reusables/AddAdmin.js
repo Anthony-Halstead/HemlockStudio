@@ -31,17 +31,15 @@ function AddAdmin() {
 
     }
 
-    const signUpChangeHandler = (event) => {
-        const name = event.target.name;
-        const value = event.target.value;
-        const tempAdmin = { admin };
-        tempAdmin[name] = value;
+    const registerChangeHandler = (event) => {
+        const { name, value } = event.target;
+        const tempAdmin = { ...admin, [name]: value };
         setAdmin(tempAdmin);
         validate(tempAdmin);
-    };
+      };
 
 
-    const signUpSubmitHandler = () => {
+    const registerSubmitHandler = () => {
         if (validate(admin)) {
             axios.post("http://localhost:8080/auth/registerAdmin", admin)
                 .then((response) => {
@@ -57,19 +55,19 @@ function AddAdmin() {
             <div className='sign-up-sign-in-box'>
                 <h1>Add Admin</h1>
                 <div className='input-container'>
-                    <input className='input-field' value={admin.email} name='email' type='email' onChange={signUpChangeHandler} placeholder='EMAIL'></input>
+                    <input className='input-field' value={admin.email} name='email' type='email' onChange={registerChangeHandler} placeholder='EMAIL'></input>
                     <div className='invalid-input'>{errors.email}</div>
                 </div>
                 <div className='input-container'>
-                    <input className='input-field' value={admin.username} name='username' type='username' onChange={signUpChangeHandler} placeholder='USERNAME'></input>
+                <input className='input-field' value={admin.username} name='username' type='text' onChange={registerChangeHandler} placeholder='USERNAME'></input>
                     <div className='invalid-input'>{errors.username}</div>
                 </div>
                 <div className='input-container'>
-                    <input className='input-field' value={admin.password} name='password' type='password' onChange={signUpChangeHandler} placeholder='PASSWORD'></input>
+                    <input className='input-field' value={admin.password} name='password' type='password' onChange={registerChangeHandler} placeholder='PASSWORD'></input>
                     <div className='invalid-input'>{errors.password}</div>
                 </div>
                 <div >
-                    <button className='submit-button' onClick={signUpSubmitHandler}>SUBMIT</button>
+                    <button className='submit-button' onClick={registerSubmitHandler}>SUBMIT</button>
                 </div>
             </div>
         </div>

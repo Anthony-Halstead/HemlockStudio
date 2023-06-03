@@ -1,5 +1,7 @@
 package com.HemlockStudiosWebsite.service;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -75,5 +77,9 @@ public class CouponService {
             throw new RuntimeException("Coupon not found");
         }
         couponRepo.deleteById(couponId);
+    }
+
+    public List<Coupon> getAll() {
+        return couponRepo.findAll();
     }
 }

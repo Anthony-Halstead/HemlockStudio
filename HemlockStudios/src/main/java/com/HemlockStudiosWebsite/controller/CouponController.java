@@ -1,10 +1,13 @@
 package com.HemlockStudiosWebsite.controller;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -15,6 +18,7 @@ import com.HemlockStudiosWebsite.dto.CreateCouponResponse;
 import com.HemlockStudiosWebsite.dto.DeleteRequest;
 import com.HemlockStudiosWebsite.dto.DeleteResponse;
 import com.HemlockStudiosWebsite.dto.DiscountRequest;
+import com.HemlockStudiosWebsite.entity.Coupon;
 import com.HemlockStudiosWebsite.service.CouponService;
 
 @RestController
@@ -45,8 +49,8 @@ public ResponseEntity<Object> createCoupon(@RequestBody CreateCouponRequest requ
 }
 
 @RequestMapping(
-    value="/deleteCoupon",
-    method = RequestMethod.POST,
+    value="/delete",
+    method = RequestMethod.DELETE,
     consumes = MediaType.APPLICATION_JSON_VALUE,
     produces = MediaType.APPLICATION_JSON_VALUE
 )
@@ -76,4 +80,11 @@ public ResponseEntity<Object> applyCouponDiscount(@RequestBody DiscountRequest d
         return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
     }
 }
+
+@GetMapping("/findAll")
+    public ResponseEntity<List<Coupon>> findCoupons() {
+        System.out.println("in the find coupons endpoint");
+        List<Coupon> coupons = couponService.getAll();
+        return ResponseEntity.ok(coupons); 
+    }
 }

@@ -3,12 +3,18 @@
     flex-direction: column;
     width: 100vw;
     height: 100vh;
+    overflow: hidden;
     background-color: white;
     justify-content: center;
     color: black;
+    z-index: 1;
 }
 .draggable-wrapper{
-    display: flex;
-    flex-direction: row;
-    max-width:826px;
+   
+        position: fixed;
+        top: 0;
+        left: 0;
+     
+        z-index: 9999;
+      
 }

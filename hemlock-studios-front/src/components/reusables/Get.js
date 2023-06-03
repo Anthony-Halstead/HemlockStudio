@@ -23,7 +23,8 @@ function Get({ entityType }) {
   const entityFields = {
     product: ['id', 'name', 'price', 'category', 'subcategory', 'size', 'discount', 'description'],
     user: ['id', 'username', 'email'],
-    news: ['id', 'title', 'description', 'announcement', 'body', 'datePublished'],
+    news: ['id', 'title', 'description', 'anouncement', 'body', 'datePublished'],
+    coupon: ['id', 'couponCode', 'discountValue'],
   };
 
   const handleDelete = (id) => {
@@ -80,6 +81,7 @@ function Get({ entityType }) {
       <table className="table-container">
         <thead>
           <tr>
+          <th></th>
             <th></th>
             {entityFields[entityType].map((field) => (
               <th key={field}>{field}</th>
@@ -95,6 +97,11 @@ function Get({ entityType }) {
               {entityType !== 'user' && (
                 <td>
                   <button onClick={() => handleDelete(item.id)}>Delete</button>
+                </td>
+              )}
+                  {entityType == 'user' && (
+                <td>
+               
                 </td>
               )}
               {entityFields[entityType].map((field) => (
