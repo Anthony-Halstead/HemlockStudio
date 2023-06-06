@@ -4,8 +4,10 @@ import {faBars} from '@fortawesome/free-solid-svg-icons'
 import '../../css/reusables/dropdown.css'
 import { UseDetectOutsideClick } from './UseDetectOutsideClick';
 import { useNavigate } from 'react-router';
+import { Link } from 'react-router-dom';
 
-function DropdownMenu({props}) {
+function DropdownMenu(props) {
+  console.log("DropDownMenu:", props.user)
     const dropdownRef = useRef(null);
     const [isActive, setIsActive] = UseDetectOutsideClick(dropdownRef, false);
     const navigate = useNavigate();
@@ -14,7 +16,7 @@ function DropdownMenu({props}) {
 
     const handleSignOut = () => {
       // Clear user state and JWT
-      props.setUser({
+     props.setUser({
         id: undefined,
         username: "",
         email: "",
@@ -33,13 +35,15 @@ function DropdownMenu({props}) {
             {props.user.id ? (
               <>
                 <li><a href="/Cart">Cart</a></li>
-                <li><a href="/Account">Account</a></li>
+                <li>  
+                    <Link to="/Account">Account</Link>
+                    </li>
                 <li><a href="/" onClick={handleSignOut}>Sign Out</a></li>
               </>
             ) : (
               <>
-                <li><a href="/SignIn">Sign-In</a></li>
-                <li><a href="/SignUp">Sign-Up</a></li>
+                <li><Link to="/SignIn">Sign-In</Link></li>
+                <li><Link to="/SignUp">Sign-Up</Link></li>
               </>
             )}
           </ul>

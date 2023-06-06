@@ -103,14 +103,6 @@ function AddProduct() {
       size: selectedSize,
     };
 
-
-    console.log("description:", productData.description)
-    console.log("Name:", productData.name)
-    console.log("price:", productData.price)
-    console.log("imgUrls:", productData.imgUrls)
-    console.log("category:", productData.category)
-    console.log(" subcategory:", productData.subcategory)
-    console.log("size:", productData.size)
     axios
       .post('http://localhost:8080/product/createProduct', productData)
       .then((response) => {

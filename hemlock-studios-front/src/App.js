@@ -11,6 +11,8 @@ import Checkout from './components/pages/Checkout';
 import Account from './components/pages/Account';
 import Favorites from './components/reusables/Favorites';
 import News from './components/pages/News';
+import DropdownMenu from './components/reusables/DropdownMenu';
+import axios from 'axios';
 
 
 function App() {
@@ -21,36 +23,52 @@ function App() {
     email: "",
     roles: [],
 });
+
+const [updateUser, setUpdateUser] = useState({})
   
 useEffect(() => {
   let jwtToken = localStorage.getItem("token");
   if (jwtToken) {
-    const decodedToken = jwt_decode(jwtToken);
-    const updatedUser = {
-      id: decodedToken.userId,
-      username: decodedToken.sub,
-      email: decodedToken.email,
-      roles: decodedToken.roles
-    };
-    setUser(updatedUser);
+    console.log("JWT TOKEN",jwtToken)
+    axios
+      .get('http://localhost:8080/user/getUser', {
+        headers: {
+          'Authorization': `Bearer ${jwtToken}`
+        }
+      })
+      .then(response => {
+        console.log("token authenticated")
+        setUser({
+          ...response.data,
+          roles: response.data.roles.map(role => role.authority)
+        });
+      })
+      .catch(e => {
+        console.log(e);
+      console.log("deleted token")
+        localStorage.removeItem("token");
+      });
   }
-}, []);
+}, [updateUser]);
 
   return (
     <PageWrapper
     user = {user}
     setUser = {setUser}
+    setUpdateUser={setUpdateUser}
     >
       <Routes>
         <Route path="/" element={<Home user={user} setUser={setUser}/>} />
-        <Route path="/store" element={<Store user={user} setUser={setUser}/>} />
+        <Route path="/store" element={<Store user={user} setUser={setUser} setUpdateUser={setUpdateUser}/>} />
         <Route path="/about" element={<About user={user} setUser={setUser}/>} />
         <Route path="/news" element={<News user={user} setUser={setUser}/>} />
         <Route path="/SignIn" element={<SignIn user={user} setUser={setUser}/>} />
         <Route path="/SignUp" element={<SignUp user={user} setUser={setUser}/>} />
-        <Route path="/Account" element={<Account user={user} setUser={setUser}/>} />
-        <Route path="/Checkout" element={<Checkout user={user} setUser={setUser}/>} />
-        <Route path="/Favorites" element={<Favorites user={user} setUser={setUser}/>} />
+        <Route path="/Account" element={<Account user={user} setUser={setUser} setUpdateUser={setUpdateUser}/>} />
+        <Route path="/Checkout" element={<Checkout user={user} setUser={setUser} setUpdateUser={setUpdateUser}/>} />
+        <Route path="/Favorites" element={<Favorites user={user} setUser={setUser} setUpdateUser={setUpdateUser}/>} />
+        <Route path="/DropDownMenu" element={<DropdownMenu user={user} setUser={setUser} setUpdateUser={setUpdateUser}/>} />
+      
       </Routes>
     </PageWrapper>
   );

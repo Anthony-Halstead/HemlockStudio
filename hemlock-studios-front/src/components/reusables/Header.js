@@ -1,10 +1,11 @@
 import React from 'react';
 import '../../css/pages/header.css';
 import DropdownMenu from "./DropdownMenu";
+import { Link } from 'react-router-dom';
 
 
-function Header({props}) {
-
+function Header(props) {
+    console.log("Header:", props.user)
     return (
         <div>
             <div className="header">
@@ -12,19 +13,21 @@ function Header({props}) {
                     <a href="/" className='logo-container'> <img className='logo' src="https://i.imgur.com/dTD6ivm.png" /></a>
                 </div>
                 <div >
-                    <a className=' header-link'href="/" >GAME</a>
+                <Link className=' header-link' to="/">GAME</Link>
                 </div>
                 <div >
-                    <a className=' header-link' href="/store" >SHOP</a>
+                <Link className=' header-link' to="/store">SHOP</Link>    
                 </div>
                 <div >
-                    <a className=' header-link' href="/News" >NEWS </a>
+                <Link className=' header-link' to="/News">NEWS</Link>
                 </div>
                 <div >
-                    <a className=' header-link' href="/about" >ABOUT</a>
+                <Link className=' header-link' to="/about">ABOUT</Link>
                 </div>
                 <div className='icon-dimensions'>
-                    <div className=' header-link-icon'><DropdownMenu props={props}/></div>
+                    <div className=' header-link-icon'>  
+                     <DropdownMenu  user={props.user} setUser={props.setUser} setUpdateUser={props.setUpdateUser}/>
+                    </div>
                 </div>
             </div>
         </div>

@@ -1,5 +1,4 @@
 package com.HemlockStudiosWebsite.entity;
-
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -18,10 +17,10 @@ public class CreditCard {
     private String cardNumber;
 
     @Column(name = "expiration_month")
-    private Integer expirationMonth;
+    private String expirationMonth;
 
     @Column(name = "expiration_year")
-    private Integer expirationYear;
+    private String expirationYear;
 
     @Column(name = "card_holder_name")
     private String cardHolderName;
@@ -33,31 +32,7 @@ public class CreditCard {
         return id;
     }
 
-    public String getCardNumber() {
-        return cardNumber;
-    }
-
-    public void setCardNumber(String cardNumber) {
-        this.cardNumber = cardNumber;
-    }
-
- 
-    public Integer getExpirationMonth() {
-        return expirationMonth;
-    }
-
-    public void setExpirationMonth(Integer expirationMonth) {
-        this.expirationMonth = expirationMonth;
-    }
-
-    public Integer getExpirationYear() {
-        return expirationYear;
-    }
-
-    public void setExpirationYear(Integer expirationYear) {
-        this.expirationYear = expirationYear;
-    }
-
+   
     public String getCardHolderName() {
         return cardHolderName;
     }
@@ -66,13 +41,46 @@ public class CreditCard {
         this.cardHolderName = cardHolderName;
     }
 
+
+    public String getCardNumber() {
+        return cardNumber;
+    }
+
+
+    public void setCardNumber(String cardNumber) {
+        this.cardNumber = cardNumber;
+    }
+
+
+    public String getExpirationMonth() {
+        return expirationMonth;
+    }
+
+
+    public void setExpirationMonth(String expirationMonth) {
+        this.expirationMonth = expirationMonth;
+    }
+
+
+    public String getExpirationYear() {
+        return expirationYear;
+    }
+
+
+    public void setExpirationYear(String expirationYear) {
+        this.expirationYear = expirationYear;
+    }
+
+
     public String getCvv() {
         return cvv;
     }
+
 
     public void setCvv(String cvv) {
         this.cvv = cvv;
     }
 
+  
 
 }

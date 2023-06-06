@@ -11,8 +11,10 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+
 import com.HemlockStudiosWebsite.dto.LoginResponseDTO;
 import com.HemlockStudiosWebsite.dto.RegistrationDTO;
+import com.HemlockStudiosWebsite.entity.CreditCard;
 import com.HemlockStudiosWebsite.entity.EmailVerificationToken;
 import com.HemlockStudiosWebsite.entity.User;
 import com.HemlockStudiosWebsite.service.AuthenticationService;
@@ -64,7 +66,6 @@ public ResponseEntity<?> confirmEmail(@RequestParam String token) {
 
     return ResponseEntity.ok("Email confirmed");
 }
-
 
 @PostMapping("/login")
 public LoginResponseDTO loginUser(@RequestBody RegistrationDTO body){

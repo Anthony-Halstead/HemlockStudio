@@ -1,14 +1,20 @@
 package com.HemlockStudiosWebsite.dto;
 
-public class CreditCardRequest {
- 
+public class UpdateCreditCardRequest {
+    private Integer creditCardId;
     private String cardNumber;
     private String expirationMonth;
     private String expirationYear;
     private String cardHolderName;
     private String cvv;
 
- 
+  
+
+    public Integer getCreditCardId() {
+        return creditCardId;
+    }
+
+
 
     public String getCardNumber() {
         return cardNumber;
@@ -67,6 +73,5 @@ public class CreditCardRequest {
     public void setCvv(String cvv) {
         this.cvv = cvv;
     }
-
 
 }

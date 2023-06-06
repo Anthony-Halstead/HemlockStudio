@@ -13,11 +13,11 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
-import com.HemlockStudiosWebsite.dto.LoginResponseDTO;
+
 import com.HemlockStudiosWebsite.entity.EmailVerificationToken;
 import com.HemlockStudiosWebsite.entity.Role;
 import com.HemlockStudiosWebsite.entity.User;
-import com.HemlockStudiosWebsite.repo.EmailVerificationTokenRepo;
+
 import com.HemlockStudiosWebsite.repo.RoleRepo;
 import com.HemlockStudiosWebsite.repo.UserRepo;
 import jakarta.transaction.Transactional;
@@ -98,4 +98,6 @@ public String loginUser(String username, String password){
         throw e; // Re-throwing the exception to let the controller handle it.
     }
 }
+
+
 }

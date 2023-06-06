@@ -24,12 +24,8 @@ function SignIn(props) {
     const signInSubmitHandler = () => {
       axios.post("http://localhost:8080/auth/login", props.user)
           .then((response) => {
-
-              console.log("response", response.data)
               localStorage.setItem("token", response.data.jwt);
-              console.log("You set the token")
               const decodedToken = jwt_decode(response.data.jwt);
-              console.log("token decoded")
               const updatedUser = {
                   id: decodedToken.userId,
                   username: decodedToken.sub,

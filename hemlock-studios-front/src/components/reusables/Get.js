@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import '../../css/reusables/get.css';
-import { useNavigate } from 'react-router';
 import UpdateForm from './UpdateForm'; // Import the UpdateForm component
 
 function Get({ entityType }) {
@@ -10,8 +9,13 @@ function Get({ entityType }) {
 
 
   useEffect(() => {
+    let jwtToken = localStorage.getItem("token");
     axios
-      .get(`http://localhost:8080/${entityType}/findAll`)
+      .get(`http://localhost:8080/${entityType}/findAll`, {
+        headers: {
+          'Authorization': `Bearer ${jwtToken}`
+        }
+      })
       .then((response) => {
         setData(response.data);
       })
@@ -28,11 +32,20 @@ function Get({ entityType }) {
   };
 
   const handleDelete = (id) => {
+    let jwtToken = localStorage.getItem("token");
     axios
-      .delete(`http://localhost:8080/${entityType}/delete`, { data: { id } })
+      .delete(`http://localhost:8080/${entityType}/delete`, { data: { id } }, {
+        headers: {
+          'Authorization': `Bearer ${jwtToken}`
+        }
+      })
       .then(() => {
         axios
-          .get(`http://localhost:8080/${entityType}/findAll`)
+          .get(`http://localhost:8080/${entityType}/findAll`, {
+            headers: {
+              'Authorization': `Bearer ${jwtToken}`
+            }
+          })
           .then((response) => {
             setData(response.data);
           })
@@ -55,11 +68,20 @@ function Get({ entityType }) {
   };
   
   const handleUpdateSubmit = (updatedItem) => {
+    let jwtToken = localStorage.getItem("token");
     axios
-      .put(`http://localhost:8080/${entityType}/update`, updatedItem)
+      .put(`http://localhost:8080/${entityType}/update`, updatedItem, {
+        headers: {
+          'Authorization': `Bearer ${jwtToken}`
+        }
+      })
       .then(() => {
         axios
-          .get(`http://localhost:8080/${entityType}/findAll`)
+          .get(`http://localhost:8080/${entityType}/findAll`, {
+            headers: {
+              'Authorization': `Bearer ${jwtToken}`
+            }
+          })
           .then((response) => {
             setData(response.data);
           })

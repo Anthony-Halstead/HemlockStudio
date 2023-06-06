@@ -59,6 +59,7 @@ return new ProviderManager(daoProvider);
 
 @Bean
 public SecurityFilterChain filterChain(HttpSecurity http) throws Exception{
+    System.out.println("In the security filter chain");
     http
             .cors(withDefaults())
             .csrf(csrf -> csrf.disable())
@@ -68,10 +69,8 @@ public SecurityFilterChain filterChain(HttpSecurity http) throws Exception{
                 auth.requestMatchers("/product/**").permitAll();
                 auth.requestMatchers("/news/**").permitAll();
                 auth.requestMatchers("/coupon/**").permitAll();
-                auth.requestMatchers("/admin/**").permitAll();
-                //.hasRole("ADMIN");
-                auth.requestMatchers("/user/**").permitAll();
-                //.hasAnyRole("ADMIN", "USER");
+                auth.requestMatchers("/admin/**").hasRole("ADMIN");
+                auth.requestMatchers("/user/**").hasAnyRole("ADMIN", "USER");
                 auth.anyRequest().authenticated();
             });
 http
@@ -86,8 +85,10 @@ return http.build();
 
 @Bean
 public JwtDecoder jwtDecoder(){
+    System.out.println("In the jwt decoder");
 return NimbusJwtDecoder.withPublicKey(keys.getPublicKey()).build();
 }
+
 @Bean
 public JwtEncoder jwtEncoder(){
 JWK jwk = new RSAKey.Builder(keys.getPublicKey()).privateKey(keys.getPrivateKey()).build();

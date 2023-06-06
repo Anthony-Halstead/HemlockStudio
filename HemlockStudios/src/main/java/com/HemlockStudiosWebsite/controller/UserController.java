@@ -9,7 +9,11 @@ import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.oauth2.jwt.Jwt;
 import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -22,16 +26,23 @@ import org.springframework.web.bind.annotation.RestController;
 import com.HemlockStudiosWebsite.dto.CreditCardRequest;
 import com.HemlockStudiosWebsite.dto.CreditCardResponse;
 import com.HemlockStudiosWebsite.dto.GetUserCartTotalRequest;
+import com.HemlockStudiosWebsite.dto.LoginResponseDTO;
 import com.HemlockStudiosWebsite.dto.RemoveCreditCardRequest;
+import com.HemlockStudiosWebsite.dto.UpdateCreditCardRequest;
 import com.HemlockStudiosWebsite.dto.UpdateFavoritesRequest;
 import com.HemlockStudiosWebsite.dto.UpdateFavoritesResponse;
 import com.HemlockStudiosWebsite.dto.UpdateUserRequest;
 import com.HemlockStudiosWebsite.dto.UserAccountResponse;
 import com.HemlockStudiosWebsite.dto.UserDTO;
+import com.HemlockStudiosWebsite.dto.UserDetailsDTO;
+import com.HemlockStudiosWebsite.entity.CreditCard;
+import com.HemlockStudiosWebsite.entity.Product;
 // import com.RealEstateHomes.entity.Car;
 import com.HemlockStudiosWebsite.entity.User;
 import com.HemlockStudiosWebsite.service.CartService;
 import com.HemlockStudiosWebsite.service.CouponService;
+import com.HemlockStudiosWebsite.service.CreditCardService;
+import com.HemlockStudiosWebsite.service.TokenService;
 import com.HemlockStudiosWebsite.service.UserService;
 
 @RestController
@@ -48,6 +59,12 @@ public class UserController {
     @Autowired
     CouponService couponService;
 
+    @Autowired
+    CreditCardService creditCardService;
+
+    @Autowired
+    TokenService tokenService;
+
     @RequestMapping(value = "/findUserById/{id}", produces = MediaType.APPLICATION_JSON_VALUE, method = RequestMethod.GET)
     public ResponseEntity<Object> findUserById(@PathVariable Integer id) {
         try {
@@ -61,6 +78,24 @@ public class UserController {
             return new ResponseEntity<Object>(e, HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
+
+    @GetMapping("/getUser")
+public ResponseEntity<Object> currentUser() {
+    try {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        Jwt jwt = (Jwt) authentication.getPrincipal();
+        String email = jwt.getClaim("email");
+
+        // assuming you have a UserService with a method to fetch user by username
+        User user = userService.findByEmail(email);
+
+        UserDetailsDTO userDetails = new UserDetailsDTO(user.getUsername(), user.getId(), user.getEmail(), user.getAuthorities());
+        return new ResponseEntity<Object>(userDetails, HttpStatus.OK);
+    } catch (Exception e) {
+        System.out.println(e.getMessage());
+        return new ResponseEntity<Object>(HttpStatus.INTERNAL_SERVER_ERROR);
+    }
+}
 
     @RequestMapping(value = "/findAll", produces = MediaType.APPLICATION_JSON_VALUE, method = RequestMethod.GET)
     public ResponseEntity<List<UserDTO>> findUsers() {
@@ -114,10 +149,10 @@ public class UserController {
     @RequestMapping(value = "/addProductToFavorites", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE, method = RequestMethod.POST)
     public ResponseEntity<Object> addProductToFavorites(@RequestBody UpdateFavoritesRequest request) {
         try {
-            if (request.getUserId() == null || request.getProductId() == null) {
+            if (request.getProductId() == null) {
                 throw new IllegalArgumentException("Missing required fields in the request.");
             }
-            userService.addProductToFavorites(request.getUserId(), request.getProductId());
+            userService.addProductToFavorites(request.getProductId());
 
             UpdateFavoritesResponse response = new UpdateFavoritesResponse();
             response.setMessage("Item Added to Favorites Successfully.");
@@ -130,13 +165,13 @@ public class UserController {
 
     }
 
-    @RequestMapping(value = "/removeProductFromFavorites", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE, method = RequestMethod.DELETE)
-    public ResponseEntity<Object> removeProductFromFavorites(@RequestBody UpdateFavoritesRequest request) {
+    @RequestMapping(value = "/removeProductFromFavorites/{favoriteProductId}", method = RequestMethod.DELETE)
+    public ResponseEntity<Object> removeFavorite(@PathVariable Integer favoriteProductId) {
         try {
-            if (request.getUserId() == null || request.getProductId() == null) {
-                throw new IllegalArgumentException("Missing required fields in the request.");
-            }
-            userService.removeProductFromFavorites(request.getUserId(), request.getProductId());
+          
+
+            System.out.println("REMOVE PRODUCT FAVORITE PATH");
+            userService.removeProductFromFavorites(favoriteProductId);
 
             UpdateFavoritesResponse response = new UpdateFavoritesResponse();
             response.setMessage("Item Removed from Favorites Successfully.");
@@ -149,17 +184,18 @@ public class UserController {
 
     }
 
-    @RequestMapping(value = "/addCreditCardToUser", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE, method = RequestMethod.POST)
+    @RequestMapping(value = "/addCreditCard", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE, method = RequestMethod.POST)
     // get favorites for display
-    public ResponseEntity<Object> addCreditCardToUser(@RequestBody CreditCardRequest request) {
+    public ResponseEntity<Object> addCreditCard(@RequestBody CreditCardRequest request) {
         try {
-            if (request.getUserId() == null || request.getCardNumber() == null || request.getExpirationMonth() == null
+            System.out.println("in the add credit card path");
+            if (request.getCardNumber() == null || request.getExpirationMonth() == null
                     ||
                     request.getExpirationYear() == null || request.getCardHolderName() == null
                     || request.getCvv() == null) {
                 throw new IllegalArgumentException("Missing required fields in the request.");
             }
-            userService.addCreditCardToUser(request.getUserId(), request.getCardNumber(), request.getExpirationMonth(),
+            userService.addCreditCard(request.getCardNumber(), request.getExpirationMonth(),
                     request.getExpirationYear(), request.getCardHolderName(), request.getCvv());
 
             CreditCardResponse response = new CreditCardResponse();
@@ -174,14 +210,13 @@ public class UserController {
 
     }
 
-    @RequestMapping(value = "/removeCreditCardFromUser", method = RequestMethod.DELETE, consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<Object> removeCreditCardFromUser(@RequestBody RemoveCreditCardRequest request) {
+    @DeleteMapping("/removeCreditCard/{creditCardId}")
+    public ResponseEntity<Object> removeCreditCard(@PathVariable Integer creditCardId)  {
         try {
-            if (request.getUserId() == null || request.getCreditCardId() == null) {
-                throw new IllegalArgumentException("Missing required fields in the request.");
-            }
-            userService.removeCreditCardFromUser(request.getUserId(), request.getCreditCardId());
-
+            
+    System.out.println("In the removeCreditCard path (BackEnd)");
+            userService.removeCreditCard(creditCardId);
+    
             CreditCardResponse response = new CreditCardResponse();
             response.setMessage("Credit Card removed Successfully.");
             return new ResponseEntity<Object>(response, HttpStatus.OK);
@@ -191,7 +226,53 @@ public class UserController {
             return new ResponseEntity<Object>(e, HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
-    // getcreditcards for display
+
+    @RequestMapping(value = "/updateCreditCard", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE, method = RequestMethod.PUT)
+    public ResponseEntity<Object> updateCreditCard(@RequestBody UpdateCreditCardRequest request) {
+
+        try {
+            if (request.getCreditCardId() == null || request.getCardNumber() == null || request.getExpirationMonth() == null
+            ||
+            request.getExpirationYear() == null || request.getCardHolderName() == null
+            || request.getCvv() == null) {
+        throw new IllegalArgumentException("Missing required fields in the request.");
+    }
+    creditCardService.updateCreditCard(request.getCreditCardId(), request.getCardNumber(), request.getExpirationMonth(),
+            request.getExpirationYear(), request.getCardHolderName(), request.getCvv());
+
+    CreditCardResponse response = new CreditCardResponse();
+    response.setMessage("Credit Card Updated Successfully.");
+            return new ResponseEntity<Object>(response, HttpStatus.OK);
+        } catch (Exception e) {
+            return new ResponseEntity<Object>(e, HttpStatus.BAD_REQUEST);
+        } catch (Error e) {
+            return new ResponseEntity<Object>(e, HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+
+    }
+
+    
+    @GetMapping("/findCreditCards")
+    public ResponseEntity<List<CreditCard>> findCreditCards() {
+        System.out.println("In the find credit cards path");
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        Jwt jwt = (Jwt) auth.getPrincipal();
+        Long userIdLong = (Long) jwt.getClaim("userId");
+        System.out.println("CREDITCARD does the id exist?" + userIdLong);
+        List<CreditCard> creditCards = userService.getCreditCards(userIdLong.intValue());
+        return ResponseEntity.ok(creditCards); 
+    }
+    
+    @GetMapping("/findFavoriteProducts")
+    public ResponseEntity<List<Product>> findFavoriteProducts() {
+        System.out.println("In the find favorites path");
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        Jwt jwt = (Jwt) auth.getPrincipal();
+        Long userIdLong = (Long) jwt.getClaim("userId");
+        List<Product> favorites = userService.getFavoriteProducts(userIdLong.intValue());
+        return ResponseEntity.ok(favorites); 
+    }
+    
 
     @RequestMapping(value = "/user/cartTotal", method = RequestMethod.GET, consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<Double> getUserCartTotal(@RequestBody GetUserCartTotalRequest request) {

@@ -4,9 +4,9 @@ import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import Product from '../reusables/Product';
 import ProductOverlay from '../reusables/ProductOverlay';
-
+import '../../css/pages/admin.css'
 function Store(props) {
-
+console.log("In the Store Path", props)
   const [products, setProducts] = useState([]);
   const [selectedProduct, setSelectedProduct] = useState(null);
 
@@ -47,7 +47,7 @@ function Store(props) {
        
         <div>
         {products.map((product) => (
-            <Product key={product.id} product={product} onClick={openOverlay} />
+            <Product  setUpdateUser={props.setUpdateUser} key={product.id} product={product} onClick={openOverlay}/>
           ))}
        </div>
        {selectedProduct && (
@@ -62,7 +62,7 @@ function Store(props) {
        <div className="shop">
         <div>
          {products.map((product) => (
-            <Product key={product.id} product={product} onClick={openOverlay} />
+            <Product  setUpdateUser={props.setUpdateUser} key={product.id} product={product} onClick={openOverlay} />
           ))}
        </div>
         {selectedProduct && (

@@ -11,9 +11,12 @@ import java.util.List;
 import javax.security.auth.login.AccountNotFoundException;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.security.oauth2.jwt.Jwt;
 import org.springframework.stereotype.Service;
 
 
@@ -69,8 +72,10 @@ public class UserService implements UserDetailsService{
     }
 
 	public User findByEmail(String email) {
-		return userRepo.findByUserName(email);
+		return userRepo.findByEmail(email);
 	}
+
+
 
 	public List<User> findAll() {
 		return userRepo.findAll();
@@ -134,24 +139,30 @@ public class UserService implements UserDetailsService{
         return user.getCart();
     }
 
-    public void addProductToFavorites(Integer userId, Integer productId) {
-      User user = userRepo.findById(userId)
-      .orElseThrow(() -> new RuntimeException("User not found"));
+    public void addProductToFavorites(Integer productId) {
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        Jwt jwt = (Jwt) auth.getPrincipal();
+        String email = jwt.getClaim("email");
+       User currentUser = userRepo.findByEmail(email);
+
 
       Product product = productService.getProductById(productId);
 
-      user.getFavoriteProducts().add(product);
-      userRepo.save(user);
+      currentUser.getFavoriteProducts().add(product);
+      userRepo.save(currentUser);
     }
 
-    public void removeProductFromFavorites(Integer userId, Integer productId) {
-        User user = userRepo.findById(userId)
-        .orElseThrow(() -> new RuntimeException("User not found"));
-  
-        Product product = productService.getProductById(productId);
-  
-        user.getFavoriteProducts().remove(product);
-        userRepo.save(user);
+    public void removeProductFromFavorites(Integer productId) {
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        Jwt jwt = (Jwt) auth.getPrincipal();
+        String email = jwt.getClaim("email");
+       User currentUser = userRepo.findByEmail(email);
+
+
+      Product product = productService.getProductById(productId);
+
+      currentUser.getFavoriteProducts().remove(product);
+      userRepo.save(currentUser);
     }
 
     public User getUserById(Integer userId) {
@@ -159,28 +170,50 @@ public class UserService implements UserDetailsService{
         .orElseThrow(() -> new RuntimeException("User not found"));
     }
 
-    public User addCreditCardToUser(Integer userId, String cardNumber, Integer expirationYear, Integer  expirationMonth, String cardHolderName, String cvv) {
-        User user = userRepo.findById(userId)
-        .orElseThrow(() -> new RuntimeException("User not found"));
-    
-        CreditCard savedCreditCard = creditCardService.createAndAddCreditCard(cardNumber, cardHolderName, expirationMonth, expirationYear, cvv);
-    
-        user.getWallet().add(savedCreditCard);
-        return userRepo.save(user);
+    public void addCreditCard(String cardNumber, String expirationYear, String  expirationMonth, String cardHolderName, String cvv) {
+       // Get authentication
+       System.out.println("in the add credit card SERVICE path");
+       Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        Jwt jwt = (Jwt) auth.getPrincipal();
+        String email = jwt.getClaim("email");
+       User currentUser = userRepo.findByEmail(email);
+        CreditCard savedCreditCard = creditCardService.createCreditCard(cardNumber, cardHolderName, expirationMonth, expirationYear, cvv);
+        currentUser.getWallet().add(savedCreditCard);
+       userRepo.save(currentUser);
     }
 
-    public void removeCreditCardFromUser(Integer userId, Integer creditCardId) {
-        User user = userRepo.findById(userId)
-        .orElseThrow(() -> new RuntimeException("User not found"));
+    public void removeCreditCard(Integer creditCardId) {
+        System.out.println("In the removeCreditCardPath in user service");
+    
+     Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        Jwt jwt = (Jwt) auth.getPrincipal();
+        String email = jwt.getClaim("email");
+       User currentUser = userRepo.findByEmail(email);
     
         CreditCard creditCard = creditCardService.getCreditCardById(creditCardId);
+        System.out.println("Credit card to delete: " + creditCard);
+        
+        currentUser.getWallet().remove(creditCard);
+        System.out.println("Credit card removed from wallet");
+        
+        userRepo.save(currentUser);
+        System.out.println("User updated in database");
     
-        user.getWallet().remove(creditCard);
-        userRepo.save(user);
-
         creditCardService.deleteCreditCardById(creditCardId);
+        System.out.println("Credit card deleted from credit card database");
     }
 
+    public List<CreditCard> getCreditCards(Integer id) {
+        User user = userRepo.findById(id)
+        .orElseThrow(() -> new RuntimeException("User not found"));
+        return user.getWallet();
+    }
+
+    public List<Product> getFavoriteProducts(Integer id) {
+        User user = userRepo.findById(id)
+        .orElseThrow(() -> new RuntimeException("User not found"));
+        return user.getFavoriteProducts();
+    }
 
 	@Override
 public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
@@ -188,6 +221,8 @@ System.out.println("in the userdetail service");
 return userRepo.findByUsername(username).orElseThrow(() -> new UsernameNotFoundException("user is not valid"));
 }
 
+    
+    
 }
 
 

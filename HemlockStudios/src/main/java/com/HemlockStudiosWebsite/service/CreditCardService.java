@@ -54,7 +54,8 @@ public class CreditCardService {
         return creditCardRepo.findAll();
     }
   
-    public CreditCard createAndAddCreditCard(String cardNumber, String cardHolderName, int expirationMonth, int expirationYear, String cvv) {
+    public CreditCard createCreditCard(String cardNumber, String cardHolderName, String expirationMonth, String expirationYear, String cvv) {
+      
         CreditCard creditCard = new CreditCard();
         creditCard.setCardNumber(cardNumber);
         creditCard.setCardHolderName(cardHolderName);
@@ -63,6 +64,21 @@ public class CreditCardService {
         creditCard.setCvv(cvv);
 
         return creditCardRepo.save(creditCard);
+    }
+
+    public void updateCreditCard(Integer creditCardId, String cardNumber, String expirationMonth, String expirationYear,
+            String cardHolderName, String cvv) {
+
+         CreditCard cardToUpdate = creditCardRepo.findById(creditCardId)
+        .orElseThrow(() -> new RuntimeException("Product not found"));
+
+        cardToUpdate.setCardHolderName(cardHolderName);
+        cardToUpdate.setCardNumber(cardNumber);
+        cardToUpdate.setExpirationMonth(expirationMonth);
+        cardToUpdate.setExpirationYear(expirationYear);
+        cardToUpdate.setCvv(cvv);
+
+        creditCardRepo.save(cardToUpdate);
     }
 
 }
