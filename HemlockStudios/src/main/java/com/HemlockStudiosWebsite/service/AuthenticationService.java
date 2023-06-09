@@ -14,6 +14,7 @@ import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import com.HemlockStudiosWebsite.entity.Cart;
 import com.HemlockStudiosWebsite.entity.EmailVerificationToken;
 import com.HemlockStudiosWebsite.entity.Role;
 import com.HemlockStudiosWebsite.entity.User;
@@ -38,6 +39,9 @@ private TokenService tokenService;
 EmailVerificationTokenService emailVerificationTokenService;
 @Autowired
 EmailSenderService emailSenderService;
+@Autowired
+CartService cartService;
+
 
 public User registerUser(String username, String password, String email){
     String encodedPassword = passwordEncoder.encode(password);
@@ -47,6 +51,10 @@ public User registerUser(String username, String password, String email){
 
     User user = new User(0, username, encodedPassword, email, authorities);
     user.setEmailConfirmed(false);
+
+    Cart cart = cartService.createCart();
+
+    user.setCart(cart);
 
     return userRepo.save(user);
 }

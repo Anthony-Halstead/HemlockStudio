@@ -11,6 +11,7 @@ import java.util.List;
 import javax.security.auth.login.AccountNotFoundException;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.event.EventListener;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -27,14 +28,10 @@ public class UserService implements UserDetailsService{
     @Autowired
     UserRepo userRepo;
 
-    @Autowired
-    CartService cartService;
-
-    @Autowired
-    ProductService productService;
 
     @Autowired
     CreditCardService creditCardService;
+
 
     public User save(User user) {
 		// Another predefined function, used to save your objects
@@ -139,31 +136,41 @@ public class UserService implements UserDetailsService{
         return user.getCart();
     }
 
-    public void addProductToFavorites(Integer productId) {
+    public User findUserByEmail() {
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+    
+        if (auth == null) {
+            System.out.println("Authentication is null");
+            return null;
+        }
+    
         Jwt jwt = (Jwt) auth.getPrincipal();
+    
+        if (jwt == null) {
+            System.out.println("JWT is null");
+            return null;
+        }
+    
         String email = jwt.getClaim("email");
-       User currentUser = userRepo.findByEmail(email);
-
-
-      Product product = productService.getProductById(productId);
-
-      currentUser.getFavoriteProducts().add(product);
-      userRepo.save(currentUser);
+    
+        if (email == null) {
+            System.out.println("Email claim is null");
+            return null;
+        }
+    
+        User currentUser = userRepo.findByEmail(email);
+    
+        if (currentUser == null) {
+            System.out.println("User not found in database with email: " + email);
+            return null;
+        }
+    
+        return currentUser;
     }
-
-    public void removeProductFromFavorites(Integer productId) {
-        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-        Jwt jwt = (Jwt) auth.getPrincipal();
-        String email = jwt.getClaim("email");
-       User currentUser = userRepo.findByEmail(email);
+    
+ 
 
 
-      Product product = productService.getProductById(productId);
-
-      currentUser.getFavoriteProducts().remove(product);
-      userRepo.save(currentUser);
-    }
 
     public User getUserById(Integer userId) {
         return userRepo.findById(userId)

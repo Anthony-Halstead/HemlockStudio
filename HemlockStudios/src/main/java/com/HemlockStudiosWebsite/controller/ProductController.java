@@ -9,6 +9,7 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -73,7 +74,7 @@ public ResponseEntity<Object> updateProduct(@RequestBody UpdateProductRequest re
         if (request.getId() == null || request.getDescription() == null || request.getPrice() == null || request.getName() == null || request.getImgUrls() == null) {
             throw new IllegalArgumentException("Missing required field: id");
         }
-
+System.out.println("in the update product path");
        productService.updateProduct(
             request.getId(),
             request.getDescription(), request.getPrice(),  request.getName(), 
@@ -94,15 +95,14 @@ response.setMessage("Product was updated");
 
 
 @RequestMapping(
-    value="/delete",
+    value="/delete/{id}",
     method = RequestMethod.DELETE,
-    consumes = MediaType.APPLICATION_JSON_VALUE,
     produces = MediaType.APPLICATION_JSON_VALUE
 )
-public ResponseEntity<Object> deleteProduct(@RequestBody DeleteRequest request) {
+public ResponseEntity<Object> deleteProduct(@PathVariable Integer id) {
     try {
-        System.out.println("in the delete product endpoint"+request);
-        productService.deleteProductById(request.getId());
+        System.out.println("in the delete product endpoint"+id);
+        productService.deleteProductById(id);
 
         DeleteResponse response = new DeleteResponse();
         response.setMessage("Product deleted successfully.");

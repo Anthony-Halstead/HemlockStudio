@@ -71,6 +71,7 @@ public SecurityFilterChain filterChain(HttpSecurity http) throws Exception{
                 auth.requestMatchers("/coupon/**").permitAll();
                 auth.requestMatchers("/admin/**").hasRole("ADMIN");
                 auth.requestMatchers("/user/**").hasAnyRole("ADMIN", "USER");
+                auth.requestMatchers("/cart/**").hasAnyRole("ADMIN", "USER");
                 auth.anyRequest().authenticated();
             });
 http

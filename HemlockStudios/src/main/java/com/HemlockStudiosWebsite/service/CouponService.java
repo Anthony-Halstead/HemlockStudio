@@ -8,7 +8,6 @@ import org.springframework.stereotype.Service;
 import com.HemlockStudiosWebsite.entity.Cart;
 import com.HemlockStudiosWebsite.entity.Coupon;
 import com.HemlockStudiosWebsite.entity.User;
-import com.HemlockStudiosWebsite.entity.Product;
 import com.HemlockStudiosWebsite.repo.CouponRepo;
 
 @Service
@@ -21,50 +20,44 @@ public class CouponService {
     @Autowired
     UserService userService;
 
-    public Double applyCouponDiscount(Integer cartId, String couponCode) {
-        Cart cart = cartService.getCartById(cartId);
+    public void applyCouponDiscount(String couponCode) {
+        User currentUser = userService.findUserByEmail();
+        Cart cart = currentUser.getCart();
+        Double total = cart.getTotal();
+    
         Coupon coupon = couponRepo.findByCouponCode(couponCode);
-    
-        Double originalTotal = cartService.calculateCartTotal(cartId);
-        Double discountValue = 0.0;
-    
-        // Iterate through the products in the cart
-        for (Product product : cart.getItemsInCart()) {
-            // If a product doesn't have a discount, apply the coupon discount
-            if (product.getDiscount() == null || product.getDiscount() == 0) {
-                discountValue += coupon.getDiscountValue();
-            }
+        if (coupon != null) {
+            Double discount = coupon.getDiscountValue();
+            Double discountedTotal = total - (total * discount);
+            cart.setDiscountedTotal(discountedTotal);
+            cartService.saveCart(cart);
+            System.out.println("Discount applied successfully. New discounted total: " + discountedTotal);
+        } else {
+            
+            System.out.println("No coupon found with the provided code");
         }
-    
-        Double newTotal = originalTotal - discountValue;
-    
-        // Update the cart with the new total
-        cart.setDiscountedTotal(newTotal);
-        cartService.saveCart(cart);
-    
-        return newTotal;
     }
     
-    public Double applySignInDiscount(Integer cartId, Integer userId) {
-        Cart cart = cartService.getCartById(cartId);
-        User user = userService.getUserById(userId);
+    // public Double applySignInDiscount(Integer cartId, Integer userId) {
+    //     Cart cart = cartService.getCartById(cartId);
+    //     User user = userService.getUserById(userId);
     
-        Double originalTotal = cartService.calculateCartTotal(cartId);
-        Double discountValue = 0.0;
+    //     Double originalTotal = cartService.calculateCartTotal(cartId);
+    //     Double discountValue = 0.0;
     
-        // Apply a 5% discount if the user is signed in
-        if (user.getIsSignedUp()) {
-            discountValue += originalTotal * 0.05;
-        }
+    //     // Apply a 5% discount if the user is signed in
+    //     if (user.getIsSignedUp()) {
+    //         discountValue += originalTotal * 0.05;
+    //     }
     
-        Double newTotal = originalTotal - discountValue;
+    //     Double newTotal = originalTotal - discountValue;
     
-        // Update the cart with the new total
-        cart.setDiscountedTotal(newTotal);
-        cartService.saveCart(cart);
+    //     // Update the cart with the new total
+    //     cart.setDiscountedTotal(newTotal);
+    //     cartService.saveCart(cart);
     
-        return newTotal;
-    }
+    //     return newTotal;
+    // }
     public Coupon createCoupon(String couponCode, Double discountValue) {
         Coupon coupon = new Coupon();
         coupon.setCouponCode(couponCode);

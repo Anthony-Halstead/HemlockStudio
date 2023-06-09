@@ -2,22 +2,23 @@ package com.HemlockStudiosWebsite.service;
 
 import java.util.List;
 
+
 import org.springframework.beans.factory.annotation.Autowired;
+
 import org.springframework.stereotype.Service;
 
 import com.HemlockStudiosWebsite.entity.Cart;
-import com.HemlockStudiosWebsite.entity.Product;
+import com.HemlockStudiosWebsite.entity.User;
 import com.HemlockStudiosWebsite.repo.CartRepo;
 
 
 @Service
 public class CartService {
 
-    @Autowired
-    CartRepo cartRepo;
-
-    @Autowired
-    ProductService productService;
+@Autowired
+CartRepo cartRepo;
+@Autowired
+UserService userService;
 
     public Cart createCart() {
         Cart cart = new Cart();
@@ -32,44 +33,21 @@ public class CartService {
          return cartRepo.findAll();
     }
 
-    public void addItemToCart(Integer cartId, Integer productId) {
-        Cart cart = cartRepo.findById(cartId)
-        .orElseThrow(() -> new RuntimeException("Cart not found"));
-
-    Product product = productService.getProductById(productId);
-//
-// update total prices here to send back prices of all products stored in cart
-//
-//
-    cart.getItemsInCart().add(product);
-    cartRepo.save(cart);
-    }
-
-    public void removeItemFromCart(Integer cartId, Integer productId) {
-        Cart cart = cartRepo.findById(cartId)
-        .orElseThrow(() -> new RuntimeException("Cart not found"));
-
-        Product product = productService.getProductById(productId);
-//
-// update total prices here to send back prices of all products stored in cart
-//
-//
-        cart.getItemsInCart().remove(product);
-    cartRepo.save(cart);
-    }
-
-    public Double calculateCartTotal(Integer cartId) {
-        Cart cart = cartRepo.findById(cartId)
-                .orElseThrow(() -> new RuntimeException("Cart not found"));
     
-        List<Product> products = cart.getItemsInCart();
-    
-        Double totalPrice = 0.0;
-        for (Product product : products) {
-            totalPrice += product.getPrice();
-        }
-        return totalPrice;
-    }
+   public Double getCartTotal(){
+    User currentUser = userService.findUserByEmail();
+    System.out.println("found user");
+    Cart cart = currentUser.getCart();
+    return cart.getTotal();
+   }
+
+   public Double getDiscountedCartTotal(){
+    User currentUser = userService.findUserByEmail();
+    System.out.println("found user");
+    Cart cart = currentUser.getCart();
+    return cart.getDiscountedTotal();
+   }
+
 
     public Cart getCartById(Integer cartId) {
         return cartRepo.findById(cartId).orElseThrow(() -> new RuntimeException("Cart not found"));

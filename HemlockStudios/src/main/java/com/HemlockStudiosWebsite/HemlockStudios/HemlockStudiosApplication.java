@@ -9,13 +9,19 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
+import org.springframework.scheduling.annotation.EnableAsync;
 import org.springframework.security.crypto.password.PasswordEncoder;
+
+import com.HemlockStudiosWebsite.entity.Cart;
 import com.HemlockStudiosWebsite.entity.Role;
 import com.HemlockStudiosWebsite.entity.User;
 import com.HemlockStudiosWebsite.repo.RoleRepo;
 import com.HemlockStudiosWebsite.repo.UserRepo;
 
+
+
 @SpringBootApplication
+@EnableAsync
 @ComponentScan(basePackages = "com.HemlockStudiosWebsite")
 public class  HemlockStudiosApplication {
     
@@ -32,8 +38,9 @@ roleRepo.save(new Role("USER"));
 Set<Role> roles = new HashSet<>();
 roles.add(adminRole);
 User admin = new User(1, "admin", passwordEncoder.encode("password"), "admin@HemlockStudios.com", roles);
-
+Cart cart = new Cart(1 );
 admin.setEmailConfirmed(true);
+admin.setCart(cart);
 userRepo.save(admin);
 };
 }

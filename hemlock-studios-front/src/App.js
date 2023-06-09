@@ -11,6 +11,7 @@ import Checkout from './components/pages/Checkout';
 import Account from './components/pages/Account';
 import Favorites from './components/reusables/Favorites';
 import News from './components/pages/News';
+import Cart from './components/reusables/Cart'
 import DropdownMenu from './components/reusables/DropdownMenu';
 import axios from 'axios';
 
@@ -68,7 +69,7 @@ useEffect(() => {
         <Route path="/Checkout" element={<Checkout user={user} setUser={setUser} setUpdateUser={setUpdateUser}/>} />
         <Route path="/Favorites" element={<Favorites user={user} setUser={setUser} setUpdateUser={setUpdateUser}/>} />
         <Route path="/DropDownMenu" element={<DropdownMenu user={user} setUser={setUser} setUpdateUser={setUpdateUser}/>} />
-      
+        <Route path="/Cart" element={<Cart user={user} setUser={setUser} setUpdateUser={setUpdateUser}/>} />
       </Routes>
     </PageWrapper>
   );

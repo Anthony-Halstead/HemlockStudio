@@ -1,9 +1,9 @@
 import React from 'react'
 
-function AddToCartButton() {
+function AddToCartButton({ onAddToCartClick }) {
   return (
-    <div>AddToCartButton</div>
-  )
+    <button onClick={onAddToCartClick}>Add to Cart</button>
+  );
 }
 
 export default AddToCartButton

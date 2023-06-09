@@ -4,6 +4,8 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faHeart as faHeartSolid } from '@fortawesome/free-solid-svg-icons';
 import { faHeart as faHeartRegular } from '@fortawesome/free-regular-svg-icons';
 import axios from 'axios';
+import AddToCartButton from './AddToCartButton';
+
 
 function Product({ product, onClick, setUpdateUser }) {
   const [isFavorited, setIsFavorited] = useState(false);
@@ -33,12 +35,32 @@ function Product({ product, onClick, setUpdateUser }) {
     onClick(product);
   };
 
+
+  const handleAddToCartClick = (event) => {
+    event.stopPropagation();
+    let jwtToken = localStorage.getItem("token");
+ 
+    console.log("PRODUCT ID", product.id)
+    axios.post("http://localhost:8080/cart/addItemToCart", { productId: product.id },{
+        headers: {
+          'Authorization': `Bearer ${jwtToken}`
+        }
+      })
+      .then((response) => {
+        setUpdateUser({});
+        // Handle the response, e.g. show a notification that the product was added to the cart
+      })
+      .catch((error) => {
+        console.error('Error adding product to the cart', error);
+        // Handle the error, e.g. show an error message
+      });
+  };
+
   const handleFavoritedClick = (event) => {
     event.stopPropagation();
     let jwtToken = localStorage.getItem("token");
 
     const favoriteDeleteData = product.id;
-
 
     console.log("in the handle favorites click", jwtToken)
     if (isFavorited) {
@@ -76,7 +98,9 @@ function Product({ product, onClick, setUpdateUser }) {
 
   return (
     <div className="product">
-      <FontAwesomeIcon icon={isFavorited ? faHeartSolid : faHeartRegular} onClick={handleFavoritedClick} />
+      <div >
+      <FontAwesomeIcon className='favorite-icon' icon={isFavorited ? faHeartSolid : faHeartRegular} onClick={handleFavoritedClick} />
+      </div> 
       <div onClick={handleClick}>
         {product.photoAlbum.length > 0 && (
           <img src={product.photoAlbum[0].photoUrl} alt={product.name} />
@@ -84,6 +108,7 @@ function Product({ product, onClick, setUpdateUser }) {
         <h2>{product.name}</h2>
         <p>{product.description}</p>
         <p>${product.price}</p>
+        <AddToCartButton onAddToCartClick={handleAddToCartClick} />
       </div>
     </div>
   );

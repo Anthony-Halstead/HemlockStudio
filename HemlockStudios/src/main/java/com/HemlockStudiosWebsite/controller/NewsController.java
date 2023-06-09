@@ -8,6 +8,7 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -84,16 +85,15 @@ public class NewsController {
             return new ResponseEntity<Object>(e, HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
-    
+   
     @RequestMapping(
-        value="/delete",
+        value="/delete/{id}",
         method = RequestMethod.DELETE,
-        consumes = MediaType.APPLICATION_JSON_VALUE,
         produces = MediaType.APPLICATION_JSON_VALUE
     )
-    public ResponseEntity<Object> deleteNews(@RequestBody DeleteRequest request) {
+    public ResponseEntity<Object> deleteNews(@PathVariable Integer id) {
         try {
-            newsService.deleteNewsById(request.getId());
+            newsService.deleteNewsById(id);
     
             DeleteResponse response = new DeleteResponse();
             response.setMessage("News deleted successfully.");

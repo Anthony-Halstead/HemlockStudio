@@ -2,6 +2,7 @@ package com.HemlockStudiosWebsite.entity;
 
 import java.util.List;
 
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -9,8 +10,9 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinTable;
 import jakarta.persistence.ManyToMany;
+import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
-import jakarta.persistence.JoinColumn;
+
 
 
 @Entity
@@ -26,16 +28,23 @@ public class Cart {
     @Column(name = "discounted_total")
     private Double discountedTotal;
 
+    @Column(name = "total")
+    private Double total;
+ 
+    @OneToMany(mappedBy="cart", cascade = CascadeType.REMOVE)
+    private List<CartItem> itemsInCart;
 
-    @ManyToMany
-    @JoinTable(
-        name="cart_products",
-        joinColumns=
-        @JoinColumn(name="cart_id", referencedColumnName="id"), 
-        inverseJoinColumns=
-        @JoinColumn(name="products_id", referencedColumnName="id")
-    )
-    private List<Product> itemsInCart;
+
+    
+  
+   
+public Cart(){
+
+}
+        public Cart(Integer id){
+        super();
+          this.id =id;
+        }
 
 public Double getDiscountedTotal() {
     return discountedTotal;
@@ -53,12 +62,20 @@ public void setDiscountedTotal(Double discountedTotal) {
     public void setId(Integer id) {
         this.id = id;
     }
-
-    public List<Product> getItemsInCart() {
+    public List<CartItem> getItemsInCart() {
         return itemsInCart;
     }
-
-    public void setItemsInCart(List<Product> itemsInCart) {
+    public void setItemsInCart(List<CartItem> itemsInCart) {
         this.itemsInCart = itemsInCart;
     }
+
+    public Double getTotal() {
+        return total;
+    }
+
+    public void setTotal(Double total) {
+        this.total = total;
+    }
+
+   
 }

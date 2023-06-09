@@ -8,15 +8,15 @@ import com.HemlockStudiosWebsite.repo.CartRepo;
 @Service
 public class CartProductService {
 
-    @Autowired
-    private CartRepo cartRepo;
+    // @Autowired
+    // private CartRepo cartRepo;
 
-    public void removeProductFromAllCarts(Product product) {
-        cartRepo.findAll().forEach(cart -> {
-            if (cart.getItemsInCart().contains(product)) {
-                cart.getItemsInCart().remove(product);
-                cartRepo.save(cart);
-            }
-        });
-    }
+    // public void removeProductFromAllCarts(Product product) {
+    //     cartRepo.findAll().forEach(cart -> {
+    //         if (cart.getItemsInCart().contains(product)) {
+    //             cart.getItemsInCart().remove(product);
+    //             cartRepo.save(cart);
+    //         }
+    //     });
+    // }
 }

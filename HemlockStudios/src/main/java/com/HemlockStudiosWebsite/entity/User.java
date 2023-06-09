@@ -57,7 +57,7 @@ private Integer id;
     @JoinColumn(name = "cart_id")
     private Cart cart;
 
-@ManyToMany
+@ManyToMany(cascade = CascadeType.REMOVE)
     @JoinTable(
         name = "user_favorite_products",
         joinColumns = @JoinColumn(name = "user_id", referencedColumnName = "id"),

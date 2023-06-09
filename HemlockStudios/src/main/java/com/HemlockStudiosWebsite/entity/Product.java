@@ -27,6 +27,9 @@ public class Product {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
+    @OneToMany(mappedBy = "product", cascade = CascadeType.REMOVE)
+    private List<CartItem> cartItems;
+
     @Column(name = "description")
     private String description;
 
@@ -52,6 +55,7 @@ public class Product {
     @Column(name = "size")
     private ProductEnums.Size size;
 
+    
 
     @Column(name="discount")
     private Double discount;
@@ -123,5 +127,7 @@ public class Product {
     public void setName(String name) {
         this.name = name;
     }
+
+   
 
 }

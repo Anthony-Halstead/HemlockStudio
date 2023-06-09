@@ -32,3 +32,11 @@
     transition: transform 0.1s ease-in;
     box-shadow: 0 0 12px black;
   }
+
+  .favorite-icon{
+    display: flex;
+    transform:scale(1.5);
+  }
+  .favorite-icon:hover{
+transform: scale(1.75);
+  }

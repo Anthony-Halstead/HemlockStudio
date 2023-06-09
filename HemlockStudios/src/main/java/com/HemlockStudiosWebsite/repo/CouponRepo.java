@@ -9,5 +9,5 @@ public interface CouponRepo extends JpaRepository<Coupon, Integer> {
 
     
     @Query(value="select * from coupon where discount_code =?1", nativeQuery = true) 
-    public Coupon  findByCouponCode(String couponCode);
+    public Coupon findByCouponCode(String couponCode);
 }

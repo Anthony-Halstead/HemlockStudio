@@ -8,11 +8,13 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.HemlockStudiosWebsite.dto.ApplyCouponDiscountRequest;
 import com.HemlockStudiosWebsite.dto.CreateCouponRequest;
 import com.HemlockStudiosWebsite.dto.CreateCouponResponse;
 import com.HemlockStudiosWebsite.dto.DeleteRequest;
@@ -49,14 +51,13 @@ public ResponseEntity<Object> createCoupon(@RequestBody CreateCouponRequest requ
 }
 
 @RequestMapping(
-    value="/delete",
+    value="/delete/{id}",
     method = RequestMethod.DELETE,
-    consumes = MediaType.APPLICATION_JSON_VALUE,
     produces = MediaType.APPLICATION_JSON_VALUE
 )
-public ResponseEntity<Object> deleteCoupon(@RequestBody DeleteRequest deleteCouponRequest) {
+public ResponseEntity<Object> deleteCoupon(@PathVariable Integer id) {
     try {
-        couponService.deleteCoupon(deleteCouponRequest.getId());
+        couponService.deleteCoupon(id);
 
         DeleteResponse response = new DeleteResponse();
         response.setMessage("Coupon deleted successfully.");
@@ -72,10 +73,10 @@ public ResponseEntity<Object> deleteCoupon(@RequestBody DeleteRequest deleteCoup
     consumes = MediaType.APPLICATION_JSON_VALUE,
     produces = MediaType.APPLICATION_JSON_VALUE
 )
-public ResponseEntity<Object> applyCouponDiscount(@RequestBody DiscountRequest discountRequest) {
+public ResponseEntity<Object> applyCouponDiscount(@RequestBody ApplyCouponDiscountRequest request) {
     try {
-        Double newTotal = couponService.applyCouponDiscount(discountRequest.getCartId(), discountRequest.getCouponCode());
-        return new ResponseEntity<>(newTotal, HttpStatus.OK);
+        couponService.applyCouponDiscount(request.getCouponCode());
+        return new ResponseEntity<>(HttpStatus.OK);
     } catch (Exception e) {
         return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
     }

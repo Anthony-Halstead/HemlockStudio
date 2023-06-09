@@ -1,18 +1,31 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 
 const UpdateForm = ({ selectedItem, entityType, onUpdate, onCancel }) => {
   const [updatedValues, setUpdatedValues] = useState({});
 
-  const handleFieldChange = (field, value) => {
-    setUpdatedValues((prevValues) => ({
-      ...prevValues,
-      [field]: value,
-    }));
+  useEffect(() => {
+    setUpdatedValues(selectedItem);
+  }, [selectedItem]);
+
+  const handleFieldChange = (field, value, index = null) => {
+    if (index !== null) {
+      const newArray = [...updatedValues[field]];
+      newArray[index].url = value;
+      setUpdatedValues(prevValues => ({
+        ...prevValues,
+        [field]: newArray,
+      }));
+    } else {
+      setUpdatedValues(prevValues => ({
+        ...prevValues,
+        [field]: value,
+      }));
+    }
   };
 
-  const handleUpdateSubmit = () => {
-    const updatedItem = { ...updatedValues };
-    onUpdate(updatedItem);
+  const handleUpdateSubmit = (event) => {
+    event.preventDefault();
+    onUpdate(updatedValues);
   };
 
   return (
@@ -20,16 +33,26 @@ const UpdateForm = ({ selectedItem, entityType, onUpdate, onCancel }) => {
       <h3>Update {entityType.toUpperCase()}</h3>
       <form onSubmit={handleUpdateSubmit}>
         {Object.keys(selectedItem).map((field) => (
-          // Exclude the ID fields from being editable
           field !== 'id' && (
             <div key={field}>
               <label htmlFor={field}>{field}</label>
-              <input
-                type="text"
-                id={field}
-                value={updatedValues[field] || selectedItem[field]}
-                onChange={(e) => handleFieldChange(field, e.target.value)}
-              />
+              {Array.isArray(updatedValues[field]) ? updatedValues[field].map((item, index) => (
+                <div key={index}>
+                  <input
+                    type="text"
+                    id={field}
+                    value={item.photoUrl}
+                    onChange={(e) => handleFieldChange(field, e.target.value, index)}
+                  />
+                </div>
+              )) : (
+                <input
+                  type="text"
+                  id={field}
+                  value={updatedValues[field]}
+                  onChange={(e) => handleFieldChange(field, e.target.value)}
+                />
+              )}
             </div>
           )
         ))}

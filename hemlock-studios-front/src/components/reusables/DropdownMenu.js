@@ -34,11 +34,9 @@ function DropdownMenu(props) {
           <ul>
             {props.user.id ? (
               <>
-                <li><a href="/Cart">Cart</a></li>
-                <li>  
-                    <Link to="/Account">Account</Link>
-                    </li>
-                <li><a href="/" onClick={handleSignOut}>Sign Out</a></li>
+                <li><Link to="/Cart">Cart</Link></li>
+                <li><Link to="/Account">Account</Link></li>
+                <li><Link to="/" onClick={handleSignOut}>Sign Out</Link></li>
               </>
             ) : (
               <>

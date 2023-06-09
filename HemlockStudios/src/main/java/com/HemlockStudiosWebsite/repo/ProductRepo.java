@@ -11,6 +11,7 @@ import com.HemlockStudiosWebsite.entity.Product;
 @Repository
 public interface ProductRepo extends JpaRepository<Product, Integer> {
 
-
+    @Query(value="select * from product where id = ?1", nativeQuery = true)
+    public Product findReference(Integer id);
     }
 

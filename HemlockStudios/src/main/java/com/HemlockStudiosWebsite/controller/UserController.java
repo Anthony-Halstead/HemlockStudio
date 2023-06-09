@@ -42,6 +42,7 @@ import com.HemlockStudiosWebsite.entity.User;
 import com.HemlockStudiosWebsite.service.CartService;
 import com.HemlockStudiosWebsite.service.CouponService;
 import com.HemlockStudiosWebsite.service.CreditCardService;
+import com.HemlockStudiosWebsite.service.ProductService;
 import com.HemlockStudiosWebsite.service.TokenService;
 import com.HemlockStudiosWebsite.service.UserService;
 
@@ -52,6 +53,9 @@ public class UserController {
 
     @Autowired
     UserService userService;
+
+    @Autowired
+    ProductService productService;
 
     @Autowired
     CartService cartService;
@@ -152,7 +156,7 @@ public ResponseEntity<Object> currentUser() {
             if (request.getProductId() == null) {
                 throw new IllegalArgumentException("Missing required fields in the request.");
             }
-            userService.addProductToFavorites(request.getProductId());
+            productService.addProductToFavorites(request.getProductId());
 
             UpdateFavoritesResponse response = new UpdateFavoritesResponse();
             response.setMessage("Item Added to Favorites Successfully.");
@@ -171,7 +175,7 @@ public ResponseEntity<Object> currentUser() {
           
 
             System.out.println("REMOVE PRODUCT FAVORITE PATH");
-            userService.removeProductFromFavorites(favoriteProductId);
+            productService.removeProductFromFavorites(favoriteProductId);
 
             UpdateFavoritesResponse response = new UpdateFavoritesResponse();
             response.setMessage("Item Removed from Favorites Successfully.");
@@ -274,23 +278,23 @@ public ResponseEntity<Object> currentUser() {
     }
     
 
-    @RequestMapping(value = "/user/cartTotal", method = RequestMethod.GET, consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<Double> getUserCartTotal(@RequestBody GetUserCartTotalRequest request) {
-        if (request.getUserId() == null || request.getCartId() == null) {
-            throw new IllegalArgumentException("Missing required fields in the request.");
-        }
+    // @RequestMapping(value = "/user/cartTotal", method = RequestMethod.GET, consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
+    // public ResponseEntity<Double> getUserCartTotal(@RequestBody GetUserCartTotalRequest request) {
+    //     if (request.getUserId() == null || request.getCartId() == null) {
+    //         throw new IllegalArgumentException("Missing required fields in the request.");
+    //     }
 
-        Integer userId = request.getUserId();
-        Integer cartId = request.getCartId();
-        User user = userService.getUserById(userId);
-        Double totalPrice = cartService.calculateCartTotal(cartId);
+    //     Integer userId = request.getUserId();
+    //     Integer cartId = request.getCartId();
+    //     User user = userService.getUserById(userId);
+    //     Double totalPrice = cartService.calculateCartTotal(cartId);
 
-        // Apply the sign-in discount if the user is signed up
-        if (user.getIsSignedUp()) {
-            totalPrice = couponService.applySignInDiscount(cartId, userId);
-        }
+    //     // Apply the sign-in discount if the user is signed up
+    //     if (user.getIsSignedUp()) {
+    //         totalPrice = couponService.applySignInDiscount(cartId, userId);
+    //     }
 
-        return ResponseEntity.ok(totalPrice);
-    }
+    //     return ResponseEntity.ok(totalPrice);
+    // }
 
 }
