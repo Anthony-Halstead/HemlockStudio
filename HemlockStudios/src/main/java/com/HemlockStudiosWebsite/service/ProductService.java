@@ -16,6 +16,7 @@ import com.HemlockStudiosWebsite.entity.Photo;
 import com.HemlockStudiosWebsite.entity.Product;
 import com.HemlockStudiosWebsite.entity.User;
 import com.HemlockStudiosWebsite.enums.ProductEnums;
+import com.HemlockStudiosWebsite.events.ProductMadeEvent;
 import com.HemlockStudiosWebsite.repo.ProductRepo;
 
 
@@ -33,6 +34,9 @@ public class ProductService {
 
     @Autowired
     UserService userService;
+
+    @Autowired
+    ApplicationEventPublisher eventPublisher;
 
     public List<Product> getAll() {
         return productRepo.findAll();
@@ -65,6 +69,8 @@ public class ProductService {
                 product.getPhotoAlbum().add(newPhoto);
             }
             productRepo.save(product);
+            eventPublisher.publishEvent(new ProductMadeEvent(product));
+            //send product email event
             System.out.println("Product saved successfully");
         } catch (Exception e) {
             System.out.println("Error during product creation: " + e.getMessage());
@@ -104,10 +110,10 @@ try {
         // Clear the photo album
         product.getPhotoAlbum().clear();
 
-        // Delete all photos from the photo repository
-        for (Photo photo : currentPhotos) {
-            photoService.deleteById(photo.getId());
-        }
+        // // Delete all photos from the photo repository
+        // for (Photo photo : currentPhotos) {
+        //     photoService.deleteById(photo.getId());
+        // }
 
         // Add the new photos
         for (String imgUrl : imgUrls) {

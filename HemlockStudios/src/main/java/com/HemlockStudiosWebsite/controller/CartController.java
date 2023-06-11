@@ -106,7 +106,7 @@ public ResponseEntity<Double> getDiscountedCartTotal() {
 
 @RequestMapping(
     value="/makePurchase",
-    method = RequestMethod.PUT,
+    method = RequestMethod.POST,
     produces = MediaType.APPLICATION_JSON_VALUE
 )public ResponseEntity<Object> makePurchase() {
     try {

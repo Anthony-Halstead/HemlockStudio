@@ -84,7 +84,7 @@ const getCartTotal = () => {
         </div>
       </div>
       ))}
-      <div>Cart Total: ${cartTotal}</div>
+      <div>Cart Total: ${cartTotal.toFixed(2)}</div>
       <Link to='/Checkout'>Go to Checkout</Link>
       <div>
       <Link to='/store'>-return to shopping-</Link>

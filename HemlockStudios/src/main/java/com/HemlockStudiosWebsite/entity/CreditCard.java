@@ -28,10 +28,12 @@ public class CreditCard {
     @Column(name = "cvv")
     private String cvv;
 
+@Column(name = "default")
+private Boolean defaultCard;
+
     public Integer getId() {
         return id;
     }
-
    
     public String getCardHolderName() {
         return cardHolderName;
@@ -79,6 +81,14 @@ public class CreditCard {
 
     public void setCvv(String cvv) {
         this.cvv = cvv;
+    }
+
+    public Boolean getDefaultCard() {
+        return defaultCard;
+    }
+
+    public void setDefaultCard(Boolean defaultCard) {
+        this.defaultCard = defaultCard;
     }
 
   

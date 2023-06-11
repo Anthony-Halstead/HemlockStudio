@@ -37,7 +37,6 @@ import com.HemlockStudiosWebsite.dto.UserDTO;
 import com.HemlockStudiosWebsite.dto.UserDetailsDTO;
 import com.HemlockStudiosWebsite.entity.CreditCard;
 import com.HemlockStudiosWebsite.entity.Product;
-// import com.RealEstateHomes.entity.Car;
 import com.HemlockStudiosWebsite.entity.User;
 import com.HemlockStudiosWebsite.service.CartService;
 import com.HemlockStudiosWebsite.service.CouponService;
@@ -199,7 +198,7 @@ public ResponseEntity<Object> currentUser() {
                     || request.getCvv() == null) {
                 throw new IllegalArgumentException("Missing required fields in the request.");
             }
-            userService.addCreditCard(request.getCardNumber(), request.getExpirationMonth(),
+            creditCardService.addCreditCard(request.getCardNumber(), request.getExpirationMonth(),
                     request.getExpirationYear(), request.getCardHolderName(), request.getCvv());
 
             CreditCardResponse response = new CreditCardResponse();
@@ -219,7 +218,7 @@ public ResponseEntity<Object> currentUser() {
         try {
             
     System.out.println("In the removeCreditCard path (BackEnd)");
-            userService.removeCreditCard(creditCardId);
+            creditCardService.removeCreditCard(creditCardId);
     
             CreditCardResponse response = new CreditCardResponse();
             response.setMessage("Credit Card removed Successfully.");
@@ -277,24 +276,21 @@ public ResponseEntity<Object> currentUser() {
         return ResponseEntity.ok(favorites); 
     }
     
+    @RequestMapping(value = "/toggleNotification", method = RequestMethod.PUT, produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<Boolean> getNotificationStatus(){
+        Boolean notificationStatus = userService.getNotificationStatus();
+        return ResponseEntity.ok(notificationStatus);
+    }
 
-    // @RequestMapping(value = "/user/cartTotal", method = RequestMethod.GET, consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
-    // public ResponseEntity<Double> getUserCartTotal(@RequestBody GetUserCartTotalRequest request) {
-    //     if (request.getUserId() == null || request.getCartId() == null) {
-    //         throw new IllegalArgumentException("Missing required fields in the request.");
-    //     }
+    @RequestMapping(value = "/setDefaultCreditCard", method = RequestMethod.PUT, produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<Object> setDefaultCard(@RequestBody Integer defaultCardId) {
+        creditCardService.setDefaultCreditCard(defaultCardId);
+        return ResponseEntity.ok(HttpStatus.OK);
+    }
 
-    //     Integer userId = request.getUserId();
-    //     Integer cartId = request.getCartId();
-    //     User user = userService.getUserById(userId);
-    //     Double totalPrice = cartService.calculateCartTotal(cartId);
-
-    //     // Apply the sign-in discount if the user is signed up
-    //     if (user.getIsSignedUp()) {
-    //         totalPrice = couponService.applySignInDiscount(cartId, userId);
-    //     }
-
-    //     return ResponseEntity.ok(totalPrice);
-    // }
-
+    @GetMapping("/getDefaultCreditCard")
+    public ResponseEntity<CreditCard> getDefaultCard(){
+       CreditCard defaultCard = creditCardService.getDefaultCreditCard();
+       return ResponseEntity.ok(defaultCard);
+    }
 }

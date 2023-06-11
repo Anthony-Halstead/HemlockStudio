@@ -53,7 +53,6 @@ public User registerUser(String username, String password, String email){
     user.setEmailConfirmed(false);
 
     Cart cart = cartService.createCart();
-
     user.setCart(cart);
 
     return userRepo.save(user);
@@ -69,6 +68,8 @@ public User registerAdmin(String username, String password, String email){
 
     User user = new User(0, username, encodedPassword, email, authorities);
     user.setEmailConfirmed(true);
+    user.setNotificationsEnabled(true);
+   
 
     return userRepo.save(user);
 }
@@ -97,7 +98,7 @@ public String loginUser(String username, String password){
         User user = userRepo.findByUsername(username).get();
 
         if (!user.getIsEmailConfirmed()) {
-            throw new RuntimeException("Email not confirmed");
+            throw new RuntimeException("Email not confirmed check your email and click on the link");
         }
 
         return tokenService.generateJwt(auth);

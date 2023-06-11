@@ -13,6 +13,8 @@ import com.HemlockStudiosWebsite.entity.CartItem;
 import com.HemlockStudiosWebsite.entity.Product;
 import com.HemlockStudiosWebsite.entity.User;
 import com.HemlockStudiosWebsite.events.PurchaseMadeEvent;
+import com.HemlockStudiosWebsite.events.ReceiptEvent;
+import com.HemlockStudiosWebsite.events.TotalEvent;
 import com.HemlockStudiosWebsite.repo.CartItemRepo;
 import com.HemlockStudiosWebsite.repo.CartRepo;
 
@@ -100,6 +102,16 @@ public void makePurchase() {
     User currentUser = userService.findUserByEmail();
     Cart cart = currentUser.getCart();
     List<CartItem> cartItems = cart.getItemsInCart();
+    String userEmail = currentUser.getEmail();
+
+    Double total;
+    
+    if(cart.getTotal() == cart.getDiscountedTotal())
+    {
+        total = cart.getTotal();
+    }else total = cart.getDiscountedTotal();
+
+    eventPublisher.publishEvent(new TotalEvent(total));
 
     List<ProductSaleInfoDTO> productSales = new ArrayList<>();
     for (CartItem item : cartItems) {
@@ -107,6 +119,7 @@ public void makePurchase() {
     }
 
     eventPublisher.publishEvent(new PurchaseMadeEvent(productSales));
+    eventPublisher.publishEvent(new ReceiptEvent(userEmail, productSales));
 
     cart.getItemsInCart().clear();
     updateCartTotal(cart);

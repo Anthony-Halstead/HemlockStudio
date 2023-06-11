@@ -70,9 +70,17 @@ function Get({ entityType }) {
   
   const handleUpdateSubmit = (updatedItem) => {
     // Transform the photoAlbum array to imgUrls array
-    updatedItem.imgUrls = updatedItem.photoAlbum.map(photo => photo.photoUrl);
-    // Remove the original photoAlbum field
-    delete updatedItem.photoAlbum;
+    if (updatedItem.photoAlbum) {
+      updatedItem.imgUrls = updatedItem.photoAlbum.map(photo => photo.photoUrl);
+      delete updatedItem.photoAlbum;
+    }
+    
+    // Handle the photoReal field
+    if (updatedItem.photoReal) {
+      // Process the photoReal field as needed
+      // For example:
+      updatedItem.photoReal = updatedItem.photoReal.map(photo => photo.photoUrl);
+    }
   
     let jwtToken = localStorage.getItem("token");
     console.log("In the handle update submit with this product", updatedItem)
@@ -104,6 +112,7 @@ function Get({ entityType }) {
         setSelectedItem(null);
       });
   };
+  const isCouponEntity = entityType === 'coupon';
 
   return (
     <div>
@@ -111,7 +120,7 @@ function Get({ entityType }) {
       <table className="table-container">
         <thead>
           <tr>
-          <th></th>
+            {!isCouponEntity && <th></th>}
             <th></th>
             {entityFields[entityType].map((field) => (
               <th key={field}>{field}</th>
@@ -121,19 +130,17 @@ function Get({ entityType }) {
         <tbody>
           {data.map((item) => (
             <tr key={item.id}>
-              <td>
-                <button onClick={() => handleUpdate(item.id)}>Update</button>
-              </td>
+              {!isCouponEntity && (
+                <td>
+                  <button onClick={() => handleUpdate(item.id)}>Update</button>
+                </td>
+              )}
               {entityType !== 'user' && (
                 <td>
                   <button onClick={() => handleDelete(item.id)}>Delete</button>
                 </td>
               )}
-                  {entityType == 'user' && (
-                <td>
-               
-                </td>
-              )}
+              {entityType === 'user' && <td></td>}
               {entityFields[entityType].map((field) => (
                 <td key={field}>{item[field]}</td>
               ))}

@@ -16,7 +16,7 @@ function CreditCard(props) {
   useEffect(() => {
     let jwtToken = localStorage.getItem("token");
     if (jwtToken) {
-        console.log("creditcard JWT Token Checkpoint", jwtToken)
+      console.log("creditcard JWT Token Checkpoint", jwtToken)
       axios
         .get('http://localhost:8080/user/findCreditCards', {
           headers: {
@@ -30,7 +30,7 @@ function CreditCard(props) {
           console.error('Error fetching credit cards', error);
         });
     }
-}, [props.user]);
+  }, [props.user]);
 
   useEffect(() => {
     if (selectedCard) {
@@ -67,13 +67,13 @@ function CreditCard(props) {
 
 
   const handleSaveClick = () => {
- console.log("in the handle save click", creditCardInfo)
+    console.log("in the handle save click", creditCardInfo)
 
     let jwtToken = localStorage.getItem("token");
     if (jwtToken) {
       console.log("JWT TOKEN", jwtToken)
       axios
-        .post( 'http://localhost:8080/user/addCreditCard', creditCardInfo, {
+        .post('http://localhost:8080/user/addCreditCard', creditCardInfo, {
           headers: {
             'Authorization': `Bearer ${jwtToken}`
           }
@@ -94,7 +94,7 @@ function CreditCard(props) {
           console.error('Error adding credit card:', error);
         });
     }
-};
+  };
 
   const handleUpdateClick = () => {
     if (!props.user || !props.user.id) {
@@ -102,7 +102,7 @@ function CreditCard(props) {
       console.error('User object is invalid');
       return;
     }
-  
+
     const updatedCard = {
       creditCardId: selectedCard.creditCardId,
       cardNumber: creditCardInfo.cardNumber,
@@ -111,7 +111,7 @@ function CreditCard(props) {
       cardHolderName: creditCardInfo.cardHolderName,
       cvv: creditCardInfo.cvv,
     };
-  
+
     axios
       .put('http://localhost:8080/user/updateCreditCard', updatedCard)
       .then((response) => {
@@ -131,54 +131,84 @@ function CreditCard(props) {
 
   const handleRemove = (card) => {
     console.log("in the handle remove", card)
-   
+
     let jwtToken = localStorage.getItem("token");
     const cardDeleteData = card.id;
-  
+
     console.log(cardDeleteData)
     if (jwtToken) {
-        console.log("JWT TOKEN", jwtToken)
-        axios
+      console.log("JWT TOKEN", jwtToken)
+      axios
         .delete(`http://localhost:8080/user/removeCreditCard/${cardDeleteData}`, {
           headers: {
             'Authorization': `Bearer ${jwtToken}`
           }
         })
-      .then((response) => {
-        console.log(response.data);
-        props.setUpdateUser({});
-      })
-      .catch((error) => {
-        console.error('Error removing credit card:', error);
-      });
+        .then((response) => {
+          console.log(response.data);
+          props.setUpdateUser({});
+        })
+        .catch((error) => {
+          console.error('Error removing credit card:', error);
+        });
     }
   };
-  
+
+
+  const handleSetDefault = (card) => {
+    let jwtToken = localStorage.getItem('token');
+
+    if (jwtToken) {
+      axios.put(
+        'http://localhost:8080/user/setDefaultCreditCard',
+        { defaultCardId: card.id },
+        {
+          headers: {
+            Authorization: `Bearer ${jwtToken}`,
+          },
+        }
+      )
+        .then((response) => {
+          console.log(response.data);
+          props.setUpdateUser({});
+        })
+        .catch((error) => {
+          console.error('Error setting default credit card:', error);
+        });
+    }
+  };
 
   return (
     <div>
       <h3>Credit Card Information</h3>
       {!editable && (
-      <div>
-        {creditCards.map((creditCard) => (
-          <div key={creditCard.id}>
-            <p>Card Number: {creditCard.cardNumber}</p>
-            <p>Expiration Month: {creditCard.expirationMonth}</p>
-            <p>Expiration Year: {creditCard.expirationYear}</p>
-            <p>Card Holder Name: {creditCard.cardHolderName}</p>
-            <p>CVV: {creditCard.cvv}</p>
-            <button onClick={() => handleToggleEdit(creditCard)}>
-              Edit
-            </button>
-            <button onClick={() => handleRemove(creditCard)}>
-              Remove
-            </button>
-            <hr />
-          </div>
-        ))}
-        <button onClick={() => handleToggleEdit(null)}>Add Credit Card</button>
-      </div>
-    )}
+        <div>
+          {creditCards.map((creditCard) => (
+            <div key={creditCard.id}>
+              <p>Card Number: {creditCard.cardNumber}</p>
+              <p>Expiration Month: {creditCard.expirationMonth}</p>
+              <p>Expiration Year: {creditCard.expirationYear}</p>
+              <p>Card Holder Name: {creditCard.cardHolderName}</p>
+              <p>CVV: {creditCard.cvv}</p>
+              <button onClick={() => handleToggleEdit(creditCard)}>
+                Edit
+              </button>
+              <button onClick={() => handleRemove(creditCard)}>
+                Remove
+              </button>
+              <input
+                type="radio"
+                name="defaultCard"
+                checked={creditCard.id === props.defaultCardId}
+                onChange={() => handleSetDefault(creditCard)}
+              />
+              Set as Default
+              <hr />
+            </div>
+          ))}
+          <button onClick={() => handleToggleEdit(null)}>Add Credit Card</button>
+        </div>
+      )}
       {!editable && creditCards.length === 0 && (
         <p>No credit cards found.</p>
       )}

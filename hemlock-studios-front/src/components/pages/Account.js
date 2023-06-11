@@ -16,7 +16,7 @@ function Account(props) {
       <AddToCartButton user={props.user} setUser={props.setUser} setUpdateUser={props.setUpdateUser}/>
 
       <h2>Notifications</h2>
-      <NotificationsToggle user={props.user} setUser={props.setUser} setUpdateUser={props.setUpdateUser}/>
+      <NotificationsToggle setUpdateUser={props.setUpdateUser}/>
       
     </div>
   );

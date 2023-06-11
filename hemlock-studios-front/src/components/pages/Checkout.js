@@ -1,7 +1,7 @@
 import axios from 'axios';
 import React, { useEffect, useState } from 'react';
-import CreditCard from '../reusables/CreditCard';
 import { Link, useNavigate } from 'react-router-dom';
+import DefaultCreditCard from '../reusables/DefaultCreditCard';
 
 function Checkout() {
   useEffect(() => {
@@ -18,7 +18,7 @@ function Checkout() {
 
   const handleSubmit = () => {
     let jwtToken = localStorage.getItem('token');
-    axios.put('http://localhost:8080/cart/makePurchase',
+    axios.post('http://localhost:8080/cart/makePurchase',
         {
           headers: {
             Authorization: `Bearer ${jwtToken}`,
@@ -26,7 +26,6 @@ function Checkout() {
         }
       )
       .then((response) => {
-      
         navigator('/receipt');
       })
       .catch((error) => {
@@ -118,7 +117,7 @@ function Checkout() {
 
   return (
     <div>
-      <CreditCard />
+      <DefaultCreditCard />
       <div>
         Enter Coupon Code:
         <input
@@ -129,9 +128,7 @@ function Checkout() {
           onKeyUp={handleCouponCode}
         />
       </div>
-      <div>
-        Cart Total: ${cartTotal}
-      </div>
+      <div>Cart Total: ${cartTotal.toFixed(2)}</div>
       <div>
         <button onClick={handleSubmit}>Submit</button>
       </div>

@@ -8,6 +8,7 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.OneToMany;
+import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
 
 @Entity
@@ -23,5 +24,38 @@ public class Analytics {
 
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "analytics")
     private List<CouponAnalytics> couponAnalyticsList;
-    // other fields, constructors, getters, setters
+
+    @OneToOne(cascade = CascadeType.ALL, mappedBy = "analytics")
+    private RevenueAnalytics revenueAnalytics;
+
+    public Integer getId() {
+        return id;
+    }
+
+    public List<ProductAnalytics> getProductAnalyticsList() {
+        return productAnalyticsList;
+    }
+
+    public void setProductAnalyticsList(List<ProductAnalytics> productAnalyticsList) {
+        this.productAnalyticsList = productAnalyticsList;
+    }
+
+    public List<CouponAnalytics> getCouponAnalyticsList() {
+        return couponAnalyticsList;
+    }
+
+    public void setCouponAnalyticsList(List<CouponAnalytics> couponAnalyticsList) {
+        this.couponAnalyticsList = couponAnalyticsList;
+    }
+
+    public RevenueAnalytics getRevenueAnalytics() {
+        return revenueAnalytics;
+    }
+
+    public void setRevenueAnalytics(RevenueAnalytics revenueAnalytics) {
+        this.revenueAnalytics = revenueAnalytics;
+    }
+   
+
+    
 }

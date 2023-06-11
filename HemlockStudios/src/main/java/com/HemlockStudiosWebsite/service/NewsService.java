@@ -1,15 +1,18 @@
 package com.HemlockStudiosWebsite.service;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.stereotype.Service;
 
 import com.HemlockStudiosWebsite.entity.News;
 import com.HemlockStudiosWebsite.entity.Photo;
 import com.HemlockStudiosWebsite.enums.NewsEnums;
+import com.HemlockStudiosWebsite.events.NewsMadeEvent;
 import com.HemlockStudiosWebsite.repo.NewsRepo;
 
 @Service
@@ -20,7 +23,8 @@ public class NewsService {
     @Autowired
     PhotoService photoService;
 
-
+    @Autowired
+    ApplicationEventPublisher eventPublisher;
 
     public List<News> getAll()
     {
@@ -43,6 +47,7 @@ public class NewsService {
                Photo newPhoto = photoService.createPhoto(imgUrl);
                news.getPhotoReal().add(newPhoto);
             }
+            eventPublisher.publishEvent(new NewsMadeEvent(news));
            newsRepo.save(news);
            System.out.println("News saved successfully");
         } catch (Exception e) {
@@ -58,38 +63,39 @@ public class NewsService {
             Optional<News> optionalNews = newsRepo.findById(id);
             if (optionalNews.isPresent()) {
                 News news = optionalNews.get();
-
-            news.setDescription(description);
-            news.setTitle(title);
-            news.setBody(body);
-            NewsEnums.Anouncement anouncementEnum = NewsEnums.Anouncement.valueOf(anouncement);
-            news.setAnouncement(anouncementEnum);
-
-                List<Photo> currentPhotos = news.getPhotoReal();
-                for (Photo photo : currentPhotos) {
-                    // Remove the photo from the news photo real
-                    news.getPhotoReal().remove(photo);
-                    // Delete the photo from the photo repository
-                    photoService.deleteById(photo.getId());
-                }
-                
+    
+                news.setDescription(description);
+                news.setTitle(title);
+                news.setBody(body);
+                NewsEnums.Anouncement anouncementEnum = NewsEnums.Anouncement.valueOf(anouncement);
+                news.setAnouncement(anouncementEnum);
+    
+                // Get a copy of the current photo real
+                List<Photo> currentPhotos = new ArrayList<>(news.getPhotoReal());
+    
+                // Clear the photo real
+                news.getPhotoReal().clear();
+    
+                // // Delete all photos from the photo repository
+                // for (Photo photo : currentPhotos) {
+                //     photoService.deleteById(photo.getId());
+                // }
+                    
                 for (String imgUrl : imgUrls) {
                     System.out.println("Creating photo for url: " + imgUrl);
                     Photo newPhoto = photoService.createPhoto(imgUrl);
                     news.getPhotoReal().add(newPhoto);
                 }
-                
-                // Save the updated product
+                    
+                // Save the updated news
                 newsRepo.save(news);
-                System.out.println("News saved successfully");
+                System.out.println("News updated successfully");
             }
         } catch (Exception e) {
-            System.out.println("Error during product creation: " + e.getMessage());
+            System.out.println("Error during news update: " + e.getMessage());
             e.printStackTrace();
         }
     }
-    
-
 
     public News save(News news){
          return newsRepo.save(news);

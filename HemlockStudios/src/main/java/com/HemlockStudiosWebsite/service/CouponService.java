@@ -3,11 +3,13 @@ package com.HemlockStudiosWebsite.service;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.stereotype.Service;
 
 import com.HemlockStudiosWebsite.entity.Cart;
 import com.HemlockStudiosWebsite.entity.Coupon;
 import com.HemlockStudiosWebsite.entity.User;
+import com.HemlockStudiosWebsite.events.CouponMadeEvent;
 import com.HemlockStudiosWebsite.repo.CouponRepo;
 
 @Service
@@ -19,6 +21,9 @@ public class CouponService {
     CartService cartService;
     @Autowired
     UserService userService;
+    @Autowired
+    ApplicationEventPublisher eventPublisher;
+
 
     public void applyCouponDiscount(String couponCode) {
         User currentUser = userService.findUserByEmail();
@@ -33,7 +38,7 @@ public class CouponService {
             cartService.saveCart(cart);
             System.out.println("Discount applied successfully. New discounted total: " + discountedTotal);
         } else {
-            
+
             System.out.println("No coupon found with the provided code");
         }
     }
@@ -58,10 +63,12 @@ public class CouponService {
     
     //     return newTotal;
     // }
+    
     public Coupon createCoupon(String couponCode, Double discountValue) {
         Coupon coupon = new Coupon();
         coupon.setCouponCode(couponCode);
         coupon.setDiscountValue(discountValue);
+        eventPublisher.publishEvent(new CouponMadeEvent(coupon));
         return couponRepo.save(coupon);
     }
 

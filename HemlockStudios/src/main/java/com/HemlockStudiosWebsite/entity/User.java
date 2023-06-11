@@ -57,6 +57,12 @@ private Integer id;
     @JoinColumn(name = "cart_id")
     private Cart cart;
 
+    @Column(name = "notifications_enabled", nullable = false)
+    private Boolean notificationsEnabled = false;
+
+    @Column(name = "first_time_login", nullable = false)
+    private Boolean firstTimeLogin = true;
+
 @ManyToMany(cascade = CascadeType.REMOVE)
     @JoinTable(
         name = "user_favorite_products",
@@ -196,5 +202,14 @@ private Integer id;
     public boolean isEnabled() {
     return true;
     }
+
+    public Boolean getNotificationsEnabled() {
+        return notificationsEnabled;
+    }
+
+    public void setNotificationsEnabled(Boolean notificationsEnabled) {
+        this.notificationsEnabled = notificationsEnabled;
+    }
+
 
 }
