@@ -60,15 +60,16 @@ public class CreditCardService {
         return creditCardRepo.findAll();
     }
   
-    public CreditCard createCreditCard(String cardNumber, String cardHolderName, String expirationMonth, String expirationYear, String cvv) {
+    public CreditCard createCreditCard(String cardNumber, String expirationMonth, String expirationYear,  String cardHolderName, String cvv) {
       
         CreditCard creditCard = new CreditCard();
         creditCard.setCardNumber(cardNumber);
-        creditCard.setCardHolderName(cardHolderName);
         creditCard.setExpirationMonth(expirationMonth);
         creditCard.setExpirationYear(expirationYear);
+        creditCard.setCardHolderName(cardHolderName);
         creditCard.setCvv(cvv);
-
+        creditCard.setDefaultCard(false);
+System.out.println("createCredit card path "+creditCard);
         return creditCardRepo.save(creditCard);
     }
 
@@ -87,22 +88,28 @@ public class CreditCardService {
         creditCardRepo.save(cardToUpdate);
     }
 
-    public void setDefaultCreditCard(Integer id)
-    {
+    public void setDefaultCreditCard(Integer id) {
+        System.out.println("In the setDefault Credit Card path");
         User user = userService.findUserByEmail();
         CreditCard currentCard = creditCardRepo.findById(id)
-        .orElseThrow(() -> new RuntimeException("Credit card not found"));
+            .orElseThrow(() -> new RuntimeException("Credit card not found"));
         List<CreditCard> cards = user.getWallet();
-
-        for(CreditCard card : cards)
-        {
-            if(card.getDefaultCard() == true)
-            {
-                card.setDefaultCard(false);
+    
+        if (currentCard.getDefaultCard()) {
+            System.out.println("Current card is already the default card.");
+            return;
+        } else {
+            for (CreditCard card : cards) {
+                if (currentCard.equals(card)) {
+                    card.setDefaultCard(true);
+                    creditCardRepo.save(card);
+                } else {
+                    card.setDefaultCard(false);
+                    creditCardRepo.save(card);
+                }
             }
+            System.out.println("Default credit card set successfully."+currentCard.getDefaultCard());
         }
-
-        currentCard.setDefaultCard(true);
     }
 
     public CreditCard getDefaultCreditCard()
@@ -123,14 +130,12 @@ public class CreditCardService {
     }
 
 
-    public void addCreditCard(String cardNumber, String expirationYear, String  expirationMonth, String cardHolderName, String cvv) {
+    public void addCreditCard(String cardNumber, String  expirationMonth, String expirationYear,  String cardHolderName, String cvv) {
         // Get authentication
         System.out.println("in the add credit card SERVICE path");
-        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-         Jwt jwt = (Jwt) auth.getPrincipal();
-         String email = jwt.getClaim("email");
-        User currentUser = userService.findByEmail(email);
-         CreditCard savedCreditCard = createCreditCard(cardNumber, cardHolderName, expirationMonth, expirationYear, cvv);
+       
+        User currentUser = userService.findUserByEmail();
+         CreditCard savedCreditCard = createCreditCard(cardNumber, expirationMonth, expirationYear, cardHolderName, cvv);
          currentUser.getWallet().add(savedCreditCard);
         userService.save(currentUser);
      }

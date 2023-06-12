@@ -2,6 +2,7 @@ import axios from 'axios';
 import React, { useEffect, useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import DefaultCreditCard from '../reusables/DefaultCreditCard';
+import '../../css/pages/checkout.css'
 
 function Checkout() {
   useEffect(() => {
@@ -116,7 +117,7 @@ function Checkout() {
   }
 
   return (
-    <div>
+    <div className='checkout-content'>
       <DefaultCreditCard />
       <div>
         Enter Coupon Code:

@@ -1,19 +1,21 @@
 .product {
-    border: 1px solid #ccc;
+    border: 1px solid white;
     padding: 20px;
-    margin: 20px;
-    width: 200px; /* Adjust as needed */
+    margin: 10px;
+    width: 200px; 
+    height: 46%;
     text-align: center;
     box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    background-color: rgb(255, 255, 255, 0.6);
   }
   
   .product img {
-    width: 100%;
-    height: auto;
+    width: 200px;
+    height: 200px;
+    object-fit: cover; 
   }
-  
   .product h2 {
-    margin-top: 20px;
+    margin-top: 0px;
     font-size: 18px;
   }
   
@@ -30,7 +32,7 @@
   .product:hover{
     transform:scale(1.07);
     transition: transform 0.1s ease-in;
-    box-shadow: 0 0 12px black;
+    box-shadow: 0 0 12px rgb(0, 0, 0, .8);
   }
 
   .favorite-icon{

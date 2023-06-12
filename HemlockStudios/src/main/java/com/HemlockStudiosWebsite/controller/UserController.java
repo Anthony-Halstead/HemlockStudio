@@ -277,12 +277,19 @@ public ResponseEntity<Object> currentUser() {
     }
     
     @RequestMapping(value = "/toggleNotification", method = RequestMethod.PUT, produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<Boolean> getNotificationStatus(){
+    public ResponseEntity<Object> setNotificationStatus(){
+        System.out.println("In the toggle notification");
+        userService.setNotificationStatus();
+        return ResponseEntity.ok(HttpStatus.OK);
+    }
+
+    @GetMapping("/getNotificationStatus")
+    public ResponseEntity<Boolean> getStatus(){
         Boolean notificationStatus = userService.getNotificationStatus();
         return ResponseEntity.ok(notificationStatus);
     }
 
-    @RequestMapping(value = "/setDefaultCreditCard", method = RequestMethod.PUT, produces = MediaType.APPLICATION_JSON_VALUE)
+    @RequestMapping(value = "/setDefaultCreditCard", method = RequestMethod.PUT, consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<Object> setDefaultCard(@RequestBody Integer defaultCardId) {
         creditCardService.setDefaultCreditCard(defaultCardId);
         return ResponseEntity.ok(HttpStatus.OK);

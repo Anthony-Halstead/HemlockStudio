@@ -54,7 +54,7 @@ function Favorites(props) {
           )}
           <h2>{product.name}</h2>
           <p>{product.description}</p>
-          <p>${product.price}</p>
+          <p>${product.price.toFixed(2)}</p>
           <button onClick={() => removeFavorite(product.id)}>Remove from favorites</button>
           {/* Add any other product details you want to display */}
         </div>

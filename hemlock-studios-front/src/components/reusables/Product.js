@@ -108,7 +108,9 @@ function Product({ product, onClick, setUpdateUser }) {
         <h2>{product.name}</h2>
         <p>{product.description}</p>
         <p>${product.price.toFixed(2)}</p>
+        <div>
         <AddToCartButton onAddToCartClick={handleAddToCartClick} />
+        </div>
       </div>
     </div>
   );

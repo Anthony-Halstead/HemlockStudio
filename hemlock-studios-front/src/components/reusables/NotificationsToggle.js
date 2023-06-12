@@ -1,12 +1,37 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import '../../css/reusables/notificationstoggle.css';
 
 function NotificationsToggle(props) {
-  const handleToggle = () => {
+  const [notificationStatus, setNotificationStatus] = useState(false);
+
+  useEffect(() => {
+    let jwtToken = localStorage.getItem('token');
     axios
-      .put('http://localhost:8080/user/toggleNotification')
+      .get('http://localhost:8080/user/getNotificationStatus', {
+        headers: {
+          Authorization: `Bearer ${jwtToken}`,
+        },
+      })
       .then(response => {
+        setNotificationStatus(response.data);
+        console.log('Notification status retrieved successfully');
+      })
+      .catch(error => {
+        console.log('Error retrieving notification status:', error);
+      });
+  }, []);
+
+  const handleToggle = () => {
+    let jwtToken = localStorage.getItem('token');
+    axios
+      .put('http://localhost:8080/user/toggleNotification', null, {
+        headers: {
+          Authorization: `Bearer ${jwtToken}`,
+        },
+      })
+      .then(response => {
+        setNotificationStatus(response.data);
         props.setUpdateUser({});
         console.log('Toggle Success');
       })
@@ -18,7 +43,7 @@ function NotificationsToggle(props) {
   return (
     <div className="notifications-toggle">
       <label className="toggle-switch">
-        <input type="checkbox" onChange={handleToggle} />
+        <input type="checkbox" checked={notificationStatus} onChange={handleToggle} />
         <span className="toggle-slider"></span>
       </label>
       <span className="toggle-label">Notifications</span>

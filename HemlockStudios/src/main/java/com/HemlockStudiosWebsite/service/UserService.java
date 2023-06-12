@@ -99,17 +99,27 @@ public class UserService implements UserDetailsService{
 			.orElseThrow(() -> new UsernameNotFoundException("User not found"));
 	}
 
-    public Boolean getNotificationStatus(){
+
+    public Boolean getNotificationStatus()
+    {
+      
+        User currentUser = findUserByEmail();
+        Boolean notificationStatus = currentUser.getNotificationsEnabled();
+        return notificationStatus;
+    }
+
+    public void setNotificationStatus(){
         User currentUser = findUserByEmail();
         Boolean notificationStatus = currentUser.getNotificationsEnabled();
         if(notificationStatus == true)
         {
-            notificationStatus = false;
-            return notificationStatus;
+            currentUser.setNotificationsEnabled(false);
+            userRepo.save(currentUser);
+      
         } 
         else{
-            notificationStatus = true;
-        return notificationStatus;
+            currentUser.setNotificationsEnabled(true);
+            userRepo.save(currentUser);
     }
     }
 

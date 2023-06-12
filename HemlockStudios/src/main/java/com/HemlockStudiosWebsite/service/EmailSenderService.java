@@ -93,7 +93,7 @@ public void sendReceiptHtmlEmail( List<ProductSaleInfoDTO> productSales, String 
     public void sendNewsCreatedHtmlEmail(News createdNews) {
         List<User> users = userService.getAll();
         for (User user : users) {
-            if (user.getNotificationsEnabled()) {
+            if (user.getNotificationsEnabled() == true) {
                 sendNewsEmail(user.getEmail(), createdNews);
             }
         }
@@ -130,7 +130,7 @@ public void sendReceiptHtmlEmail( List<ProductSaleInfoDTO> productSales, String 
     public void sendProductCreatedHtmlEmail(Product createdProduct) {
         List<User> users = userService.getAll();
         for (User user : users) {
-            if (user.getNotificationsEnabled()) {
+            if (user.getNotificationsEnabled() == true) {
                 sendProductEmail(user.getEmail(), createdProduct);
             }
         }
@@ -168,7 +168,7 @@ public void sendReceiptHtmlEmail( List<ProductSaleInfoDTO> productSales, String 
     public void sendCouponCreatedHtmlEmail(Coupon createdCoupon) {
         List<User> users = userService.getAll();
         for (User user : users) {
-            if (user.getNotificationsEnabled()) {
+            if (user.getNotificationsEnabled() == true) {
                 sendCouponEmail(user.getEmail(), createdCoupon);
             }
         }

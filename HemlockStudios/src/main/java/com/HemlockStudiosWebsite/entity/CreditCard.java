@@ -28,7 +28,7 @@ public class CreditCard {
     @Column(name = "cvv")
     private String cvv;
 
-@Column(name = "default")
+@Column(name = "default_card")
 private Boolean defaultCard;
 
     public Integer getId() {
