@@ -1,18 +1,31 @@
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import axios from 'axios';
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import '../../css/reusables/additive.css';
 import { faSquareMinus, faSquarePlus } from '@fortawesome/free-solid-svg-icons';
 import '../../css/pages/addproduct.css';
+import { ToastContext } from '../reusables/ToastContext';
 
 function AddNews() {
     const [anouncements, setAnouncements] = useState([]);
     const [selectedAnouncement, setSelectedAnouncement] = useState('NULL');
+    const { setMessage } = useContext(ToastContext);
 
+    const handleAddedMessage = () => {
+      setMessage('A New News Item Was Created');
+  };
+  
    
     useEffect(() => {
+      let jwtToken = localStorage.getItem('token');
       axios
-        .get('http://localhost:8080/enums/findAll')
+        .get('http://localhost:8080/enums/findAll',
+        {
+          headers: {
+            Authorization: `Bearer ${jwtToken}`,
+          },
+        }
+      )
         .then((response) => {
           const { anouncements} = response.data;
           setAnouncements(anouncements);
@@ -74,7 +87,7 @@ function AddNews() {
   
     const handleAddNewsSubmit = (event) => {
       event.preventDefault();
-  
+      let jwtToken = localStorage.getItem('token');
       const newsData = {
         title: newNews.title,
         description: newNews.description,
@@ -88,7 +101,13 @@ function AddNews() {
   console.log(selectedAnouncement)
   console.log(newNews.imgUrls)
       axios
-        .post('http://localhost:8080/news/createNews', newsData)
+        .post('http://localhost:8080/news/createNews', newsData,
+        {
+          headers: {
+            Authorization: `Bearer ${jwtToken}`,
+          },
+        }
+      )
         .then((response) => {
           console.log(response.data);
           setNewNews({
@@ -101,13 +120,20 @@ function AddNews() {
         })
         .catch((error) => {
           console.log(error);
+          handleAddedMessage();
         });
     };
     
+    const handleKeyDown = (event) => {
+      event.stopPropagation();
+    }
+
     return (
       <div className='add-product-content'>
-       {/* Anouncement dropdown */}
+         <h1>Add News</h1>
+         <div> Anouncement</div>
   <select value={selectedAnouncement} onChange={handleAnouncementChange} name='anouncements'>
+   
     {anouncements.map((anouncement) => (
       <option key={anouncement} value={anouncement}>
         {anouncement}
@@ -116,15 +142,30 @@ function AddNews() {
   </select>  
         <div>
           Title
-          <input value={newNews.title} name='title' type='text' onChange={inputFieldChangeHandler}></input>
+          <div className='input-container'>
+          <input placeholder="Title..." className='input-field' value={newNews.title} name='title' type='text' onChange={inputFieldChangeHandler}></input>
+          </div>
         </div>
         <div>
           Description
-          <input value={newNews.description} name='description' type='text' onChange={inputFieldChangeHandler}></input>
+          <div className='input-container'>
+          <input placeholder="Description..." className='input-field' value={newNews.description} name='description' type='text' onChange={inputFieldChangeHandler}></input>
+          </div>
         </div>
         <div>
           Body
-          <input value={newNews.body} name='body' type='text' onChange={inputFieldChangeHandler}></input>
+          <div className='input-container'>
+          <textarea
+          className='about-textarea'
+          placeholder="Body..."
+          value={newNews.body}
+          name='body'
+          type='text'
+          onKeyDown={handleKeyDown}
+          onChange={inputFieldChangeHandler}
+        ></textarea>
+          
+          </div>
         </div>
         <div className='add-flex-column'>
           Images
@@ -138,7 +179,7 @@ function AddNews() {
           <FontAwesomeIcon className='additive-icon' icon={faSquarePlus} onClick={addInputFieldHandler} />
         </div>
         <div>
-          <button onClick={handleAddNewsSubmit}>SUBMIT</button>
+          <button className='submit-button' onClick={handleAddNewsSubmit}>SUBMIT</button>
         </div>
       </div>
     );

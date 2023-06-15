@@ -121,11 +121,16 @@ public void makePurchase() {
     eventPublisher.publishEvent(new PurchaseMadeEvent(productSales));
     eventPublisher.publishEvent(new ReceiptEvent(userEmail, productSales));
 
+    // Remove all items from cart and from the cartItemRepo
+    for (CartItem item : cartItems) {
+        cartItemRepo.delete(item);
+    }
+
+    // Clear the items in cart and update total
     cart.getItemsInCart().clear();
     updateCartTotal(cart);
     cartService.saveCart(cart);
 }
-
 
 
 }

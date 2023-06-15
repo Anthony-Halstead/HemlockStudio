@@ -1,8 +1,65 @@
-.account-content{
+
+  .account-content{
+      display: flex;
+      flex-direction: column;
+      justify-content:center;
+      align-items:center;
+      height: 100%;
+      width: 100%;
+      overflow: hidden;  
+      background-image: url('../../images/SnowMountains.png');
+   
+    background-repeat: no-repeat;
+    background-size: cover;
+  }
+  
+  .account-container{
     display: flex;
     flex-direction: column;
     justify-content:center;
     align-items:center;
-    height: 100%;
+    margin-top: 8%;
+    height: 90%;
     width: 100%;
-}
+    overflow: hidden; 
+   
+  }
+  .account-content-panel{
+      display: flex;
+      flex-direction: row;
+      background-color: rgba(3, 68, 81, 0.7);
+      padding-top: 1%;
+      padding-bottom: 1%;
+      height: 10%;
+      width: 100%;
+      overflow-x: auto;
+      white-space: nowrap;
+    margin-bottom: 2%;
+  }
+  
+  .favorite-item {
+      border: 1px solid black; 
+      margin-right: 1em; 
+      flex-shrink: 0; 
+      width: 200px; 
+      background-color: rgb(245, 245, 245, 0.9);
+      height: fit-content;
+  }
+  .favorite-item img{
+    height: 200px;
+    width:200px;
+ 
+  }
+  .account-panel-columns{
+      display: flex;
+      flex-direction: column;
+      padding: 1em;
+  }
+
+  .credit-card-panel{
+    width: fit-content;
+    height: fit-content;
+    background-color: rgba(3, 68, 81, 0.7);
+    border: 1px solid black;
+    margin-bottom: 1%;
+  }

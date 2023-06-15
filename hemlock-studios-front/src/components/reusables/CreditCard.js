@@ -1,5 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
+import '../../css/pages/account.css'
+import'../../css/reusables/custombutton.css'
 
 function CreditCard(props) {
   const [editable, setEditable] = useState(false);
@@ -275,17 +277,16 @@ function CreditCard(props) {
 
   return (
     <div>
-      <h3>Credit Card Information</h3>
       {!editable && (
-        <div>
+        <div >
           {creditCards.map((creditCard) => (
-            <div key={creditCard.id}>
+            <div key={creditCard.id} className='credit-card-panel'>
               <p>Card Number: {creditCard.cardNumber}</p>
               <p>Expiration Month: {creditCard.expirationMonth}</p>
               <p>Expiration Year: {creditCard.expirationYear}</p>
               <p>Card Holder Name: {creditCard.cardHolderName}</p>            
-              <button onClick={() => handleToggleEdit(creditCard)}>Edit</button>
-              <button onClick={() => handleRemove(creditCard)}>Remove</button>
+              <button className='custom-button' onClick={() => handleToggleEdit(creditCard)}>Edit</button>
+              <button className='custom-button'  onClick={() => handleRemove(creditCard)}>Remove</button>
               <label>
                 <input
                   type="radio"
@@ -298,7 +299,7 @@ function CreditCard(props) {
               <hr />
             </div>
           ))}
-          <button onClick={() => handleToggleEdit(null)}>Add Credit Card</button>
+          <button className='custom-button' onClick={() => handleToggleEdit(null)}>Add Credit Card</button>
         </div>
       )}
       {!editable && creditCards.length === 0 && (
@@ -348,13 +349,13 @@ function CreditCard(props) {
           {formErrors.cvv && <p>{formErrors.cvv}</p>}
           {selectedCard ? (
             <div>
-              <button onClick={handleUpdateClick}>Update Credit Card</button>
-              <button onClick={handleCancelClick}>Cancel</button>
+              <button className='custom-button' onClick={handleUpdateClick}>Update Credit Card</button>
+              <button className='custom-button' onClick={handleCancelClick}>Cancel</button>
             </div>
           ) : (
             <div>
-              <button onClick={handleSaveClick}>Save Credit Card</button>
-              <button onClick={handleCancelClick}>Cancel</button>
+              <button className='custom-button' onClick={handleSaveClick}>Save Credit Card</button>
+              <button className='custom-button' onClick={handleCancelClick}>Cancel</button>
             </div>
           )}
         </div>

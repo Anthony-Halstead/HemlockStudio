@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
+import '../../css/reusables/get.css'
 
 const UpdateForm = ({ selectedItem, entityType, onUpdate, onCancel }) => {
   const [updatedValues, setUpdatedValues] = useState({});
@@ -8,10 +9,17 @@ const UpdateForm = ({ selectedItem, entityType, onUpdate, onCancel }) => {
   const [anouncement, setAnouncement] = useState([]);
   const [sizes, setSizes] = useState([]);
   const [newPhotoUrl, setNewPhotoUrl] = useState('');
+
+
   useEffect(() => {
     setUpdatedValues(selectedItem);
+    let jwtToken = localStorage.getItem("token");
     axios
-      .get('http://localhost:8080/enums/findAll')
+      .get('http://localhost:8080/enums/findAll', {
+        headers: {
+          'Authorization': `Bearer ${jwtToken}`
+        }
+      })
       .then((response) => {
         const { categories, subcategories, sizes, anouncements } = response.data;
         setCategories(categories);
@@ -95,6 +103,7 @@ const UpdateForm = ({ selectedItem, entityType, onUpdate, onCancel }) => {
       const localHandleRemovePhoto = field === 'photoAlbum' ? handleRemovePhoto : handleRemovePhotoReal;
       
       return (
+        <div className='table-container-color'>
         <>
           {updatedValues[field].map((photo, index) => (
             <div key={index}>
@@ -123,9 +132,9 @@ const UpdateForm = ({ selectedItem, entityType, onUpdate, onCancel }) => {
             </button>
           </div>
         </>
-      );
+        </div> );
     }  else if (field === 'subcategory') {
-      return (
+      return (  <div className='table-container-color'>
         <select
           value={updatedValues[field] || ''}
           onChange={(e) => handleFieldChange(field, e.target.value)}
@@ -136,9 +145,9 @@ const UpdateForm = ({ selectedItem, entityType, onUpdate, onCancel }) => {
             </option>
           ))}
         </select>
-      );
+        </div>);
     } else if (field === 'size') {
-      return (
+      return (<div className='table-container-color'>
         <select
           value={updatedValues[field] || ''}
           onChange={(e) => handleFieldChange(field, e.target.value)}
@@ -149,9 +158,9 @@ const UpdateForm = ({ selectedItem, entityType, onUpdate, onCancel }) => {
             </option>
           ))}
         </select>
-      );
+        </div>);
     } else if (field === 'anouncement') {
-      return (
+      return (<div className='table-container-color'>
         <select
           value={updatedValues[field] || ''}
           onChange={(e) => handleFieldChange(field, e.target.value)}
@@ -162,19 +171,22 @@ const UpdateForm = ({ selectedItem, entityType, onUpdate, onCancel }) => {
             </option>
           ))}
         </select>
-      );
+        </div>  );
     } else {
-      return (
+      return (<div className='table-container-color'>
         <input
           type="text"
           value={updatedValues[field] || ''}
           onChange={(e) => handleFieldChange(field, e.target.value)}
         />
-      );
+     </div> );
+      
     }
+   
   };
 
   return (
+    <div className='table-container-color'>
     <form onSubmit={handleUpdateSubmit}>
       {Object.keys(updatedValues).map((field) => (
         <div key={field}>
@@ -187,6 +199,7 @@ const UpdateForm = ({ selectedItem, entityType, onUpdate, onCancel }) => {
         Cancel
       </button>
     </form>
+    </div>
   );
 };
 

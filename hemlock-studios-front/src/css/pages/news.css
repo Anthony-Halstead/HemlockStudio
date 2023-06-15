@@ -1,9 +1,108 @@
 .news-content{
-    display:flex;
+    display: flex;
     flex-direction: column;
-    width: 100vw;
+    justify-content:center;
+    align-items: center;
     height: 100vh;
-    background-color: white;
-    justify-content: center;
-    color: black;
+    width: 100vw;
+    overflow: hidden;  
+    background-image: url('../../images/SnowMountains.png');
+ background-attachment: fixed;
+  background-repeat: no-repeat;
+  background-size: cover;
 }
+.article-row{
+    display: flex;
+    flex-direction: row;
+}
+.news-container{
+    margin-top: 10%;
+    display:flex;
+    flex-direction: row;
+   
+    
+    background-color: rgb(245, 245, 245, 0.9);
+    padding: 2%;
+    flex-wrap: wrap;
+}
+.announcement {
+    text-decoration: underline;
+}
+.article-container{
+    display: flex;
+    flex-direction: Column;
+    justify-content: center;
+    align-items: center;
+    padding: 5px;
+    height:340px;
+    width:250px;
+    color: white;
+    margin:2%;
+}
+
+.article-container:hover{
+    transform:scale(1.1);
+    transition: transform 0.1s ease-in;
+    box-shadow: 0 0 12px rgb(0, 0, 0,.9);
+    cursor: pointer;
+}
+
+.article-container-with-bg {
+    position:relative;
+    background-size:cover;
+    background-position: center;
+   background-repeat: no-repeat;
+  }
+
+  .article-container-with-bg::after {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(3, 68, 81, 0.8);
+  }
+
+  .article-content{
+    position: relative;
+    z-index: 1;
+}
+.article-popout{
+    position: fixed;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 9999; 
+  }
+  .popout-content{
+    position: relative;
+    z-index: 1;
+  }
+.article-popout-container{
+ 
+   width: 45%;
+   height: 90%;
+   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+   display: flex; 
+   
+   justify-content: center;
+ color: white;
+}
+.article-popout-container-with-bg{
+    position:relative;
+    background-size: cover;
+    background-position: center;
+}
+.article-popout-container-with-bg::after {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(3, 68, 81, 0.8);
+  }

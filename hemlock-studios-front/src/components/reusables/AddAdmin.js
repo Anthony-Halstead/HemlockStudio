@@ -1,8 +1,15 @@
 import axios from 'axios';
-import React, { useState } from 'react'
-import '../../css/pages/signinsignup.css'
+import React, { useContext, useState } from 'react'
+import '../../css/pages/addproduct.css';
+import { ToastContext } from '../reusables/ToastContext';
 
 function AddAdmin() {
+    const { setMessage } = useContext(ToastContext);
+
+    const handleAddedMessage = () => {
+      setMessage('A New Admin Profile Was Added');
+  };
+  
     const [errors, setErrors] = useState({})
     const [admin, setAdmin] = useState({
         username: "",
@@ -41,9 +48,17 @@ function AddAdmin() {
 
     const registerSubmitHandler = () => {
         if (validate(admin)) {
-            axios.post("http://localhost:8080/auth/registerAdmin", admin)
+            let jwtToken = localStorage.getItem('token');
+            axios.post("http://localhost:8080/auth/registerAdmin", admin,
+            {
+              headers: {
+                Authorization: `Bearer ${jwtToken}`,
+              },
+            }
+          )
                 .then((response) => {
                     console.log(response.data)
+                    handleAddedMessage();
                 })
                 .catch((e) => {
                     console.log(e);
@@ -51,8 +66,8 @@ function AddAdmin() {
         }
     };
     return (
-        <div >
-            <div className='sign-up-sign-in-box'>
+        <div className='add-product-content'>
+            <div >
                 <h1>Add Admin</h1>
                 <div className='input-container'>
                     <input className='input-field' value={admin.email} name='email' type='email' onChange={registerChangeHandler} placeholder='EMAIL'></input>

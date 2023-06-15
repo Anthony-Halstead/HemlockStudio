@@ -1,9 +1,10 @@
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import axios from 'axios';
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import '../../css/reusables/additive.css';
 import { faSquareMinus, faSquarePlus } from '@fortawesome/free-solid-svg-icons';
 import '../../css/pages/addproduct.css';
+import { ToastContext } from '../reusables/ToastContext';
 
 function AddProduct() {
   const [categories, setCategories] = useState([]);
@@ -12,11 +13,23 @@ function AddProduct() {
   const [selectedCategory, setSelectedCategory] = useState('CLOTHING');
   const [selectedSubcategory, setSelectedSubcategory] = useState('NULL');
   const [selectedSize, setSelectedSize] = useState('NULL');
+  const { setMessage } = useContext(ToastContext);
+
+  const handleAddedMessage = () => {
+    setMessage('New Product Was Created');
+};
 
  
   useEffect(() => {
+    let jwtToken = localStorage.getItem('token');
     axios
-      .get('http://localhost:8080/enums/findAll')
+      .get('http://localhost:8080/enums/findAll',
+      {
+        headers: {
+          Authorization: `Bearer ${jwtToken}`,
+        },
+      }
+    )
       .then((response) => {
         const { categories, subcategories, sizes } = response.data;
         setCategories(categories);
@@ -92,7 +105,7 @@ function AddProduct() {
 
   const handleAddProductSubmit = (event) => {
     event.preventDefault();
-
+    let jwtToken = localStorage.getItem('token');
     const productData = {
       name: newProduct.name,
       description: newProduct.description,
@@ -104,7 +117,13 @@ function AddProduct() {
     };
 
     axios
-      .post('http://localhost:8080/product/createProduct', productData)
+      .post('http://localhost:8080/product/createProduct', productData,
+      {
+        headers: {
+          Authorization: `Bearer ${jwtToken}`,
+        },
+      }
+    )
       .then((response) => {
         console.log(response.data);
         setNewProduct({
@@ -119,12 +138,15 @@ function AddProduct() {
       })
       .catch((error) => {
         console.log(error);
+        handleAddedMessage();
       });
   };
   
   return (
+    
     <div className='add-product-content'>
-     {/* Category dropdown */}
+      <h1>Add Product</h1>
+      <div>Category</div>
 <select value={selectedCategory} onChange={handleCategoryChange} name='category'>
   {categories.map((category) => (
     <option key={category} value={category}>
@@ -132,8 +154,7 @@ function AddProduct() {
     </option>
   ))}
 </select>
-
-{/* Subcategory dropdown */}
+<div>Sub-category</div>
 <select value={selectedSubcategory} onChange={handleSubcategoryChange} name='subcategory'>
   {subcategories.map((subcategory) => (
     <option key={subcategory} value={subcategory}>
@@ -141,8 +162,7 @@ function AddProduct() {
     </option>
   ))}
 </select>
-
-{/* Size dropdown */}
+<div>Sizes</div>
 <select value={selectedSize} onChange={handleSizeChange} name='size'>
   {sizes.map((size) => (
     <option key={size} value={size}>
@@ -153,15 +173,21 @@ function AddProduct() {
 
       <div>
         Name
-        <input value={newProduct.name} name='name' type='text' onChange={inputFieldChangeHandler}></input>
+        <div className='input-container'>
+        <input placeholder="Name"  className='input-field' value={newProduct.name} name='name' type='text' onChange={inputFieldChangeHandler}></input>
+        </div>
       </div>
       <div>
         Description
-        <input value={newProduct.description} name='description' type='text' onChange={inputFieldChangeHandler}></input>
+        <div className='input-container'>
+        <input placeholder="Description"  className='input-field' value={newProduct.description} name='description' type='text' onChange={inputFieldChangeHandler}></input>
+        </div>
       </div>
       <div>
         Price
-        <input value={newProduct.price} name='price' type='number' onChange={inputFieldChangeHandler}></input>
+        <div className='input-container'>
+        <input placeholder="Price"  className='input-field' value={newProduct.price} name='price' type='number' onChange={inputFieldChangeHandler}></input>
+      </div>
       </div>
       <div className='add-flex-column'>
         Images
@@ -175,7 +201,7 @@ function AddProduct() {
         <FontAwesomeIcon className='additive-icon' icon={faSquarePlus} onClick={addInputFieldHandler} />
       </div>
       <div>
-        <button onClick={handleAddProductSubmit}>SUBMIT</button>
+        <button className='submit-button' onClick={handleAddProductSubmit}>SUBMIT</button>
       </div>
     </div>
   );

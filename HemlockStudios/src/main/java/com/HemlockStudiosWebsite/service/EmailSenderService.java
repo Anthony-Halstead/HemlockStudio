@@ -46,6 +46,19 @@ ProductService productService;
         mailSender.send(simpleMailMessage);
     }
 
+    public void contactEmail(String email, String subject, String message){
+ SimpleMailMessage simpleMailMessage = new SimpleMailMessage();
+
+        simpleMailMessage.setFrom(email);
+        simpleMailMessage.setTo("anthony.dan.hal@gmail.com");
+        simpleMailMessage.setSubject(subject);
+        simpleMailMessage.setText(message);
+
+        mailSender.send(simpleMailMessage);
+    }
+
+
+
     @Async
     @EventListener
     public void handleReceiptEvent(ReceiptEvent event) {

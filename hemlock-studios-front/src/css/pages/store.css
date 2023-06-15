@@ -5,7 +5,7 @@
     height: 100vh;
     width: 100vw;
     background-image: url('../../images/SnowMountains.png');
-    background-attachment: fixed;
+   
     background-repeat: no-repeat;
     background-size: cover;
 }
@@ -15,15 +15,13 @@
     flex-direction: row;
     background-color: rgba(3, 68, 81, 0.7);
     margin-top: 7%;
-    margin-left: 2%;
-    margin-right: 2%;
-    margin-bottom: 1%;
-    padding-left: 9%;
+    padding-left: 10%;
     padding-top: 1%;
     padding-bottom: 1%;
     height: 83%;
-    width: 87%;
+    width: 90%;
     flex-wrap: wrap;
     overflow-y: auto;
+ 
     
 }

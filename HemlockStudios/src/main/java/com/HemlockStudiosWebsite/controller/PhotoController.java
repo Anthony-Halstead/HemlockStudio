@@ -53,26 +53,6 @@ public class PhotoController {
     }
 
     @RequestMapping(
-        value="/findPhotoById/{id}",
-        produces = MediaType.APPLICATION_JSON_VALUE,
-        method = RequestMethod.GET
-    )
-    public ResponseEntity<Object> findPhotoById(@PathVariable Integer id) {
-
-        try {
-            Photo foundPhoto = photoService.findById(id);
-            return new ResponseEntity<Object>(foundPhoto, HttpStatus.OK);
-        } catch (Exception e) {
-            System.out.println(e);
-            return new ResponseEntity<Object>(e.getMessage(), HttpStatus.BAD_REQUEST);
-        } catch (Error e) {
-            System.out.println(e);
-            return new ResponseEntity<Object>(e, HttpStatus.INTERNAL_SERVER_ERROR);
-        }
-
-    }
-
-    @RequestMapping(
         value="/findAll",
         produces = MediaType.APPLICATION_JSON_VALUE,
         method = RequestMethod.GET

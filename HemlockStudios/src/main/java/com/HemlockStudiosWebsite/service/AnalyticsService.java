@@ -1,5 +1,7 @@
 package com.HemlockStudiosWebsite.service;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -7,6 +9,8 @@ import org.springframework.context.event.EventListener;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
 
+import com.HemlockStudiosWebsite.dto.AnalyticsDTO;
+import com.HemlockStudiosWebsite.dto.ProductData;
 import com.HemlockStudiosWebsite.dto.ProductSaleInfoDTO;
 import com.HemlockStudiosWebsite.entity.Analytics;
 import com.HemlockStudiosWebsite.entity.Product;
@@ -22,13 +26,13 @@ import com.HemlockStudiosWebsite.repo.RevenueAnalyticsRepo;
 public class AnalyticsService {
 
     @Autowired
-    ProductAnalyticsRepo productAnalyticsRepo;
+    private ProductAnalyticsRepo productAnalyticsRepo;
     @Autowired
-    AnalyticsRepo analyticsRepo;
+    private AnalyticsRepo analyticsRepo;
     @Autowired
-    ProductService productService;
+    private ProductService productService;
     @Autowired
-    RevenueAnalyticsRepo revenueAnalyticsRepo;
+    private RevenueAnalyticsRepo revenueAnalyticsRepo;
 
 
     @Async
@@ -42,13 +46,11 @@ public class AnalyticsService {
     @Async
     @EventListener
     public void handleTotalEvent(TotalEvent event) {
-
             incrementTotalRevenue(event.getTotal());
     }
 
-
     public void incrementSoldQuantity(Integer productId, Integer quantity) {
-        // Fetch the Product object from the database
+  
         Product product = productService.getProductById(productId);
     
         ProductAnalytics productAnalytics = productAnalyticsRepo.findByProductId(productId);
@@ -56,24 +58,65 @@ public class AnalyticsService {
             productAnalytics = new ProductAnalytics();
             productAnalytics.setProduct(product);
             productAnalytics.setQuantitySold(quantity);
+
+             Analytics analytics = analyticsRepo.findById(1).orElse(new Analytics());
+    analyticsRepo.save(analytics); // save analytics before setting it to productAnalytics
+    productAnalytics.setAnalytics(analytics);
         } else {
             productAnalytics.setQuantitySold(productAnalytics.getQuantitySold() + quantity);
         }
-    
+
         productAnalyticsRepo.save(productAnalytics);
     }
 
-    public void incrementTotalRevenue(Double total)
-    {
-        Optional<RevenueAnalytics> optionalRevenueAnalytics = revenueAnalyticsRepo.findById(1);
-        if(optionalRevenueAnalytics.isPresent()){
-            RevenueAnalytics revenueAnalytics = optionalRevenueAnalytics.get();
-            revenueAnalytics.setTotalRevenue(revenueAnalytics.getTotalRevenue()+total);
-        } else {
-            RevenueAnalytics revenueAnalytics = new RevenueAnalytics();
-            revenueAnalytics.setTotalRevenue(total);
-            revenueAnalyticsRepo.save(revenueAnalytics);
+    public void incrementTotalRevenue(Double total) {
+    System.out.println("In the increment total service path" + total);
+    RevenueAnalytics revenueAnalytics = revenueAnalyticsRepo.findById(1).orElse(new RevenueAnalytics());
+    
+    if (revenueAnalytics.getTotalRevenue() == null) {
+        revenueAnalytics.setTotalRevenue(total);
+
+        Analytics analytics = analyticsRepo.findById(1).orElse(new Analytics());
+        analyticsRepo.save(analytics); // save analytics before setting it to revenueAnalytics
+        revenueAnalytics.setAnalytics(analytics);
+    } else {
+        revenueAnalytics.setTotalRevenue(revenueAnalytics.getTotalRevenue() + total);
+        
+        // Save the analytics if they exist but haven't been persisted yet
+        if (revenueAnalytics.getAnalytics() != null && revenueAnalytics.getAnalytics().getId() == null) {
+            analyticsRepo.save(revenueAnalytics.getAnalytics());
         }
     }
+    revenueAnalyticsRepo.save(revenueAnalytics);
+}
 
+ public AnalyticsDTO getAnalytics() {
+    // Fetch the Analytics entity
+    Analytics analytics = analyticsRepo.findById(1).orElse(null);
+    
+    if (analytics == null) {
+        return null; // or you can throw an exception
+    }
+
+    // Create DTO and populate with data from entity
+    AnalyticsDTO analyticsDTO = new AnalyticsDTO();
+
+    // Fetch and populate product data
+    List<ProductData> productDataList = new ArrayList<>();
+    for (ProductAnalytics productAnalytics : analytics.getProductAnalyticsList()) {
+        ProductData productData = new ProductData();
+        productData.setProductId(productAnalytics.getProduct().getId());
+        productData.setProductName(productAnalytics.getProduct().getName()); // assuming the Product entity has a getName() method
+        productData.setQuantitySold(productAnalytics.getQuantitySold());
+        productDataList.add(productData);
+    }
+    analyticsDTO.setProductDataList(productDataList);
+
+    // Fetch and populate revenue analytics data
+    if (analytics.getRevenueAnalytics() != null) {
+        analyticsDTO.setTotalRevenue(analytics.getRevenueAnalytics().getTotalRevenue());
+    }
+
+    return analyticsDTO;
+}
 }

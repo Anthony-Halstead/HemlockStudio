@@ -64,14 +64,47 @@ public SecurityFilterChain filterChain(HttpSecurity http) throws Exception{
             .cors(withDefaults())
             .csrf(csrf -> csrf.disable())
             .authorizeHttpRequests(auth -> {
-                auth.requestMatchers("/auth/**").permitAll();
+                auth.requestMatchers("/auth/register").permitAll();
+                auth.requestMatchers("/auth/login").permitAll();
+                auth.requestMatchers("/auth/confirm").permitAll();
+                auth.requestMatchers("/auth/registerAdmin").hasRole("ADMIN");
+                auth.requestMatchers("/analytics/**").hasRole("ADMIN");
                 auth.requestMatchers("/enums/**").permitAll();
                 auth.requestMatchers("/product/**").permitAll();
-                auth.requestMatchers("/news/**").permitAll();
-                auth.requestMatchers("/coupon/**").permitAll();
+                auth.requestMatchers("/news/createNews").hasRole("ADMIN");
+                auth.requestMatchers("/news/update").hasRole("ADMIN");
+                auth.requestMatchers("/news/delete/{id}").hasRole("ADMIN");
+                auth.requestMatchers("/news/findAll").permitAll();
+                auth.requestMatchers("/coupon/createCoupon").hasRole("ADMIN");
+                auth.requestMatchers("/coupon/delete/{id}").hasRole("ADMIN");
+                auth.requestMatchers("/coupon/applyCouponDiscount").hasAnyRole("ADMIN", "USER");
+                auth.requestMatchers("/coupon/findAll").hasRole("ADMIN");
+                auth.requestMatchers("/photo/create").hasRole("ADMIN");
+                auth.requestMatchers("/photo/findAll").hasRole("ADMIN");
+                auth.requestMatchers("/photo/updatePhoto").hasRole("ADMIN");
+                auth.requestMatchers("/photo/deletePhoto/{id}").hasRole("ADMIN");
+                auth.requestMatchers("/product/createProduct").hasRole("ADMIN");
+                auth.requestMatchers("/product/update").hasRole("ADMIN");
+                auth.requestMatchers("/product/delete/{id}").hasRole("ADMIN");
+                auth.requestMatchers("/product/findAll").hasAnyRole("ADMIN", "USER");
                 auth.requestMatchers("/admin/**").hasRole("ADMIN");
-                auth.requestMatchers("/user/**").hasAnyRole("ADMIN", "USER");
+                auth.requestMatchers("/user/getUser").hasAnyRole("ADMIN", "USER");
+                auth.requestMatchers("/user/findAll").hasRole("ADMIN");
+                auth.requestMatchers("/user/update").hasRole("ADMIN");
+                auth.requestMatchers("/user/delete/{id}").hasRole("ADMIN");
+                auth.requestMatchers("/user/addProductToFavorites").hasAnyRole("ADMIN", "USER");
+                auth.requestMatchers("/user/removeProductFromFavorites/{favoriteProductId}").hasAnyRole("ADMIN", "USER");
+                auth.requestMatchers("/user/addCreditCard").hasAnyRole("ADMIN", "USER");
+                auth.requestMatchers("/user/removeCreditCard/{creditCardId}").hasAnyRole("ADMIN", "USER");
+                auth.requestMatchers("/user/updateCreditCard").hasAnyRole("ADMIN", "USER");
+                auth.requestMatchers("/user/findCreditCards").hasAnyRole("ADMIN", "USER");
+                auth.requestMatchers("/user/findFavoriteProducts").hasAnyRole("ADMIN", "USER");
+                auth.requestMatchers("/user/toggleNotification").hasAnyRole("ADMIN", "USER");
+                auth.requestMatchers("/user/getNotificationStatus").hasAnyRole("ADMIN", "USER");
+                auth.requestMatchers("/user/setDefaultCreditCard").hasAnyRole("ADMIN", "USER");
+                auth.requestMatchers("/user/getDefaultCreditCard").hasAnyRole("ADMIN", "USER");
                 auth.requestMatchers("/cart/**").hasAnyRole("ADMIN", "USER");
+                auth.requestMatchers("/email/**").hasAnyRole("ADMIN", "USER");       
                 auth.anyRequest().authenticated();
             });
 http

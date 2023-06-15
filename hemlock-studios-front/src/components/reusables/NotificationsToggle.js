@@ -20,7 +20,7 @@ function NotificationsToggle(props) {
       .catch(error => {
         console.log('Error retrieving notification status:', error);
       });
-  }, []);
+  }, [notificationStatus]);
 
   const handleToggle = () => {
     let jwtToken = localStorage.getItem('token');
@@ -46,7 +46,7 @@ function NotificationsToggle(props) {
         <input type="checkbox" checked={notificationStatus} onChange={handleToggle} />
         <span className="toggle-slider"></span>
       </label>
-      <span className="toggle-label">Notifications</span>
+      <span className="toggle-label">Recieve Email Notifications</span>
     </div>
   );
 }

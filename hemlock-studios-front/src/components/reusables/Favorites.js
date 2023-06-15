@@ -1,12 +1,35 @@
 import axios from 'axios';
 import React, { useState, useEffect } from 'react';
-
-function Favorites(props) {
+import AddToCartButton from '../reusables/AddToCartButton';
+import '../../css/pages/account.css'
+function Favorites( props) {
   const [favorites, setFavorites] = useState([]);
 
   useEffect(() => {
     fetchFavorites();
   }, []);
+
+
+  const handleAddToCartClick = (productId) => {
+
+
+    console.log("FAVORITES", productId)
+    let jwtToken = localStorage.getItem("token");
+    const productData = productId;
+    axios.post("http://localhost:8080/cart/addItemToCart", {productId},{
+        headers: {
+          'Authorization': `Bearer ${jwtToken}`
+        }
+      })
+      .then((response) => {
+        props.setUpdateUser({});
+      })
+      .catch((error) => {
+        console.error('Error adding product to the cart', error);
+      });
+  };
+
+
 
   const fetchFavorites = () => {
     let jwtToken = localStorage.getItem("token");
@@ -17,7 +40,7 @@ function Favorites(props) {
         }
       })
       .then((response) => {
-        setFavorites(response.data); // Set the favorites in state to the response data
+        setFavorites(response.data); 
       })
       .catch((error) => {
         console.error('Error fetching favorites', error);
@@ -37,7 +60,7 @@ function Favorites(props) {
       }
     })
       .then((response) => { 
-        fetchFavorites(); // Refresh favorites list
+        fetchFavorites(); 
         props.updateUser({})
       })
       .catch((error) => {
@@ -46,19 +69,19 @@ function Favorites(props) {
   };
 
   return (
-    <div>
-      {favorites.map((product, index) => (
-        <div key={index}>
-          {product.photoAlbum.length > 0 && (
-            <img src={product.photoAlbum[0].photoUrl} alt={product.name} />
-          )}
-          <h2>{product.name}</h2>
-          <p>{product.description}</p>
-          <p>${product.price.toFixed(2)}</p>
-          <button onClick={() => removeFavorite(product.id)}>Remove from favorites</button>
-          {/* Add any other product details you want to display */}
-        </div>
-      ))}
+    <div className='account-content-panel' >
+   {favorites.map((product, index) => (
+  <div key={index} className='account-panel-columns favorite-item'>
+    {product.photoAlbum.length > 0 && (
+      <img src={product.photoAlbum[0].photoUrl} alt={product.name} />
+    )}
+    <h2>{product.name}</h2>
+    <p>${product.price.toFixed(2)}</p>
+    <button className='custom-button' onClick={() => removeFavorite(product.id)}>Remove from favorites</button>
+    <button className='custom-button' onClick={() => handleAddToCartClick(product.id)}>Add to cart</button>
+  </div>
+))}
+     
     </div>
   );
 }

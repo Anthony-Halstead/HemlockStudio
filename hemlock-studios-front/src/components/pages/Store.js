@@ -7,6 +7,7 @@ import ProductOverlay from '../reusables/ProductOverlay';
 import '../../css/pages/admin.css'
 import '../../css/pages/store.css'
 import SortingPanel from '../reusables/SortingPanel';
+
 function Store(props) {
 
   console.log("In the Store Path", props)
@@ -15,8 +16,14 @@ function Store(props) {
   const [filteredProducts, setFilteredProducts] = useState(products);
 
   useEffect(() => {
-
-    axios.get("http://localhost:8080/product/findAll")
+    let jwtToken = localStorage.getItem('token');
+    axios.get("http://localhost:8080/product/findAll",
+    {
+      headers: {
+        Authorization: `Bearer ${jwtToken}`,
+      },
+    }
+  )
       .then((response) => {
         setProducts(response.data);
       })
@@ -41,50 +48,47 @@ function Store(props) {
             defaultPosition={{ x: 0, y: 0 }}
             bounds={{ top: 0, left: 0, right: 1100, bottom: 900 }}
           >
-            <div >
+            <div>
               <AdminPanel />
             </div>
           </Draggable>
         </div>
-        <div >
+        <div>
           <SortingPanel products={products} setFilteredProducts={setFilteredProducts} /> 
         </div>
         <div className='store-content-container'>  
           <div className='store-product-panel'>
           {filteredProducts.map((product) => (
-          <Product setUpdateUser={props.setUpdateUser} key={product.id} product={product} onClick={openOverlay} />
-        ))}
-          </div>
-          <div>
-          {selectedProduct && (
-            <ProductOverlay product={selectedProduct} onClose={closeOverlay} />
-          )}
-          </div>
-        </div>
-      </div>
-    )
-  }
-  else {
-    return (
-      <div>
-      <div >
-      <SortingPanel products={products} setFilteredProducts={setFilteredProducts} /> 
-      </div>
-      <div className='store-content-container'>
-        <div className='store-product-panel'>
-          {products.map((product) => (
             <Product setUpdateUser={props.setUpdateUser} key={product.id} product={product} onClick={openOverlay} />
           ))}
-        </div>
-        <div>
-        {selectedProduct && (
+          </div>
+          {selectedProduct && (
           <ProductOverlay product={selectedProduct} onClose={closeOverlay} />
         )}
-       </div>
+        </div>
+       
       </div>
+    )
+  } else {
+    return (
+      <div>
+       
+        <div>
+          <SortingPanel products={products} setFilteredProducts={setFilteredProducts} /> 
+        </div>
+        <div className='store-content-container'>
+          <div className='store-product-panel'>
+            {products.map((product) => (
+              <Product setUpdateUser={props.setUpdateUser} key={product.id} product={product} onClick={openOverlay} />
+            ))}
+          </div>
+          {selectedProduct && (
+          <ProductOverlay product={selectedProduct} onClose={closeOverlay} />
+        )}
+        </div>
+       
       </div>
     )
   }
 }
-
 export default Store

@@ -3,13 +3,10 @@ package com.HemlockStudiosWebsite.service;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
-import java.util.concurrent.CountDownLatch;
+
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationEventPublisher;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.oauth2.jwt.Jwt;
 import org.springframework.stereotype.Service;
 
 import com.HemlockStudiosWebsite.entity.Photo;
@@ -28,9 +25,6 @@ public class ProductService {
 
     @Autowired
     PhotoService photoService;
-
-    @Autowired
-    CartProductService cartProductService;
 
     @Autowired
     UserService userService;
@@ -85,51 +79,51 @@ public class ProductService {
     }
 
 
+public void updateProduct(Integer id, String description, Double price, String name, String[] imgUrls,
+        String category, String subcategory, String size, Double discount) {
+    try {
+        System.out.println("In the backend update product service start");
+        Optional<Product> optionalProduct = productRepo.findById(id);
+        if (optionalProduct.isPresent()) {
+            Product product = optionalProduct.get();
+            product.setDescription(description);
+            product.setPrice(price);
+            product.setName(name);
+            product.setDiscount(discount);
+            ProductEnums.Category categoryEnum = ProductEnums.Category.valueOf(category);
+            ProductEnums.Subcategory subcategoryEnum = ProductEnums.Subcategory.valueOf(subcategory);
+            ProductEnums.Size sizeEnum = ProductEnums.Size.valueOf(size);
+            product.setCategory(categoryEnum);
+            product.setSubcategory(subcategoryEnum);
+            product.setSize(sizeEnum);
 
-    public void updateProduct(Integer id, String description, Double price, String name, String[] imgUrls,
-    String category, String subcategory, String size, Double discount) {
-try {
-    System.out.println("In the backend update product service start");
-    Optional<Product> optionalProduct = productRepo.findById(id);
-    if (optionalProduct.isPresent()) {
-        Product product = optionalProduct.get();
-        product.setDescription(description);
-        product.setPrice(price);
-        product.setName(name);
-        product.setDiscount(discount);
-        ProductEnums.Category categoryEnum = ProductEnums.Category.valueOf(category);
-        ProductEnums.Subcategory subcategoryEnum = ProductEnums.Subcategory.valueOf(subcategory);
-        ProductEnums.Size sizeEnum = ProductEnums.Size.valueOf(size);
-        product.setCategory(categoryEnum);
-        product.setSubcategory(subcategoryEnum);
-        product.setSize(sizeEnum);
+            if (imgUrls != null) {
+                for (String imgUrl : imgUrls) {
+                    if (imgUrl != null && !photoExistsInList(product.getPhotoAlbum(), imgUrl)) {
+                        System.out.println("Creating photo for url: " + imgUrl);
+                        Photo newPhoto = photoService.createPhoto(imgUrl);
+                        product.getPhotoAlbum().add(newPhoto);
+                    }
+                }
+            }
 
-        // get a copy of the current photo album
-        List<Photo> currentPhotos = new ArrayList<>(product.getPhotoAlbum());
-
-        // Clear the photo album
-        product.getPhotoAlbum().clear();
-
-        // // Delete all photos from the photo repository
-        // for (Photo photo : currentPhotos) {
-        //     photoService.deleteById(photo.getId());
-        // }
-
-        // Add the new photos
-        for (String imgUrl : imgUrls) {
-            System.out.println("Creating photo for url: " + imgUrl);
-            Photo newPhoto = photoService.createPhoto(imgUrl);
-            product.getPhotoAlbum().add(newPhoto);
+            // Save the updated product
+            productRepo.save(product);
+            System.out.println("Product updated successfully");
         }
-
-        // Save the updated product
-        productRepo.save(product);
-        System.out.println("Product updated successfully");
+    } catch (Exception e) {
+        System.out.println("Error during product update: " + e.getMessage());
+        e.printStackTrace();
     }
-} catch (Exception e) {
-    System.out.println("Error during product update: " + e.getMessage());
-    e.printStackTrace();
 }
+
+private boolean photoExistsInList(List<Photo> photoList, String imgUrl) {
+    for (Photo photo : photoList) {
+        if (photo.getPhotoUrl().equals(imgUrl)) {
+            return true;
+        }
+    }
+    return false;
 }
 
     public Product getProductById(Integer id) {

@@ -110,6 +110,6 @@ public class NewsController {
         public ResponseEntity<List<News>> findNews() {
             System.out.println("in the find news endpoint");
             List<News> news = newsService.getAll();
-            return ResponseEntity.ok(news); // returns a 200 OK response with the newss in the body
+            return ResponseEntity.ok(news); 
         }
 }

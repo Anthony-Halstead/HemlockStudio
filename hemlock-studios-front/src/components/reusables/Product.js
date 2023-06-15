@@ -1,4 +1,5 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
+import { ToastContext } from '../reusables/ToastContext';
 import '../../css/reusables/product.css';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faHeart as faHeartSolid } from '@fortawesome/free-solid-svg-icons';
@@ -9,6 +10,14 @@ import AddToCartButton from './AddToCartButton';
 
 function Product({ product, onClick, setUpdateUser }) {
   const [isFavorited, setIsFavorited] = useState(false);
+  const { setMessage } = useContext(ToastContext);
+
+  const handleAddedMessage = () => {
+    setMessage('Item added to favorites');
+};
+const handleRemoveMessage = () => {
+  setMessage('Item removed from favorites');
+};
 
   useEffect(() => {
     let jwtToken = localStorage.getItem("token");
@@ -19,9 +28,7 @@ function Product({ product, onClick, setUpdateUser }) {
         }
       })
       .then((response) => {
-        // This maps the array of products to an array of product IDs
         const favoriteProductIds = response.data.map(product => product.id);
-        // Checks if the current product's ID is in the list of favorite product IDs
         if (favoriteProductIds.includes(product.id)) {
           setIsFavorited(true);
         }
@@ -72,11 +79,11 @@ function Product({ product, onClick, setUpdateUser }) {
         .then((response) => {
           setIsFavorited(false);
           setUpdateUser({});
-          // Handle the response, e.g. show a notification that the product was removed from favorites
+         handleRemoveMessage();
         })
         .catch((error) => {
           console.error('Error removing product from favorites', error);
-          // Handle the error, e.g. show an error message
+         
         });
     } else {
       axios.post("http://localhost:8080/user/addProductToFavorites", { productId: product.id },{
@@ -87,11 +94,11 @@ function Product({ product, onClick, setUpdateUser }) {
         .then((response) => {
           setUpdateUser({});
           setIsFavorited(true);
-          // Handle the response, e.g. show a notification that the product was added to favorites
+         handleAddedMessage();
         })
         .catch((error) => {
           console.error('Error adding product to favorites', error);
-          // Handle the error, e.g. show an error message
+         
         });
     }
   };
@@ -106,8 +113,7 @@ function Product({ product, onClick, setUpdateUser }) {
           <img src={product.photoAlbum[0].photoUrl} alt={product.name} />
         )}
         <h2>{product.name}</h2>
-        <p>{product.description}</p>
-        <p>${product.price.toFixed(2)}</p>
+        <h1>${product.price.toFixed(2)}</h1>
         <div>
         <AddToCartButton onAddToCartClick={handleAddToCartClick} />
         </div>

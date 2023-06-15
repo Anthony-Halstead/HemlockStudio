@@ -68,19 +68,19 @@ public class UserController {
     @Autowired
     TokenService tokenService;
 
-    @RequestMapping(value = "/findUserById/{id}", produces = MediaType.APPLICATION_JSON_VALUE, method = RequestMethod.GET)
-    public ResponseEntity<Object> findUserById(@PathVariable Integer id) {
-        try {
-            User foundUser = userService.findById(id);
-            return new ResponseEntity<Object>(foundUser, HttpStatus.OK);
-        } catch (Exception e) {
-            System.out.println(e);
-            return new ResponseEntity<Object>(e.getMessage(), HttpStatus.BAD_REQUEST);
-        } catch (Error e) {
-            System.out.println(e);
-            return new ResponseEntity<Object>(e, HttpStatus.INTERNAL_SERVER_ERROR);
-        }
-    }
+    // @RequestMapping(value = "/findUserById/{id}", produces = MediaType.APPLICATION_JSON_VALUE, method = RequestMethod.GET)
+    // public ResponseEntity<Object> findUserById(@PathVariable Integer id) {
+    //     try {
+    //         User foundUser = userService.findById(id);
+    //         return new ResponseEntity<Object>(foundUser, HttpStatus.OK);
+    //     } catch (Exception e) {
+    //         System.out.println(e);
+    //         return new ResponseEntity<Object>(e.getMessage(), HttpStatus.BAD_REQUEST);
+    //     } catch (Error e) {
+    //         System.out.println(e);
+    //         return new ResponseEntity<Object>(e, HttpStatus.INTERNAL_SERVER_ERROR);
+    //     }
+    // }
 
     @GetMapping("/getUser")
 public ResponseEntity<Object> currentUser() {

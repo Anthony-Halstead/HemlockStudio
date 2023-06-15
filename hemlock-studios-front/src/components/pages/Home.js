@@ -26,7 +26,6 @@ function Home() {
   return (
     <div className="main">
       <video className='video' src={videoBG} autoPlay loop muted/>
-     {/*<animated.h1 style={titleAnimation}>STUFF</animated.h1>*/}
       <div className="accordion ">
       <Accordion
           id={1}

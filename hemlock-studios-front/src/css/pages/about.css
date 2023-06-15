@@ -1,0 +1,84 @@
+.about-content{
+    display: flex;
+    flex-direction: column;
+    justify-content:center;
+    height: 100%;
+    width: 100%;
+    overflow: hidden;  
+    background-image: url('../../images/SnowMountains.png');
+ background-attachment: fixed;
+  background-repeat: no-repeat;
+  background-size: cover;
+}
+.about-contact-header{
+  
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    width:100%;
+}
+.about-container{
+    margin-top: 12%;
+    display:flex;
+    flex-direction: column;
+    justify-content:center;
+    align-items: center;
+    background-color: rgb(245, 245, 245, 0.9);
+    padding: 2%;
+}
+.contact-container{
+    display:flex;
+    flex-direction: column;
+    justify-content:center;
+    align-items: center;
+    background-color: rgb(245, 245, 245, 0.9);
+    height:100%;
+    width: 100%;
+}
+.about-logo-container{
+display: flex;
+flex-direction: row;
+width: fit-content;
+margin-top:1%;
+
+background-color: rgb(245, 245, 245, 0.9);
+}
+.about-logo{
+transform: scale(1.7);
+margin-left:30px;
+color:black;
+}
+.about-logo:hover{
+    transform:scale(2);
+}
+
+.circle-container {
+    display: flex;
+    justify-content: left;
+    align-items: center;
+  }
+  
+  .circle {
+    border-radius: 50%;
+    width: 200px; /* you can change this to the desired size */
+    height: 200px; /* you can change this to the desired size */
+    overflow: hidden;
+    margin-left:40px;
+  }
+  
+  .circle img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover; 
+  }
+  .about-text-field{
+    width:500px;
+    height:35px;
+   
+  }
+  .about-textarea {
+    width: 500px; /* adjust this as needed */
+    height: 300px; /* adjust this as needed */
+    padding: 10px;
+}

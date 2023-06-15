@@ -1,0 +1,21 @@
+.receipt-content{
+    display: flex;
+    flex-direction: column;
+    justify-content:center;
+    height: 100%;
+    width: 100%;
+  
+}
+.receipt-container{
+    margin-top: 10%;
+    margin-left:20%;
+    margin-right:20%;
+    display:flex;
+    justify-content: center;
+    align-items: center;
+    color: white;
+    flex-direction: column;
+    background-color: rgba(3, 68, 81, 0.785);
+    padding: 2%;
+    flex-wrap: wrap;
+}

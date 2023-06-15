@@ -69,16 +69,14 @@ function Get({ entityType }) {
   };
   
   const handleUpdateSubmit = (updatedItem) => {
-    // Transform the photoAlbum array to imgUrls array
+ 
     if (updatedItem.photoAlbum) {
       updatedItem.imgUrls = updatedItem.photoAlbum.map(photo => photo.photoUrl);
       delete updatedItem.photoAlbum;
     }
     
-    // Handle the photoReal field
     if (updatedItem.photoReal) {
-      // Process the photoReal field as needed
-      // For example:
+      
       updatedItem.photoReal = updatedItem.photoReal.map(photo => photo.photoUrl);
     }
   
@@ -115,7 +113,8 @@ function Get({ entityType }) {
   const isCouponEntity = entityType === 'coupon';
 
   return (
-    <div>
+    <div className='table-container-color'>
+    <div >
       <h2>{entityType.toUpperCase()} List</h2>
       <table className="table-container">
         <thead>
@@ -157,6 +156,7 @@ function Get({ entityType }) {
           onCancel={handleCancelUpdate}
         />
       )}
+    </div>
     </div>
   );
 }

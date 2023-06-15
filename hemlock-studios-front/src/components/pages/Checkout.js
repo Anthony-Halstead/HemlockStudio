@@ -3,7 +3,10 @@ import React, { useEffect, useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import DefaultCreditCard from '../reusables/DefaultCreditCard';
 import '../../css/pages/checkout.css'
-
+import'../../css/reusables/linkbutton.css'
+import'../../css/reusables/custombutton.css'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faBagShopping, faCartShopping } from '@fortawesome/free-solid-svg-icons';
 function Checkout() {
   useEffect(() => {
     getCartTotal();
@@ -19,7 +22,7 @@ function Checkout() {
 
   const handleSubmit = () => {
     let jwtToken = localStorage.getItem('token');
-    axios.post('http://localhost:8080/cart/makePurchase',
+    axios.post('http://localhost:8080/cart/makePurchase',{},
         {
           headers: {
             Authorization: `Bearer ${jwtToken}`,
@@ -27,7 +30,7 @@ function Checkout() {
         }
       )
       .then((response) => {
-        navigator('/receipt');
+        navigator('/Receipt');
       })
       .catch((error) => {
         console.error('Error making purchase', error);
@@ -118,6 +121,7 @@ function Checkout() {
 
   return (
     <div className='checkout-content'>
+      <div className='checkout-container'>
       <DefaultCreditCard />
       <div>
         Enter Coupon Code:
@@ -131,14 +135,19 @@ function Checkout() {
       </div>
       <div>Cart Total: ${cartTotal.toFixed(2)}</div>
       <div>
-        <button onClick={handleSubmit}>Submit</button>
+        <button className='submit-button' onClick={handleSubmit}>Make Purchase</button>
       </div>
-      <div>
-        <Link to='/Cart'>-return to cart-</Link>
+      <div className='link-button-container'>
+     
+        <Link className='link-button' to='/Cart'>Return to cart</Link>
+        <FontAwesomeIcon className='cart-icon' icon={faCartShopping}/>
       </div>
-      <div>
-        <Link to='/store'>-return to shopping-</Link>
+      <div className='link-button-container'>
+       
+        <Link  className='link-button' to='/store'>Return to shopping</Link>
+        <FontAwesomeIcon  className='cart-icon' icon={faBagShopping} />
       </div>
+    </div>
     </div>
   );
 }

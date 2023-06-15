@@ -8,8 +8,9 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.HemlockStudiosWebsite.dto.ContactEmailRequest;
 import com.HemlockStudiosWebsite.dto.EmailRequest;
-import com.HemlockStudiosWebsite.dto.HtmlEmailRequest;
+
 import com.HemlockStudiosWebsite.service.EmailSenderService;
 
 @RestController
@@ -27,13 +28,12 @@ emailSenderService.sendEmail(emailMessage.getTo(),emailMessage.getSubject(), ema
 return ResponseEntity.ok("success");
 }
 
-// @PostMapping("/send-htmlemail")
-// public ResponseEntity<Object> sendHTMLEmail(@RequestBody HtmlEmailRequest emailMessage){
+@PostMapping("/contact-email")
+public ResponseEntity<Object> contactEmail(@RequestBody ContactEmailRequest emailMessage){
 
-// emailSenderService.sendHtmlEmail(emailMessage.getTo());
-// return ResponseEntity.ok("success");
-// }
-
+emailSenderService.contactEmail(emailMessage.getEmail(),emailMessage.getSubject(), emailMessage.getMessage());
+return ResponseEntity.ok("success");
+}
 
 
 }
