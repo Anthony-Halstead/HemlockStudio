@@ -44,7 +44,7 @@ function CreateCoupon() {
     };
     let jwtToken = localStorage.getItem("token");
     axios
-      .post('http://localhost:8080/coupon/createCoupon', couponData, {
+      .post('http://18.220.71.177:8080/coupon/createCoupon', couponData, {
         headers: {
           'Authorization': `Bearer ${jwtToken}`
         }

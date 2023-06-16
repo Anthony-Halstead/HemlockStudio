@@ -19,7 +19,7 @@ function AddNews() {
     useEffect(() => {
       let jwtToken = localStorage.getItem('token');
       axios
-        .get('http://localhost:8080/enums/findAll',
+        .get('http://18.220.71.177:8080/enums/findAll',
         {
           headers: {
             Authorization: `Bearer ${jwtToken}`,
@@ -101,7 +101,7 @@ function AddNews() {
   console.log(selectedAnouncement)
   console.log(newNews.imgUrls)
       axios
-        .post('http://localhost:8080/news/createNews', newsData,
+        .post('http://18.220.71.177:8080/news/createNews', newsData,
         {
           headers: {
             Authorization: `Bearer ${jwtToken}`,

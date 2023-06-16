@@ -49,7 +49,7 @@ function AddAdmin() {
     const registerSubmitHandler = () => {
         if (validate(admin)) {
             let jwtToken = localStorage.getItem('token');
-            axios.post("http://localhost:8080/auth/registerAdmin", admin,
+            axios.post("http://18.220.71.177:8080/auth/registerAdmin", admin,
             {
               headers: {
                 Authorization: `Bearer ${jwtToken}`,

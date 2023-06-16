@@ -16,7 +16,7 @@ function Favorites( props) {
     console.log("FAVORITES", productId)
     let jwtToken = localStorage.getItem("token");
     const productData = productId;
-    axios.post("http://localhost:8080/cart/addItemToCart", {productId},{
+    axios.post("http://18.220.71.177:8080/cart/addItemToCart", {productId},{
         headers: {
           'Authorization': `Bearer ${jwtToken}`
         }
@@ -34,7 +34,7 @@ function Favorites( props) {
   const fetchFavorites = () => {
     let jwtToken = localStorage.getItem("token");
     axios
-      .get("http://localhost:8080/user/findFavoriteProducts", {
+      .get("http://18.220.71.177:8080/user/findFavoriteProducts", {
         headers: {
           'Authorization': `Bearer ${jwtToken}`
         }
@@ -53,7 +53,7 @@ function Favorites( props) {
     let jwtToken = localStorage.getItem("token");
     const favoriteDeleteData = productId;
     console.log(jwtToken)
-    axios.delete(`http://localhost:8080/user/removeProductFromFavorites/${favoriteDeleteData}`,
+    axios.delete(`http://18.220.71.177:8080/user/removeProductFromFavorites/${favoriteDeleteData}`,
     {
       headers: {
         'Authorization': `Bearer ${jwtToken}`

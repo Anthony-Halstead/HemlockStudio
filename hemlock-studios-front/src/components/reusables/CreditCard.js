@@ -28,7 +28,7 @@ function CreditCard(props) {
     if (jwtToken) {
       console.log("creditcard JWT Token Checkpoint", jwtToken)
       axios
-        .get('http://localhost:8080/user/findCreditCards', {
+        .get('http://18.220.71.177:8080/user/findCreditCards', {
           headers: {
             'Authorization': `Bearer ${jwtToken}`
           }
@@ -133,7 +133,7 @@ function CreditCard(props) {
       }
 
       axios
-        .post('http://localhost:8080/user/addCreditCard', creditCardInfo, {
+        .post('http://18.220.71.177:8080/user/addCreditCard', creditCardInfo, {
           headers: {
             'Authorization': `Bearer ${jwtToken}`
           }
@@ -173,7 +173,7 @@ function CreditCard(props) {
     };
     let jwtToken = localStorage.getItem("token");
     axios
-      .put('http://localhost:8080/user/updateCreditCard', updatedCard, {
+      .put('http://18.220.71.177:8080/user/updateCreditCard', updatedCard, {
         headers: {
           'Authorization': `Bearer ${jwtToken}`
         }
@@ -203,7 +203,7 @@ function CreditCard(props) {
     if (jwtToken) {
       console.log("JWT TOKEN", jwtToken)
       axios
-        .delete(`http://localhost:8080/user/removeCreditCard/${cardDeleteData}`, {
+        .delete(`http://18.220.71.177:8080/user/removeCreditCard/${cardDeleteData}`, {
           headers: {
             'Authorization': `Bearer ${jwtToken}`
           }
@@ -222,7 +222,7 @@ function CreditCard(props) {
     let jwtToken = localStorage.getItem("token");
     if (jwtToken) {
       axios
-        .get('http://localhost:8080/user/getDefaultCreditCard', {
+        .get('http://18.220.71.177:8080/user/getDefaultCreditCard', {
           headers: {
             'Authorization': `Bearer ${jwtToken}`
           }
@@ -244,7 +244,7 @@ function CreditCard(props) {
     if (jwtToken) {
       axios
         .put(
-          'http://localhost:8080/user/setDefaultCreditCard',
+          'http://18.220.71.177:8080/user/setDefaultCreditCard',
           cardId,
           {
             headers: {
@@ -257,7 +257,7 @@ function CreditCard(props) {
           console.log(response.data);
           props.setUpdateUser({});
           axios
-            .get('http://localhost:8080/user/getDefaultCreditCard', {
+            .get('http://18.220.71.177:8080/user/getDefaultCreditCard', {
               headers: {
                 Authorization: `Bearer ${jwtToken}`,
               },

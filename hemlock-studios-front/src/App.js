@@ -36,7 +36,7 @@ useEffect(() => {
   if (jwtToken) {
     console.log("JWT TOKEN",jwtToken)
     axios
-      .get('http://localhost:8080/user/getUser', {
+      .get('http://18.220.71.177:8080/user/getUser', {
         headers: {
           'Authorization': `Bearer ${jwtToken}`
         }

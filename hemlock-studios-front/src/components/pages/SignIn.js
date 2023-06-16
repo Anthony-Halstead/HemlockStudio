@@ -22,7 +22,7 @@ function SignIn(props) {
     
 
     const signInSubmitHandler = () => {
-      axios.post("http://localhost:8080/auth/login", props.user)
+      axios.post("http://18.220.71.177:8080/auth/login", props.user)
           .then((response) => {
               localStorage.setItem("token", response.data.jwt);
               const decodedToken = jwt_decode(response.data.jwt);

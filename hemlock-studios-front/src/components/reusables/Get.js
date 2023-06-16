@@ -11,7 +11,7 @@ function Get({ entityType }) {
   useEffect(() => {
     let jwtToken = localStorage.getItem("token");
     axios
-      .get(`http://localhost:8080/${entityType}/findAll`, {
+      .get(`http://18.220.71.177:8080/${entityType}/findAll`, {
         headers: {
           'Authorization': `Bearer ${jwtToken}`
         }
@@ -35,14 +35,14 @@ function Get({ entityType }) {
     let jwtToken = localStorage.getItem("token");
     console.log("Product ID",id)
     axios
-      .delete(`http://localhost:8080/${entityType}/delete/${id}`,{
+      .delete(`http://18.220.71.177:8080/${entityType}/delete/${id}`,{
         headers: {
           'Authorization': `Bearer ${jwtToken}`
         }
       })
       .then(() => {
         axios
-          .get(`http://localhost:8080/${entityType}/findAll`, {
+          .get(`http://18.220.71.177:8080/${entityType}/findAll`, {
             headers: {
               'Authorization': `Bearer ${jwtToken}`
             }
@@ -83,7 +83,7 @@ function Get({ entityType }) {
     let jwtToken = localStorage.getItem("token");
     console.log("In the handle update submit with this product", updatedItem)
     axios
-      .put(`http://localhost:8080/${entityType}/update`,  { id: selectedItem.id, ...updatedItem }, {
+      .put(`http://18.220.71.177:8080/${entityType}/update`,  { id: selectedItem.id, ...updatedItem }, {
         headers: {
           'Authorization': `Bearer ${jwtToken}`
         }
@@ -91,7 +91,7 @@ function Get({ entityType }) {
       .then(() => {
         console.log("In the handle update submit but now getting all of the products")
         axios
-          .get(`http://localhost:8080/${entityType}/findAll`, {
+          .get(`http://18.220.71.177:8080/${entityType}/findAll`, {
             headers: {
               'Authorization': `Bearer ${jwtToken}`
             }
