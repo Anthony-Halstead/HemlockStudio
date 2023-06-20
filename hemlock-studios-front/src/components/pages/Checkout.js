@@ -22,7 +22,7 @@ function Checkout() {
 
   const handleSubmit = () => {
     let jwtToken = localStorage.getItem('token');
-    axios.post('http://hemlock-studio.com:8080/cart/makePurchase',{},
+    axios.post('https://hemlock-studio.com/cart/makePurchase',{},
         {
           headers: {
             Authorization: `Bearer ${jwtToken}`,
@@ -66,7 +66,7 @@ function Checkout() {
       let jwtToken = localStorage.getItem('token');
       axios
         .post(
-          'http://hemlock-studio.com:8080/coupon/applyCouponDiscount',
+          'https://hemlock-studio.com/coupon/applyCouponDiscount',
           { couponCode: couponCode },
           {
             headers: {
@@ -89,7 +89,7 @@ function Checkout() {
   const getCartTotal = () => {
     let jwtToken = localStorage.getItem('token');
     axios
-      .get('http://hemlock-studio.com:8080/cart/total', {
+      .get('https://hemlock-studio.com/cart/total', {
         headers: {
           Authorization: `Bearer ${jwtToken}`,
         },
@@ -105,7 +105,7 @@ function Checkout() {
   const getDiscountedCartTotal = () => {
     let jwtToken = localStorage.getItem('token');
     axios
-      .get('http://hemlock-studio.com:8080/cart/discountedTotal', {
+      .get('https://hemlock-studio.com/cart/discountedTotal', {
         headers: {
           Authorization: `Bearer ${jwtToken}`,
         },

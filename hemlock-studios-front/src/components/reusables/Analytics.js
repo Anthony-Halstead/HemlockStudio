@@ -6,7 +6,7 @@ function Analytics() {
 
     useEffect(() => {
       let jwtToken = localStorage.getItem("token");
-        axios.get('http://hemlock-studio.com:8080/analytics/findAll',{
+        axios.get('https://hemlock-studio.com/analytics/findAll',{
           headers: {
             'Authorization': `Bearer ${jwtToken}`
           }

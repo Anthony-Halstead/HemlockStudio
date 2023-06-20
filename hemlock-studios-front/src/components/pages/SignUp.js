@@ -45,7 +45,7 @@ function SignUp(props) {
 
     const signUpSubmitHandler = () => {
         if (validate(props.user)) {
-            axios.post("http://hemlock-studio.com:8080/auth/register", props.user)
+            axios.post("https://hemlock-studio.com/auth/register", props.user)
                 .then(() => {
                     navigator("/SignIn");
                 })

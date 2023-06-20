@@ -83,7 +83,7 @@ public void sendEmailConfirmation(User user) {
     EmailVerificationToken emailVerificationToken = emailVerificationTokenService.createToken(user, token);
     
     // send confirmation email
-    String confirmUrl = "http://hemlock-studio.com:8080/auth/confirm?token=" + emailVerificationToken.getToken();
+    String confirmUrl = "https://hemlock-studio.com/auth/confirm?token=" + emailVerificationToken.getToken();
     emailSenderService.sendEmail(user.getEmail(), "Confirm your email", "Click this link to confirm your email: " + confirmUrl);
 }
 

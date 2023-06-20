@@ -22,7 +22,7 @@ const handleRemoveMessage = () => {
   useEffect(() => {
     let jwtToken = localStorage.getItem("token");
     axios
-      .get("http://hemlock-studio.com:8080/user/findFavoriteProducts", {
+      .get("https://hemlock-studio.com/user/findFavoriteProducts", {
         headers: {
           'Authorization': `Bearer ${jwtToken}`
         }
@@ -48,7 +48,7 @@ const handleRemoveMessage = () => {
     let jwtToken = localStorage.getItem("token");
  
     console.log("PRODUCT ID", product.id)
-    axios.post("http://hemlock-studio.com:8080/cart/addItemToCart", { productId: product.id },{
+    axios.post("https://hemlock-studio.com/cart/addItemToCart", { productId: product.id },{
         headers: {
           'Authorization': `Bearer ${jwtToken}`
         }
@@ -71,7 +71,7 @@ const handleRemoveMessage = () => {
 
     console.log("in the handle favorites click", jwtToken)
     if (isFavorited) {
-      axios.delete(`http://hemlock-studio.com:8080/user/removeProductFromFavorites/${favoriteDeleteData}`,{
+      axios.delete(`https://hemlock-studio.com/user/removeProductFromFavorites/${favoriteDeleteData}`,{
         headers: {
           'Authorization': `Bearer ${jwtToken}`
         }
@@ -86,7 +86,7 @@ const handleRemoveMessage = () => {
          
         });
     } else {
-      axios.post("http://hemlock-studio.com:8080/user/addProductToFavorites", { productId: product.id },{
+      axios.post("https://hemlock-studio.com/user/addProductToFavorites", { productId: product.id },{
         headers: {
           'Authorization': `Bearer ${jwtToken}`
         }

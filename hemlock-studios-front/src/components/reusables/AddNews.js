@@ -19,7 +19,7 @@ function AddNews() {
     useEffect(() => {
       let jwtToken = localStorage.getItem('token');
       axios
-        .get('http://hemlock-studio.com:8080/enums/findAll',
+        .get('https://hemlock-studio.com/enums/findAll',
         {
           headers: {
             Authorization: `Bearer ${jwtToken}`,
@@ -101,7 +101,7 @@ function AddNews() {
   console.log(selectedAnouncement)
   console.log(newNews.imgUrls)
       axios
-        .post('http://hemlock-studio.com:8080/news/createNews', newsData,
+        .post('https://hemlock-studio.com/news/createNews', newsData,
         {
           headers: {
             Authorization: `Bearer ${jwtToken}`,
