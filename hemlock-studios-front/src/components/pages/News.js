@@ -15,7 +15,7 @@ function News(props) {
 
   useEffect(() => {
     let jwtToken = localStorage.getItem('token');
-    axios.get("http://3.16.219.108:8080/news/findAll",
+    axios.get("https://3.16.219.108:8080/news/findAll",
     {
       headers: {
         Authorization: `Bearer ${jwtToken}`,

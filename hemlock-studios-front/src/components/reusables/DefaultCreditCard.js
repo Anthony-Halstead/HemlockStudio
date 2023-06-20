@@ -8,7 +8,7 @@ const [creditCard, setCreditCard] = useState({});
     useEffect(() => {
         let jwtToken = localStorage.getItem("token");
           axios
-            .get('http://3.16.219.108:8080/user/getDefaultCreditCard', {
+            .get('https://3.16.219.108:8080/user/getDefaultCreditCard', {
               headers: {
                 'Authorization': `Bearer ${jwtToken}`
               }

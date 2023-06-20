@@ -20,7 +20,7 @@ function Cart(props) {
 const getCartTotal = () => {
   let jwtToken = localStorage.getItem("token");
   
-    axios.get("http://3.16.219.108:8080/cart/total", {
+    axios.get("https://3.16.219.108:8080/cart/total", {
       headers: {
         'Authorization': `Bearer ${jwtToken}`
       }
@@ -40,7 +40,7 @@ const getCartTotal = () => {
   const handleRemoveFromCartClick = (productId) => {
     let jwtToken = localStorage.getItem("token");
     console.log("PRODUCT ID", productId)
-    axios.delete(`http://3.16.219.108:8080/cart/removeItemFromCart/${productId}`, {
+    axios.delete(`https://3.16.219.108:8080/cart/removeItemFromCart/${productId}`, {
       headers: {
         'Authorization': `Bearer ${jwtToken}`
       }
@@ -60,7 +60,7 @@ const getCartTotal = () => {
   const findProductsInCart = () => {
     let jwtToken = localStorage.getItem("token");
     axios
-      .get("http://3.16.219.108:8080/cart/findItemsInCart", {
+      .get("https://3.16.219.108:8080/cart/findItemsInCart", {
         headers: {
           'Authorization': `Bearer ${jwtToken}`
         }

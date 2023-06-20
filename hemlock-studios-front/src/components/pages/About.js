@@ -26,7 +26,7 @@ function About(props) {
     };
 
     let jwtToken = localStorage.getItem('token');
-    axios.post('http://3.16.219.108:8080/email/contact-email', payload,
+    axios.post('https://3.16.219.108:8080/email/contact-email', payload,
         {
           headers: {
             Authorization: `Bearer ${jwtToken}`,
