@@ -22,7 +22,7 @@ const handleRemoveMessage = () => {
   useEffect(() => {
     let jwtToken = localStorage.getItem("token");
     axios
-      .get("http://18.220.71.177:8080/user/findFavoriteProducts", {
+      .get("https://18.220.71.177:8080/user/findFavoriteProducts", {
         headers: {
           'Authorization': `Bearer ${jwtToken}`
         }
@@ -48,7 +48,7 @@ const handleRemoveMessage = () => {
     let jwtToken = localStorage.getItem("token");
  
     console.log("PRODUCT ID", product.id)
-    axios.post("http://18.220.71.177:8080/cart/addItemToCart", { productId: product.id },{
+    axios.post("https://18.220.71.177:8080/cart/addItemToCart", { productId: product.id },{
         headers: {
           'Authorization': `Bearer ${jwtToken}`
         }
@@ -71,7 +71,7 @@ const handleRemoveMessage = () => {
 
     console.log("in the handle favorites click", jwtToken)
     if (isFavorited) {
-      axios.delete(`http://18.220.71.177:8080/user/removeProductFromFavorites/${favoriteDeleteData}`,{
+      axios.delete(`https://18.220.71.177:8080/user/removeProductFromFavorites/${favoriteDeleteData}`,{
         headers: {
           'Authorization': `Bearer ${jwtToken}`
         }
@@ -86,7 +86,7 @@ const handleRemoveMessage = () => {
          
         });
     } else {
-      axios.post("http://18.220.71.177:8080/user/addProductToFavorites", { productId: product.id },{
+      axios.post("https://18.220.71.177:8080/user/addProductToFavorites", { productId: product.id },{
         headers: {
           'Authorization': `Bearer ${jwtToken}`
         }

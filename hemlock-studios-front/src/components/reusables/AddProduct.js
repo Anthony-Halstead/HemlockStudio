@@ -23,7 +23,7 @@ function AddProduct() {
   useEffect(() => {
     let jwtToken = localStorage.getItem('token');
     axios
-      .get('http://18.220.71.177:8080/enums/findAll',
+      .get('https://18.220.71.177:8080/enums/findAll',
       {
         headers: {
           Authorization: `Bearer ${jwtToken}`,
@@ -117,7 +117,7 @@ function AddProduct() {
     };
 
     axios
-      .post('http://18.220.71.177:8080/product/createProduct', productData,
+      .post('https://18.220.71.177:8080/product/createProduct', productData,
       {
         headers: {
           Authorization: `Bearer ${jwtToken}`,
