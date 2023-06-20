@@ -15,7 +15,7 @@ const UpdateForm = ({ selectedItem, entityType, onUpdate, onCancel }) => {
     setUpdatedValues(selectedItem);
     let jwtToken = localStorage.getItem("token");
     axios
-      .get('https://18.220.71.177:8080/enums/findAll', {
+      .get('https://hemlock-studio.com/enums/findAll', {
         headers: {
           'Authorization': `Bearer ${jwtToken}`
         }
