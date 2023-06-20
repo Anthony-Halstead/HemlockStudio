@@ -74,10 +74,10 @@ function About(props) {
           </div>
           <div class="circle-container">
   <div class="circle">
-    <img src="https://th.bing.com/th/id/OIP.2BqhNdeyJ4Ol3eFDPtWxtwHaD4?w=331&h=180&c=7&r=0&o=5&dpr=1.1&pid=1.7" alt="personal picture"/>
+    <img src="" alt="personal picture"/>
   </div>
   <div class="circle">
-    <img src="https://th.bing.com/th/id/OIP.2BqhNdeyJ4Ol3eFDPtWxtwHaD4?w=331&h=180&c=7&r=0&o=5&dpr=1.1&pid=1.7" alt="personal picture"/>
+    <img src="" alt="personal picture"/>
   </div>
 </div>
         </div>
