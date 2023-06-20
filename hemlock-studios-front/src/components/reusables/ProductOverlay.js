@@ -16,7 +16,7 @@ function ProductOverlay({ product, onClose, props }) {
     let jwtToken = localStorage.getItem("token");
  
     console.log("PRODUCT ID", product.id)
-    axios.post("http://localhost:8080/cart/addItemToCart", { productId: product.id },{
+    axios.post("http://3.16.219.108:8080 /cart/addItemToCart", { productId: product.id },{
         headers: {
           'Authorization': `Bearer ${jwtToken}`
         }

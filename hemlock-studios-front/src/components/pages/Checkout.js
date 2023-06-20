@@ -22,7 +22,7 @@ function Checkout() {
 
   const handleSubmit = () => {
     let jwtToken = localStorage.getItem('token');
-    axios.post('http://localhost:8080/cart/makePurchase',{},
+    axios.post('http://3.16.219.108:8080 /cart/makePurchase',{},
         {
           headers: {
             Authorization: `Bearer ${jwtToken}`,
@@ -66,7 +66,7 @@ function Checkout() {
       let jwtToken = localStorage.getItem('token');
       axios
         .post(
-          'http://localhost:8080/coupon/applyCouponDiscount',
+          'http://3.16.219.108:8080 /coupon/applyCouponDiscount',
           { couponCode: couponCode },
           {
             headers: {
@@ -89,7 +89,7 @@ function Checkout() {
   const getCartTotal = () => {
     let jwtToken = localStorage.getItem('token');
     axios
-      .get('http://localhost:8080/cart/total', {
+      .get('http://3.16.219.108:8080 /cart/total', {
         headers: {
           Authorization: `Bearer ${jwtToken}`,
         },
@@ -105,7 +105,7 @@ function Checkout() {
   const getDiscountedCartTotal = () => {
     let jwtToken = localStorage.getItem('token');
     axios
-      .get('http://localhost:8080/cart/discountedTotal', {
+      .get('http://3.16.219.108:8080 /cart/discountedTotal', {
         headers: {
           Authorization: `Bearer ${jwtToken}`,
         },

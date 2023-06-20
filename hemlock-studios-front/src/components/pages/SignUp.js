@@ -45,7 +45,7 @@ function SignUp(props) {
 
     const signUpSubmitHandler = () => {
         if (validate(props.user)) {
-            axios.post("http://localhost:8080/auth/register", props.user)
+            axios.post("http://3.16.219.108:8080 /auth/register", props.user)
                 .then(() => {
                     navigator("/SignIn");
                 })

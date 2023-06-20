@@ -17,7 +17,7 @@ function Store(props) {
 
   useEffect(() => {
     let jwtToken = localStorage.getItem('token');
-    axios.get("http://localhost:8080/product/findAll",
+    axios.get("http://3.16.219.108:8080 /product/findAll",
     {
       headers: {
         Authorization: `Bearer ${jwtToken}`,
