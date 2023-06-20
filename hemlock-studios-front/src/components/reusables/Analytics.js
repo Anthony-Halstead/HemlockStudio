@@ -6,7 +6,7 @@ function Analytics() {
 
     useEffect(() => {
       let jwtToken = localStorage.getItem("token");
-        axios.get('http://3.16.219.108:8080 /analytics/findAll',{
+        axios.get('http://3.16.219.108:8080/analytics/findAll',{
           headers: {
             'Authorization': `Bearer ${jwtToken}`
           }
