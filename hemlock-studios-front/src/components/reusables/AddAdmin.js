@@ -49,7 +49,7 @@ function AddAdmin() {
     const registerSubmitHandler = () => {
         if (validate(admin)) {
             let jwtToken = localStorage.getItem('token');
-            axios.post("https://hemlock-studio.com/auth/registerAdmin", admin,
+            axios.post("https://LBtest-01-1681136195.us-east-2.elb.amazonaws.com/auth/registerAdmin", admin,
             {
               headers: {
                 Authorization: `Bearer ${jwtToken}`,

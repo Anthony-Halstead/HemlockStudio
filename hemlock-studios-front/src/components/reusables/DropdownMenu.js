@@ -33,7 +33,7 @@ function DropdownMenu(props) {
   const quantityProductsInCart = () => {
     let jwtToken = localStorage.getItem("token");
     axios
-      .get("https://hemlock-studio.com/cart/findItemsInCart", {
+      .get("https://LBtest-01-1681136195.us-east-2.elb.amazonaws.com/cart/findItemsInCart", {
         headers: {
           'Authorization': `Bearer ${jwtToken}`
         }

@@ -26,7 +26,7 @@ function About(props) {
     };
 
     let jwtToken = localStorage.getItem('token');
-    axios.post('https://hemlock-studio.com/email/contact-email', payload,
+    axios.post('https://LBtest-01-1681136195.us-east-2.elb.amazonaws.com/email/contact-email', payload,
         {
           headers: {
             Authorization: `Bearer ${jwtToken}`,
