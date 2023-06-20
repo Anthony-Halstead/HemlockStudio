@@ -16,7 +16,7 @@ function ProductOverlay({ product, onClose, props }) {
     let jwtToken = localStorage.getItem("token");
  
     console.log("PRODUCT ID", product.id)
-    axios.post("https://LBtest-01-1681136195.us-east-2.elb.amazonaws.com/cart/addItemToCart", { productId: product.id },{
+    axios.post("https://*.hemlock-studios.com/cart/addItemToCart", { productId: product.id },{
         headers: {
           'Authorization': `Bearer ${jwtToken}`
         }

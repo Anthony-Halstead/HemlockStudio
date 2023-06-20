@@ -22,7 +22,7 @@ function SignIn(props) {
     
 
     const signInSubmitHandler = () => {
-      axios.post("https://LBtest-01-1681136195.us-east-2.elb.amazonaws.com/auth/login", props.user)
+      axios.post("https://*.hemlock-studios.com/auth/login", props.user)
           .then((response) => {
               localStorage.setItem("token", response.data.jwt);
               const decodedToken = jwt_decode(response.data.jwt);

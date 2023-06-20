@@ -11,7 +11,7 @@ function Get({ entityType }) {
   useEffect(() => {
     let jwtToken = localStorage.getItem("token");
     axios
-      .get(`https://LBtest-01-1681136195.us-east-2.elb.amazonaws.com/${entityType}/findAll`, {
+      .get(`https://*.hemlock-studios.com/${entityType}/findAll`, {
         headers: {
           'Authorization': `Bearer ${jwtToken}`
         }
@@ -35,14 +35,14 @@ function Get({ entityType }) {
     let jwtToken = localStorage.getItem("token");
     console.log("Product ID",id)
     axios
-      .delete(`https://LBtest-01-1681136195.us-east-2.elb.amazonaws.com/${entityType}/delete/${id}`,{
+      .delete(`https://*.hemlock-studios.com/${entityType}/delete/${id}`,{
         headers: {
           'Authorization': `Bearer ${jwtToken}`
         }
       })
       .then(() => {
         axios
-          .get(`https://LBtest-01-1681136195.us-east-2.elb.amazonaws.com/${entityType}/findAll`, {
+          .get(`https://*.hemlock-studios.com/${entityType}/findAll`, {
             headers: {
               'Authorization': `Bearer ${jwtToken}`
             }
@@ -83,7 +83,7 @@ function Get({ entityType }) {
     let jwtToken = localStorage.getItem("token");
     console.log("In the handle update submit with this product", updatedItem)
     axios
-      .put(`https://LBtest-01-1681136195.us-east-2.elb.amazonaws.com/${entityType}/update`,  { id: selectedItem.id, ...updatedItem }, {
+      .put(`https://*.hemlock-studios.com/${entityType}/update`,  { id: selectedItem.id, ...updatedItem }, {
         headers: {
           'Authorization': `Bearer ${jwtToken}`
         }
@@ -91,7 +91,7 @@ function Get({ entityType }) {
       .then(() => {
         console.log("In the handle update submit but now getting all of the products")
         axios
-          .get(`https://LBtest-01-1681136195.us-east-2.elb.amazonaws.com/${entityType}/findAll`, {
+          .get(`https://*.hemlock-studios.com/${entityType}/findAll`, {
             headers: {
               'Authorization': `Bearer ${jwtToken}`
             }
