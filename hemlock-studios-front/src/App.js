@@ -36,7 +36,7 @@ useEffect(() => {
   if (jwtToken) {
     console.log("JWT TOKEN",jwtToken)
     axios
-      .get('https://hemlock-studio.com/user/getUser', {
+      .get('http://localhost:8080/user/getUser', {
         headers: {
           'Authorization': `Bearer ${jwtToken}`
         }

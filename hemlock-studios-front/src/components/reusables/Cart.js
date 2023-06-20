@@ -20,7 +20,7 @@ function Cart(props) {
 const getCartTotal = () => {
   let jwtToken = localStorage.getItem("token");
   
-    axios.get("https://hemlock-studio.com/cart/total", {
+    axios.get("http://localhost:8080/cart/total", {
       headers: {
         'Authorization': `Bearer ${jwtToken}`
       }
@@ -40,7 +40,7 @@ const getCartTotal = () => {
   const handleRemoveFromCartClick = (productId) => {
     let jwtToken = localStorage.getItem("token");
     console.log("PRODUCT ID", productId)
-    axios.delete(`https://hemlock-studio.com/cart/removeItemFromCart/${productId}`, {
+    axios.delete(`http://localhost:8080/cart/removeItemFromCart/${productId}`, {
       headers: {
         'Authorization': `Bearer ${jwtToken}`
       }
@@ -60,7 +60,7 @@ const getCartTotal = () => {
   const findProductsInCart = () => {
     let jwtToken = localStorage.getItem("token");
     axios
-      .get("https://hemlock-studio.com/cart/findItemsInCart", {
+      .get("http://localhost:8080/cart/findItemsInCart", {
         headers: {
           'Authorization': `Bearer ${jwtToken}`
         }

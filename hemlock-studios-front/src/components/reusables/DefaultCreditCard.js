@@ -8,7 +8,7 @@ const [creditCard, setCreditCard] = useState({});
     useEffect(() => {
         let jwtToken = localStorage.getItem("token");
           axios
-            .get('https://hemlock-studio.com/user/getDefaultCreditCard', {
+            .get('http://localhost:8080/user/getDefaultCreditCard', {
               headers: {
                 'Authorization': `Bearer ${jwtToken}`
               }
