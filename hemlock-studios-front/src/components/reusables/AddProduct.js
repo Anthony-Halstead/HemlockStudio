@@ -23,7 +23,7 @@ function AddProduct() {
   useEffect(() => {
     let jwtToken = localStorage.getItem('token');
     axios
-      .get('https://3.16.219.108:8080/enums/findAll',
+      .get('http://hemlock-studio.com:8080/enums/findAll',
       {
         headers: {
           Authorization: `Bearer ${jwtToken}`,
@@ -117,7 +117,7 @@ function AddProduct() {
     };
 
     axios
-      .post('https://3.16.219.108:8080/product/createProduct', productData,
+      .post('http://hemlock-studio.com:8080/product/createProduct', productData,
       {
         headers: {
           Authorization: `Bearer ${jwtToken}`,

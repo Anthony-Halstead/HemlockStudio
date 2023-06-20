@@ -44,7 +44,7 @@ function CreateCoupon() {
     };
     let jwtToken = localStorage.getItem("token");
     axios
-      .post('https://3.16.219.108:8080/coupon/createCoupon', couponData, {
+      .post('http://hemlock-studio.com:8080/coupon/createCoupon', couponData, {
         headers: {
           'Authorization': `Bearer ${jwtToken}`
         }

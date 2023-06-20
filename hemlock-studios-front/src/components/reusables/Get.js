@@ -11,7 +11,7 @@ function Get({ entityType }) {
   useEffect(() => {
     let jwtToken = localStorage.getItem("token");
     axios
-      .get(`https://3.16.219.108:8080/${entityType}/findAll`, {
+      .get(`http://hemlock-studio.com:8080/${entityType}/findAll`, {
         headers: {
           'Authorization': `Bearer ${jwtToken}`
         }
@@ -35,14 +35,14 @@ function Get({ entityType }) {
     let jwtToken = localStorage.getItem("token");
     console.log("Product ID",id)
     axios
-      .delete(`https://3.16.219.108:8080/${entityType}/delete/${id}`,{
+      .delete(`http://hemlock-studio.com:8080/${entityType}/delete/${id}`,{
         headers: {
           'Authorization': `Bearer ${jwtToken}`
         }
       })
       .then(() => {
         axios
-          .get(`https://3.16.219.108:8080/${entityType}/findAll`, {
+          .get(`http://hemlock-studio.com:8080/${entityType}/findAll`, {
             headers: {
               'Authorization': `Bearer ${jwtToken}`
             }
@@ -83,7 +83,7 @@ function Get({ entityType }) {
     let jwtToken = localStorage.getItem("token");
     console.log("In the handle update submit with this product", updatedItem)
     axios
-      .put(`https://3.16.219.108:8080/${entityType}/update`,  { id: selectedItem.id, ...updatedItem }, {
+      .put(`http://hemlock-studio.com:8080/${entityType}/update`,  { id: selectedItem.id, ...updatedItem }, {
         headers: {
           'Authorization': `Bearer ${jwtToken}`
         }
@@ -91,7 +91,7 @@ function Get({ entityType }) {
       .then(() => {
         console.log("In the handle update submit but now getting all of the products")
         axios
-          .get(`https://3.16.219.108:8080/${entityType}/findAll`, {
+          .get(`http://hemlock-studio.com:8080/${entityType}/findAll`, {
             headers: {
               'Authorization': `Bearer ${jwtToken}`
             }

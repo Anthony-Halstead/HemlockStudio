@@ -22,7 +22,7 @@ function SignIn(props) {
     
 
     const signInSubmitHandler = () => {
-      axios.post("https://3.16.219.108:8080/auth/login", props.user)
+      axios.post("http://hemlock-studio.com:8080/auth/login", props.user)
           .then((response) => {
               localStorage.setItem("token", response.data.jwt);
               const decodedToken = jwt_decode(response.data.jwt);
