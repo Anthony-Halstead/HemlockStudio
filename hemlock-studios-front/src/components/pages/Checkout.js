@@ -22,7 +22,7 @@ function Checkout() {
 
   const handleSubmit = () => {
     let jwtToken = localStorage.getItem('token');
-    axios.post('https://*.hemlock-studios.com/cart/makePurchase',{},
+    axios.post('https://LBtest-01-1681136195.us-east-2.elb.amazonaws.com/cart/makePurchase',{},
         {
           headers: {
             Authorization: `Bearer ${jwtToken}`,
@@ -66,7 +66,7 @@ function Checkout() {
       let jwtToken = localStorage.getItem('token');
       axios
         .post(
-          'https://*.hemlock-studios.com/coupon/applyCouponDiscount',
+          'https://LBtest-01-1681136195.us-east-2.elb.amazonaws.com/coupon/applyCouponDiscount',
           { couponCode: couponCode },
           {
             headers: {
@@ -89,7 +89,7 @@ function Checkout() {
   const getCartTotal = () => {
     let jwtToken = localStorage.getItem('token');
     axios
-      .get('https://*.hemlock-studios.com/cart/total', {
+      .get('https://LBtest-01-1681136195.us-east-2.elb.amazonaws.com/cart/total', {
         headers: {
           Authorization: `Bearer ${jwtToken}`,
         },
@@ -105,7 +105,7 @@ function Checkout() {
   const getDiscountedCartTotal = () => {
     let jwtToken = localStorage.getItem('token');
     axios
-      .get('https://*.hemlock-studios.com/cart/discountedTotal', {
+      .get('https://LBtest-01-1681136195.us-east-2.elb.amazonaws.com/cart/discountedTotal', {
         headers: {
           Authorization: `Bearer ${jwtToken}`,
         },

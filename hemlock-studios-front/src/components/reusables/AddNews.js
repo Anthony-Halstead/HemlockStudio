@@ -19,7 +19,7 @@ function AddNews() {
     useEffect(() => {
       let jwtToken = localStorage.getItem('token');
       axios
-        .get('https://*.hemlock-studios.com/enums/findAll',
+        .get('https://LBtest-01-1681136195.us-east-2.elb.amazonaws.com/enums/findAll',
         {
           headers: {
             Authorization: `Bearer ${jwtToken}`,
@@ -101,7 +101,7 @@ function AddNews() {
   console.log(selectedAnouncement)
   console.log(newNews.imgUrls)
       axios
-        .post('https://*.hemlock-studios.com/news/createNews', newsData,
+        .post('https://LBtest-01-1681136195.us-east-2.elb.amazonaws.com/news/createNews', newsData,
         {
           headers: {
             Authorization: `Bearer ${jwtToken}`,

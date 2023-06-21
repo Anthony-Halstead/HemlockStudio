@@ -45,7 +45,7 @@ function SignUp(props) {
 
     const signUpSubmitHandler = () => {
         if (validate(props.user)) {
-            axios.post("https://*.hemlock-studios.com/auth/register", props.user)
+            axios.post("https://LBtest-01-1681136195.us-east-2.elb.amazonaws.com/auth/register", props.user)
                 .then(() => {
                     navigator("/SignIn");
                 })

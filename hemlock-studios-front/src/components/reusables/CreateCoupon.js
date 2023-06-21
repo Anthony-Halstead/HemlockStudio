@@ -44,7 +44,7 @@ function CreateCoupon() {
     };
     let jwtToken = localStorage.getItem("token");
     axios
-      .post('https://*.hemlock-studios.com/coupon/createCoupon', couponData, {
+      .post('https://LBtest-01-1681136195.us-east-2.elb.amazonaws.com/coupon/createCoupon', couponData, {
         headers: {
           'Authorization': `Bearer ${jwtToken}`
         }
