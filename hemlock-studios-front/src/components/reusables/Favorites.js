@@ -16,7 +16,7 @@ function Favorites( props) {
     console.log("FAVORITES", productId)
     let jwtToken = localStorage.getItem("token");
     const productData = productId;
-    axios.post("https://LBtest-01-1681136195.us-east-2.elb.amazonaws.com/cart/addItemToCart", {productId},{
+    axios.post("https://hemlock-studio.com/cart/addItemToCart", {productId},{
         headers: {
           'Authorization': `Bearer ${jwtToken}`
         }
@@ -34,7 +34,7 @@ function Favorites( props) {
   const fetchFavorites = () => {
     let jwtToken = localStorage.getItem("token");
     axios
-      .get("https://LBtest-01-1681136195.us-east-2.elb.amazonaws.com/user/findFavoriteProducts", {
+      .get("https://hemlock-studio.com/user/findFavoriteProducts", {
         headers: {
           'Authorization': `Bearer ${jwtToken}`
         }
@@ -53,7 +53,7 @@ function Favorites( props) {
     let jwtToken = localStorage.getItem("token");
     const favoriteDeleteData = productId;
     console.log(jwtToken)
-    axios.delete(`https://LBtest-01-1681136195.us-east-2.elb.amazonaws.com/user/removeProductFromFavorites/${favoriteDeleteData}`,
+    axios.delete(`https://hemlock-studio.com/user/removeProductFromFavorites/${favoriteDeleteData}`,
     {
       headers: {
         'Authorization': `Bearer ${jwtToken}`

@@ -28,7 +28,7 @@ function CreditCard(props) {
     if (jwtToken) {
       console.log("creditcard JWT Token Checkpoint", jwtToken)
       axios
-        .get('https://LBtest-01-1681136195.us-east-2.elb.amazonaws.com/user/findCreditCards', {
+        .get('https://hemlock-studio.com/user/findCreditCards', {
           headers: {
             'Authorization': `Bearer ${jwtToken}`
           }
@@ -133,7 +133,7 @@ function CreditCard(props) {
       }
 
       axios
-        .post('https://LBtest-01-1681136195.us-east-2.elb.amazonaws.com/user/addCreditCard', creditCardInfo, {
+        .post('https://hemlock-studio.com/user/addCreditCard', creditCardInfo, {
           headers: {
             'Authorization': `Bearer ${jwtToken}`
           }
@@ -173,7 +173,7 @@ function CreditCard(props) {
     };
     let jwtToken = localStorage.getItem("token");
     axios
-      .put('https://LBtest-01-1681136195.us-east-2.elb.amazonaws.com/user/updateCreditCard', updatedCard, {
+      .put('https://hemlock-studio.com/user/updateCreditCard', updatedCard, {
         headers: {
           'Authorization': `Bearer ${jwtToken}`
         }
@@ -203,7 +203,7 @@ function CreditCard(props) {
     if (jwtToken) {
       console.log("JWT TOKEN", jwtToken)
       axios
-        .delete(`https://LBtest-01-1681136195.us-east-2.elb.amazonaws.com/user/removeCreditCard/${cardDeleteData}`, {
+        .delete(`https://hemlock-studio.com/user/removeCreditCard/${cardDeleteData}`, {
           headers: {
             'Authorization': `Bearer ${jwtToken}`
           }
@@ -222,7 +222,7 @@ function CreditCard(props) {
     let jwtToken = localStorage.getItem("token");
     if (jwtToken) {
       axios
-        .get('https://LBtest-01-1681136195.us-east-2.elb.amazonaws.com/user/getDefaultCreditCard', {
+        .get('https://hemlock-studio.com/user/getDefaultCreditCard', {
           headers: {
             'Authorization': `Bearer ${jwtToken}`
           }
@@ -244,7 +244,7 @@ function CreditCard(props) {
     if (jwtToken) {
       axios
         .put(
-          'https://LBtest-01-1681136195.us-east-2.elb.amazonaws.com/user/setDefaultCreditCard',
+          'https://hemlock-studio.com/user/setDefaultCreditCard',
           cardId,
           {
             headers: {
@@ -257,7 +257,7 @@ function CreditCard(props) {
           console.log(response.data);
           props.setUpdateUser({});
           axios
-            .get('https://LBtest-01-1681136195.us-east-2.elb.amazonaws.com/user/getDefaultCreditCard', {
+            .get('https://hemlock-studio.com/user/getDefaultCreditCard', {
               headers: {
                 Authorization: `Bearer ${jwtToken}`,
               },
