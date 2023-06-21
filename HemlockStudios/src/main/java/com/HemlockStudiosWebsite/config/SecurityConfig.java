@@ -67,7 +67,7 @@ public SecurityFilterChain filterChain(HttpSecurity http) throws Exception{
                 auth.requestMatchers("/auth/register").permitAll();
                 auth.requestMatchers("/auth/login").permitAll();
                 auth.requestMatchers("/auth/confirm").permitAll();
-                 auth.requestMatchers("/auth/health").permitAll();
+                auth.requestMatchers("/auth/health").permitAll();
                 auth.requestMatchers("/auth/registerAdmin").hasRole("ADMIN");
                 auth.requestMatchers("/analytics/**").hasRole("ADMIN");
                 auth.requestMatchers("/enums/**").permitAll();

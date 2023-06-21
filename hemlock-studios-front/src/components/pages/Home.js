@@ -6,7 +6,7 @@ import Story from "./Story";
 import World from "./World";
 import Gameplay from "./Gameplay";
 import Characters from "./Characters";
-import videoBG from "../../video/Unitylogo.mp4";
+import videoBG from "../../video/Trailer_Pilot_04.mp4";
 
 function Home() {
   const [activeAccordion, setActiveAccordion] = useState(null);
