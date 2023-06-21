@@ -73,4 +73,11 @@ public LoginResponseDTO loginUser(@RequestBody RegistrationDTO body){
     String jwt = authenticationService.loginUser(body.getUsername(), body.getPassword());
     return new LoginResponseDTO(jwt);
 }
+
+@GetMapping("/")
+public ResponseEntity<String> healthCheck() {
+    return ResponseEntity.ok("Healthy");
+}
+
+
 }
