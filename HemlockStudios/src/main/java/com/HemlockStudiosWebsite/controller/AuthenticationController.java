@@ -74,7 +74,7 @@ public LoginResponseDTO loginUser(@RequestBody RegistrationDTO body){
     return new LoginResponseDTO(jwt);
 }
 
-@GetMapping("/")
+@GetMapping("/health")
 public ResponseEntity<String> healthCheck() {
     return ResponseEntity.ok("Healthy");
 }
