@@ -2,6 +2,8 @@ import axios from 'axios';
 import React, { useContext, useState } from 'react'
 import '../../css/pages/addproduct.css';
 import { ToastContext } from '../reusables/ToastContext';
+import DOMPurify from 'dompurify';
+
 
 function AddAdmin() {
     const { setMessage } = useContext(ToastContext);
@@ -40,16 +42,18 @@ function AddAdmin() {
 
     const registerChangeHandler = (event) => {
         const { name, value } = event.target;
-        const tempAdmin = { ...admin, [name]: value };
+        const sanitizedValue = DOMPurify.sanitize(value);
+        const tempAdmin = { ...admin, [name]: sanitizedValue };
         setAdmin(tempAdmin);
         validate(tempAdmin);
-      };
+    };
+    
 
 
     const registerSubmitHandler = () => {
         if (validate(admin)) {
             let jwtToken = localStorage.getItem('token');
-            axios.post("https://hemlock-studio.com/auth/registerAdmin", admin,
+            axios.post(`${process.env.REACT_APP_API_URL}/auth/registerAdmin`, admin,
             {
               headers: {
                 Authorization: `Bearer ${jwtToken}`,
@@ -57,14 +61,14 @@ function AddAdmin() {
             }
           )
                 .then((response) => {
-                    console.log(response.data)
                     handleAddedMessage();
                 })
                 .catch((e) => {
-                    console.log(e);
+    
                 });
         }
     };
+    
     return (
         <div className='add-product-content'>
             <div >

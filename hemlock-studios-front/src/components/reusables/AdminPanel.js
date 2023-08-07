@@ -21,8 +21,6 @@ function AdminPanel() {
       return () => window.removeEventListener('scroll', checkScroll);
   }, []);
 
-
-
   return (
     <div className={`${isScrolling ? 'scrolling' : ''}`}>
     <div>  

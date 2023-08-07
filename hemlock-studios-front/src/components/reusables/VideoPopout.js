@@ -5,5 +5,4 @@ function VideoPopout() {
     <div>VideoPopout</div>
   )
 }
-
 export default VideoPopout

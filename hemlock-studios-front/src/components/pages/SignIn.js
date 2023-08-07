@@ -5,16 +5,15 @@ import '../../css/reusables/positions.css'
 import axios from 'axios';
 import { useNavigate } from 'react-router';
 import EmberMask from '../reusables/EmberMask'
+import DOMPurify from 'dompurify';
 
 function SignIn(props) {
 
-
     const navigator = useNavigate()
-
 
     const signInChangeHandler = (event) => {
         const name = event.target.name;
-        const value = event.target.value;
+        const value = DOMPurify.sanitize(event.target.value);
         const tempUser = { ...props.user };
         tempUser[name] = value;
         props.setUser(tempUser);
@@ -22,7 +21,7 @@ function SignIn(props) {
     
 
     const signInSubmitHandler = () => {
-      axios.post("https://hemlock-studio.com/auth/login", props.user)
+      axios.post(`${process.env.REACT_APP_API_URL}/auth/login`, props.user)
           .then((response) => {
               localStorage.setItem("token", response.data.jwt);
               const decodedToken = jwt_decode(response.data.jwt);
@@ -35,12 +34,11 @@ function SignIn(props) {
   
               props.setUser(updatedUser);
             
-            console.log("navigated to the home page")
             navigator("/")
 
           })
           .catch((e) => {
-              console.log(e)
+             
           });
   };
 

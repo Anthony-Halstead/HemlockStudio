@@ -10,8 +10,7 @@ import videoBG from "../../video/Trailer_Pilot_04.mp4";
 
 function Home() {
   const [activeAccordion, setActiveAccordion] = useState(null);
-
-
+  
   const toggleAccordion = (id) => {
     setActiveAccordion((prevId) => (prevId === id ? null : id));
   };

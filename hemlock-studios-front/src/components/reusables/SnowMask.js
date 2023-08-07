@@ -12,7 +12,6 @@ function SnowMask() {
  
  return (
 <Particles id="snow"  options={{ 
-   
   particles:{
     color: {
       value: "#ffff"

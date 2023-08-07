@@ -8,7 +8,6 @@ function AddToCartButton({ onAddToCartClick }) {
     setMessage('Item added to cart');
 };
 
-
 const handleButtonClick = (event) => {
   onAddToCartClick(event);
   handleClick();

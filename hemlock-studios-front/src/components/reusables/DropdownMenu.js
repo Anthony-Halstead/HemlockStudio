@@ -33,7 +33,7 @@ function DropdownMenu(props) {
   const quantityProductsInCart = () => {
     let jwtToken = localStorage.getItem("token");
     axios
-      .get("https://hemlock-studio.com/cart/findItemsInCart", {
+      .get(`${process.env.REACT_APP_API_URL}/cart/findItemsInCart`, {
         headers: {
           'Authorization': `Bearer ${jwtToken}`
         }
@@ -50,7 +50,6 @@ function DropdownMenu(props) {
   return (
     <div className="menu-container">
       <FontAwesomeIcon onClick={onClick} className="menu-trigger" icon={faBars} />
-
       <nav ref={dropdownRef} className={`menu ${isActive ? 'active' : 'inactive'}`}>
         <ul>
           {props.user.id ? (

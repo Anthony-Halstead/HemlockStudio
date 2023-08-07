@@ -4,7 +4,6 @@ import Home from './components/pages/Home';
 import Store from './components/pages/Store';
 import About from './components/pages/About';
 import PageWrapper from './components/reusables/PageWrapper';
-import jwt_decode from 'jwt-decode';
 import SignIn from './components/pages/SignIn';
 import SignUp from './components/pages/SignUp';
 import Checkout from './components/pages/Checkout';
@@ -34,23 +33,19 @@ const [updateUser, setUpdateUser] = useState({})
 useEffect(() => {
   let jwtToken = localStorage.getItem("token");
   if (jwtToken) {
-    console.log("JWT TOKEN",jwtToken)
     axios
-      .get('https://hemlock-studio.com/user/getUser', {
-        headers: {
-          'Authorization': `Bearer ${jwtToken}`
-        }
-      })
+  .get(`${process.env.REACT_APP_API_URL}/user/getUser`, {
+    headers: {
+      'Authorization': `Bearer ${jwtToken}`
+    }
+  })
       .then(response => {
-        console.log("token authenticated")
         setUser({
           ...response.data,
           roles: response.data.roles.map(role => role.authority)
         });
       })
       .catch(e => {
-        console.log(e);
-      console.log("deleted token")
         localStorage.removeItem("token");
       });
   }

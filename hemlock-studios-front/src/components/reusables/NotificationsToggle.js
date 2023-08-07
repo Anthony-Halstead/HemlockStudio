@@ -8,14 +8,13 @@ function NotificationsToggle(props) {
   useEffect(() => {
     let jwtToken = localStorage.getItem('token');
     axios
-      .get('https://hemlock-studio.com/user/getNotificationStatus', {
+      .get(`${process.env.REACT_APP_API_URL}/user/getNotificationStatus`, {
         headers: {
           Authorization: `Bearer ${jwtToken}`,
         },
       })
       .then(response => {
         setNotificationStatus(response.data);
-        console.log('Notification status retrieved successfully');
       })
       .catch(error => {
         console.log('Error retrieving notification status:', error);
@@ -25,7 +24,7 @@ function NotificationsToggle(props) {
   const handleToggle = () => {
     let jwtToken = localStorage.getItem('token');
     axios
-      .put('https://hemlock-studio.com/user/toggleNotification', null, {
+      .put(`${process.env.REACT_APP_API_URL}/user/toggleNotification`, null, {
         headers: {
           Authorization: `Bearer ${jwtToken}`,
         },
@@ -33,7 +32,6 @@ function NotificationsToggle(props) {
       .then(response => {
         setNotificationStatus(response.data);
         props.setUpdateUser({});
-        console.log('Toggle Success');
       })
       .catch(error => {
         console.log('Could not toggle', error);

@@ -6,5 +6,4 @@ function UpdateUsers() {
        <Get entityType="user" />
   )
 }
-
 export default UpdateUsers

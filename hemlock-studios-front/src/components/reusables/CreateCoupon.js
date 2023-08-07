@@ -44,13 +44,12 @@ function CreateCoupon() {
     };
     let jwtToken = localStorage.getItem("token");
     axios
-      .post('https://hemlock-studio.com/coupon/createCoupon', couponData, {
+      .post(`${process.env.REACT_APP_API_URL}/coupon/createCoupon`, couponData, {
         headers: {
           'Authorization': `Bearer ${jwtToken}`
         }
       })
       .then((response) => {
-        console.log(response.data);
         setNewCoupon({
           couponCode: "",
           discountValue: 0,
@@ -85,5 +84,4 @@ function CreateCoupon() {
     </div>
   );
 }
-
 export default CreateCoupon;

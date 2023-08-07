@@ -16,20 +16,18 @@ function ProductOverlay({ product, onClose, props }) {
     let jwtToken = localStorage.getItem("token");
  
     console.log("PRODUCT ID", product.id)
-    axios.post("https://hemlock-studio.com/cart/addItemToCart", { productId: product.id },{
+    axios.post(`${process.env.REACT_APP_API_URL}/cart/addItemToCart`, { productId: product.id },{
         headers: {
           'Authorization': `Bearer ${jwtToken}`
         }
       })
       .then((response) => {
         props.setUpdateUser({});
-        // Handle the response, e.g. show a notification that the product was added to the cart
       })
       .catch((error) => {
         console.error('Error adding product to the cart', error);
       });
   };
-
 
   return (
     <div className="product-overlay">

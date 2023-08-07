@@ -36,7 +36,7 @@ function SortingPanel({ products, setFilteredProducts }) {
   useEffect(() => {
     let jwtToken = localStorage.getItem('token');
     axios
-      .get('https://hemlock-studio.com/enums/findAll', {
+      .get(`${process.env.REACT_APP_API_URL}/enums/findAll`, {
         headers: {
           Authorization: `Bearer ${jwtToken}`,
         },
@@ -94,7 +94,6 @@ function SortingPanel({ products, setFilteredProducts }) {
   };
 
   useEffect(() => {
-    // Filter the products based on the selected values
     let filteredProducts = products;
 
     if (selectedCategory) {

@@ -35,7 +35,6 @@ function World() {
       content: (
         <Card imagen="https://wallpaperaccess.com/full/2832177.jpg"  />
       ),
-     
     }
   ];
   return (

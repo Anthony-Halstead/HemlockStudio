@@ -22,7 +22,7 @@ const handleRemoveMessage = () => {
   useEffect(() => {
     let jwtToken = localStorage.getItem("token");
     axios
-      .get("https://hemlock-studio.com/user/findFavoriteProducts", {
+      .get(`${process.env.REACT_APP_API_URL}/user/findFavoriteProducts`, {
         headers: {
           'Authorization': `Bearer ${jwtToken}`
         }
@@ -47,31 +47,25 @@ const handleRemoveMessage = () => {
     event.stopPropagation();
     let jwtToken = localStorage.getItem("token");
  
-    console.log("PRODUCT ID", product.id)
-    axios.post("https://hemlock-studio.com/cart/addItemToCart", { productId: product.id },{
+    axios.post(`${process.env.REACT_APP_API_URL}/cart/addItemToCart`, { productId: product.id },{
         headers: {
           'Authorization': `Bearer ${jwtToken}`
         }
       })
       .then((response) => {
         setUpdateUser({});
-        // Handle the response, e.g. show a notification that the product was added to the cart
       })
       .catch((error) => {
         console.error('Error adding product to the cart', error);
-        // Handle the error, e.g. show an error message
       });
   };
 
   const handleFavoritedClick = (event) => {
     event.stopPropagation();
     let jwtToken = localStorage.getItem("token");
-
     const favoriteDeleteData = product.id;
-
-    console.log("in the handle favorites click", jwtToken)
     if (isFavorited) {
-      axios.delete(`https://hemlock-studio.com/user/removeProductFromFavorites/${favoriteDeleteData}`,{
+      axios.delete(`${process.env.REACT_APP_API_URL}/user/removeProductFromFavorites/${favoriteDeleteData}`,{
         headers: {
           'Authorization': `Bearer ${jwtToken}`
         }
@@ -79,14 +73,14 @@ const handleRemoveMessage = () => {
         .then((response) => {
           setIsFavorited(false);
           setUpdateUser({});
-         handleRemoveMessage();
+          handleRemoveMessage();
         })
         .catch((error) => {
           console.error('Error removing product from favorites', error);
          
         });
     } else {
-      axios.post("https://hemlock-studio.com/user/addProductToFavorites", { productId: product.id },{
+      axios.post(`${process.env.REACT_APP_API_URL}/user/addProductToFavorites`, { productId: product.id },{
         headers: {
           'Authorization': `Bearer ${jwtToken}`
         }
@@ -97,8 +91,7 @@ const handleRemoveMessage = () => {
          handleAddedMessage();
         })
         .catch((error) => {
-          console.error('Error adding product to favorites', error);
-         
+          console.error('Error adding product to favorites', error);  
         });
     }
   };

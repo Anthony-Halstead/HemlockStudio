@@ -23,7 +23,7 @@ function AddProduct() {
   useEffect(() => {
     let jwtToken = localStorage.getItem('token');
     axios
-      .get('https://hemlock-studio.com/enums/findAll',
+      .get(`${process.env.REACT_APP_API_URL}/enums/findAll`,
       {
         headers: {
           Authorization: `Bearer ${jwtToken}`,
@@ -89,10 +89,7 @@ function AddProduct() {
   };
 
   const handleCategoryChange = (event) => {
-   
-    
       setSelectedCategory(event.target.value);
-    
   };
 
   const handleSubcategoryChange = (event) => {
@@ -117,7 +114,7 @@ function AddProduct() {
     };
 
     axios
-      .post('https://hemlock-studio.com/product/createProduct', productData,
+      .post(`${process.env.REACT_APP_API_URL}/product/createProduct`, productData,
       {
         headers: {
           Authorization: `Bearer ${jwtToken}`,
@@ -125,7 +122,6 @@ function AddProduct() {
       }
     )
       .then((response) => {
-        console.log(response.data);
         setNewProduct({
           name: '',
           description: '',
@@ -141,9 +137,7 @@ function AddProduct() {
         handleAddedMessage();
       });
   };
-  
   return (
-    
     <div className='add-product-content'>
       <h1>Add Product</h1>
       <div>Category</div>
@@ -170,7 +164,6 @@ function AddProduct() {
     </option>
   ))}
 </select>
-
       <div>
         Name
         <div className='input-container'>

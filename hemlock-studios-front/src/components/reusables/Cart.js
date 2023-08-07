@@ -19,8 +19,7 @@ function Cart(props) {
 
 const getCartTotal = () => {
   let jwtToken = localStorage.getItem("token");
-  
-    axios.get("https://hemlock-studio.com/cart/total", {
+    axios.get(`${process.env.REACT_APP_API_URL}/cart/total`, {
       headers: {
         'Authorization': `Bearer ${jwtToken}`
       }
@@ -30,17 +29,13 @@ const getCartTotal = () => {
       })
       .catch((error) => {
         console.error('Error getting total from cart', error);
-        // Handle the error, e.g. show an error message
       })
 };
 
 
-
-
   const handleRemoveFromCartClick = (productId) => {
     let jwtToken = localStorage.getItem("token");
-    console.log("PRODUCT ID", productId)
-    axios.delete(`https://hemlock-studio.com/cart/removeItemFromCart/${productId}`, {
+    axios.delete(`${process.env.REACT_APP_API_URL}/cart/removeItemFromCart/${productId}`, {
       headers: {
         'Authorization': `Bearer ${jwtToken}`
       }
@@ -52,15 +47,13 @@ const getCartTotal = () => {
       })
       .catch((error) => {
         console.error('Error removing product from the cart', error);
-        // Handle the error, e.g. show an error message
       });
   };
-
 
   const findProductsInCart = () => {
     let jwtToken = localStorage.getItem("token");
     axios
-      .get("https://hemlock-studio.com/cart/findItemsInCart", {
+      .get(`${process.env.REACT_APP_API_URL}/cart/findItemsInCart`, {
         headers: {
           'Authorization': `Bearer ${jwtToken}`
         }

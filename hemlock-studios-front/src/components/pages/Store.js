@@ -10,14 +10,13 @@ import SortingPanel from '../reusables/SortingPanel';
 
 function Store(props) {
 
-  console.log("In the Store Path", props)
   const [products, setProducts] = useState([]);
   const [selectedProduct, setSelectedProduct] = useState(null);
   const [filteredProducts, setFilteredProducts] = useState(products);
 
   useEffect(() => {
     let jwtToken = localStorage.getItem('token');
-    axios.get("https://hemlock-studio.com/product/findAll",
+    axios.get(`${process.env.REACT_APP_API_URL}/product/findAll`,
     {
       headers: {
         Authorization: `Bearer ${jwtToken}`,
@@ -28,7 +27,6 @@ function Store(props) {
         setProducts(response.data);
       })
       .catch((error) => {
-        console.error('Error fetching products', error);
       });
   }, []);
 
@@ -66,13 +64,11 @@ function Store(props) {
           <ProductOverlay product={selectedProduct} onClose={closeOverlay} />
         )}
         </div>
-       
       </div>
     )
   } else {
     return (
       <div>
-       
         <div>
           <SortingPanel products={products} setFilteredProducts={setFilteredProducts} /> 
         </div>

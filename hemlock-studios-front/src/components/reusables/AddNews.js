@@ -5,6 +5,7 @@ import '../../css/reusables/additive.css';
 import { faSquareMinus, faSquarePlus } from '@fortawesome/free-solid-svg-icons';
 import '../../css/pages/addproduct.css';
 import { ToastContext } from '../reusables/ToastContext';
+import DOMPurify from 'dompurify';
 
 function AddNews() {
     const [anouncements, setAnouncements] = useState([]);
@@ -19,7 +20,7 @@ function AddNews() {
     useEffect(() => {
       let jwtToken = localStorage.getItem('token');
       axios
-        .get('https://hemlock-studio.com/enums/findAll',
+      .get(`${process.env.REACT_APP_API_URL}/enums/findAll`,
         {
           headers: {
             Authorization: `Bearer ${jwtToken}`,
@@ -45,22 +46,22 @@ function AddNews() {
   
     const inputFieldChangeHandler = (event) => {
       const name = event.target.name;
-      const value = event.target.value;
+      const value = DOMPurify.sanitize(event.target.value);
       setNewNews((prevNews) => ({
         ...prevNews,
         [name]: value,
       }));
-    };
+  };
   
-    const addNewsChangeHandler = (event, index) => {
-      const value = event.target.value;
+  const addNewsChangeHandler = (event, index) => {
+      const value = DOMPurify.sanitize(event.target.value);
       const newImgUrls = [...newNews.imgUrls];
       newImgUrls[index] = value;
       setNewNews((prevNews) => ({
         ...prevNews,
         imgUrls: newImgUrls,
       }));
-    };
+  };
   
     const removeInputFieldHandler = () => {
       if (newNews.imgUrls.length > 0) {
@@ -95,13 +96,8 @@ function AddNews() {
         imgUrls: newNews.imgUrls,
         anouncement: selectedAnouncement,
       };
-  console.log(newNews.title)
-  console.log(newNews.description)
-  console.log(newNews.body)
-  console.log(selectedAnouncement)
-  console.log(newNews.imgUrls)
       axios
-        .post('https://hemlock-studio.com/news/createNews', newsData,
+       .post(`${process.env.REACT_APP_API_URL}/news/createNews`, newsData,
         {
           headers: {
             Authorization: `Bearer ${jwtToken}`,
@@ -109,7 +105,6 @@ function AddNews() {
         }
       )
         .then((response) => {
-          console.log(response.data);
           setNewNews({
             title: '',
             description: '',
@@ -133,7 +128,6 @@ function AddNews() {
          <h1>Add News</h1>
          <div> Anouncement</div>
   <select value={selectedAnouncement} onChange={handleAnouncementChange} name='anouncements'>
-   
     {anouncements.map((anouncement) => (
       <option key={anouncement} value={anouncement}>
         {anouncement}

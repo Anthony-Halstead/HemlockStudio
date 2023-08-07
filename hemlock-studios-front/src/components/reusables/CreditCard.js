@@ -4,6 +4,7 @@ import '../../css/pages/account.css'
 import'../../css/reusables/custombutton.css'
 
 function CreditCard(props) {
+
   const [editable, setEditable] = useState(false);
   const [creditCardInfo, setCreditCardInfo] = useState({
     cardNumber: '',
@@ -26,9 +27,8 @@ function CreditCard(props) {
   useEffect(() => {
     let jwtToken = localStorage.getItem("token");
     if (jwtToken) {
-      console.log("creditcard JWT Token Checkpoint", jwtToken)
       axios
-        .get('https://hemlock-studio.com/user/findCreditCards', {
+        .get(`${process.env.REACT_APP_API_URL}/user/findCreditCards`, {
           headers: {
             'Authorization': `Bearer ${jwtToken}`
           }
@@ -85,32 +85,32 @@ function CreditCard(props) {
       cvv: '',
     };
 
-    // Card Number Validation
+  
     if (!/^\d{10}$/.test(creditCardInfo.cardNumber)) {
       valid = false;
       errors.cardNumber = 'Card number must be 10 digits long.';
     }
 
-    // Expiration Month Validation
+
     const expirationMonth = parseInt(creditCardInfo.expirationMonth, 10);
     if (!/^\d{2}$/.test(creditCardInfo.expirationMonth) || expirationMonth > 12) {
       valid = false;
       errors.expirationMonth = 'Invalid expiration month.';
     }
 
-    // Expiration Year Validation
+
     if (!/^\d{4}$/.test(creditCardInfo.expirationYear)) {
       valid = false;
       errors.expirationYear = 'Invalid expiration year.';
     }
 
-    // Card Holder Name Validation
+
     if (!/^[a-zA-Z\s]+$/.test(creditCardInfo.cardHolderName)) {
       valid = false;
       errors.cardHolderName = 'Invalid card holder name.';
     }
 
-    // CVV Validation
+    
     if (!/^\d{3}$/.test(creditCardInfo.cvv)) {
       valid = false;
       errors.cvv = 'CVV must be 3 digits long.';
@@ -121,25 +121,20 @@ function CreditCard(props) {
   };
 
   const handleSaveClick = () => {
-    console.log("in the handle save click", creditCardInfo)
-
     let jwtToken = localStorage.getItem("token");
     if (jwtToken) {
-      console.log("JWT TOKEN", jwtToken);
-
       if (!validateForm()) {
         console.log('Form validation failed');
         return;
       }
 
       axios
-        .post('https://hemlock-studio.com/user/addCreditCard', creditCardInfo, {
+        .post(`${process.env.REACT_APP_API_URL}/user/addCreditCard`, creditCardInfo, {
           headers: {
             'Authorization': `Bearer ${jwtToken}`
           }
         })
         .then((response) => {
-          console.log(response.data);
           props.setUpdateUser({});
           setCreditCardInfo({
             cardNumber: '',
@@ -158,7 +153,6 @@ function CreditCard(props) {
 
   const handleUpdateClick = () => {
     if (!props.user || !props.user.id) {
-      // User object is not defined or doesn't have the necessary properties
       console.error('User object is invalid');
       return;
     }
@@ -173,13 +167,12 @@ function CreditCard(props) {
     };
     let jwtToken = localStorage.getItem("token");
     axios
-      .put('https://hemlock-studio.com/user/updateCreditCard', updatedCard, {
+      .put(`${process.env.REACT_APP_API_URL}/user/updateCreditCard`, updatedCard, {
         headers: {
           'Authorization': `Bearer ${jwtToken}`
         }
       })
       .then((response) => {
-        console.log(response.data);
         props.setUpdateUser({});
         setSelectedCard(null);
       })
@@ -194,22 +187,16 @@ function CreditCard(props) {
   };
 
   const handleRemove = (card) => {
-    console.log("in the handle remove", card)
-
     let jwtToken = localStorage.getItem("token");
     const cardDeleteData = card.id;
-
-    console.log(cardDeleteData)
     if (jwtToken) {
-      console.log("JWT TOKEN", jwtToken)
       axios
-        .delete(`https://hemlock-studio.com/user/removeCreditCard/${cardDeleteData}`, {
+        .delete(`${process.env.REACT_APP_API_URL}/user/removeCreditCard/${cardDeleteData}`, {
           headers: {
             'Authorization': `Bearer ${jwtToken}`
           }
         })
         .then((response) => {
-          console.log(response.data);
           props.setUpdateUser({});
         })
         .catch((error) => {
@@ -222,7 +209,7 @@ function CreditCard(props) {
     let jwtToken = localStorage.getItem("token");
     if (jwtToken) {
       axios
-        .get('https://hemlock-studio.com/user/getDefaultCreditCard', {
+        .get(`${process.env.REACT_APP_API_URL}/user/getDefaultCreditCard`, {
           headers: {
             'Authorization': `Bearer ${jwtToken}`
           }
@@ -244,7 +231,7 @@ function CreditCard(props) {
     if (jwtToken) {
       axios
         .put(
-          'https://hemlock-studio.com/user/setDefaultCreditCard',
+          `${process.env.REACT_APP_API_URL}/user/setDefaultCreditCard`,
           cardId,
           {
             headers: {
@@ -254,10 +241,9 @@ function CreditCard(props) {
           }
         )
         .then((response) => {
-          console.log(response.data);
           props.setUpdateUser({});
           axios
-            .get('https://hemlock-studio.com/user/getDefaultCreditCard', {
+            .get(`${process.env.REACT_APP_API_URL}/user/getDefaultCreditCard`, {
               headers: {
                 Authorization: `Bearer ${jwtToken}`,
               },
@@ -286,7 +272,7 @@ function CreditCard(props) {
               <p>Expiration Year: {creditCard.expirationYear}</p>
               <p>Card Holder Name: {creditCard.cardHolderName}</p>            
               <button className='custom-button' onClick={() => handleToggleEdit(creditCard)}>Edit</button>
-              <button className='custom-button'  onClick={() => handleRemove(creditCard)}>Remove</button>
+              <button className='custom-button' onClick={() => handleRemove(creditCard)}>Remove</button>
               <label>
                 <input
                   type="radio"

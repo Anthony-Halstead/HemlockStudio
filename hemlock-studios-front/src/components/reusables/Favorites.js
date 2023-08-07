@@ -11,12 +11,9 @@ function Favorites( props) {
 
 
   const handleAddToCartClick = (productId) => {
-
-
-    console.log("FAVORITES", productId)
     let jwtToken = localStorage.getItem("token");
     const productData = productId;
-    axios.post("https://hemlock-studio.com/cart/addItemToCart", {productId},{
+    axios.post(`${process.env.REACT_APP_API_URL}/cart/addItemToCart`, {productId},{
         headers: {
           'Authorization': `Bearer ${jwtToken}`
         }
@@ -34,7 +31,7 @@ function Favorites( props) {
   const fetchFavorites = () => {
     let jwtToken = localStorage.getItem("token");
     axios
-      .get("https://hemlock-studio.com/user/findFavoriteProducts", {
+      .get(`${process.env.REACT_APP_API_URL}/user/findFavoriteProducts`, {
         headers: {
           'Authorization': `Bearer ${jwtToken}`
         }
@@ -48,12 +45,9 @@ function Favorites( props) {
   }
 
   const removeFavorite = (productId) => {
-
-    console.log("FAVORITES", productId)
     let jwtToken = localStorage.getItem("token");
     const favoriteDeleteData = productId;
-    console.log(jwtToken)
-    axios.delete(`https://hemlock-studio.com/user/removeProductFromFavorites/${favoriteDeleteData}`,
+    axios.delete(`${process.env.REACT_APP_API_URL}/user/removeProductFromFavorites/${favoriteDeleteData}`,
     {
       headers: {
         'Authorization': `Bearer ${jwtToken}`
@@ -81,7 +75,6 @@ function Favorites( props) {
     <button className='custom-button' onClick={() => handleAddToCartClick(product.id)}>Add to cart</button>
   </div>
 ))}
-     
     </div>
   );
 }

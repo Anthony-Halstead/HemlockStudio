@@ -6,5 +6,4 @@ function UpdateNews() {
     <Get entityType="news" />
   )
 }
-
 export default UpdateNews

@@ -12,9 +12,13 @@ function About(props) {
   const [subject, setSubject] = useState('');
   const [message, setMessage] = useState('');
 
-  const handleEmailChange = (e) => setEmail(e.target.value);
-  const handleSubjectChange = (e) => setSubject(e.target.value);
-  const handleMessageChange = (e) => setMessage(e.target.value);
+  const sanitizeInput = (str) => str.replace(/(<([^>]+)>)/gi, "");
+
+  const handleEmailChange = (e) => setEmail(sanitizeInput(e.target.value));
+  const handleSubjectChange = (e) => setSubject(sanitizeInput(e.target.value));
+  const handleMessageChange = (e) => setMessage(sanitizeInput(e.target.value));
+
+
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -26,7 +30,7 @@ function About(props) {
     };
 
     let jwtToken = localStorage.getItem('token');
-    axios.post('https://hemlock-studio.com/email/contact-email', payload,
+    axios.post(`${process.env.REACT_APP_API_URL}/email/contact-email`, payload,
         {
           headers: {
             Authorization: `Bearer ${jwtToken}`,

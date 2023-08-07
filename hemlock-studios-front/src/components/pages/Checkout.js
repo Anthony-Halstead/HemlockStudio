@@ -22,7 +22,7 @@ function Checkout() {
 
   const handleSubmit = () => {
     let jwtToken = localStorage.getItem('token');
-    axios.post('https://hemlock-studio.com/cart/makePurchase',{},
+    axios.post(`${process.env.REACT_APP_API_URL}/cart/makePurchase`,{},
         {
           headers: {
             Authorization: `Bearer ${jwtToken}`,
@@ -39,7 +39,8 @@ function Checkout() {
 
 
   const couponChangeHandler = (event) => {
-    const value = event.target.value;
+    let value = event.target.value.trim();
+    value = value.replace(/[^a-zA-Z0-9-]/g, '');
     setCouponCode(value);
 
     if (value !== previousCouponCode && couponApplied) {
@@ -62,11 +63,10 @@ function Checkout() {
 
   const handleCouponCode = debounce(() => {
     if (couponCode.trim() !== '') {
-      console.log(couponCode);
       let jwtToken = localStorage.getItem('token');
       axios
         .post(
-          'https://hemlock-studio.com/coupon/applyCouponDiscount',
+          `${process.env.REACT_APP_API_URL}/coupon/applyCouponDiscount`,
           { couponCode: couponCode },
           {
             headers: {
@@ -89,7 +89,7 @@ function Checkout() {
   const getCartTotal = () => {
     let jwtToken = localStorage.getItem('token');
     axios
-      .get('https://hemlock-studio.com/cart/total', {
+      .get(`${process.env.REACT_APP_API_URL}/cart/total`, {
         headers: {
           Authorization: `Bearer ${jwtToken}`,
         },
@@ -105,7 +105,7 @@ function Checkout() {
   const getDiscountedCartTotal = () => {
     let jwtToken = localStorage.getItem('token');
     axios
-      .get('https://hemlock-studio.com/cart/discountedTotal', {
+    .get(`${process.env.REACT_APP_API_URL}/cart/discountedTotal`, {
         headers: {
           Authorization: `Bearer ${jwtToken}`,
         },

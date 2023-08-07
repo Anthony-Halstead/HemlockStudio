@@ -11,7 +11,7 @@ function Get({ entityType }) {
   useEffect(() => {
     let jwtToken = localStorage.getItem("token");
     axios
-      .get(`https://hemlock-studio.com/${entityType}/findAll`, {
+      .get(`${process.env.REACT_APP_API_URL}/${entityType}/findAll`, {
         headers: {
           'Authorization': `Bearer ${jwtToken}`
         }
@@ -33,16 +33,15 @@ function Get({ entityType }) {
 
   const handleDelete = (id) => {
     let jwtToken = localStorage.getItem("token");
-    console.log("Product ID",id)
     axios
-      .delete(`https://hemlock-studio.com/${entityType}/delete/${id}`,{
+      .delete(`${process.env.REACT_APP_API_URL}/${entityType}/delete/${id}`,{
         headers: {
           'Authorization': `Bearer ${jwtToken}`
         }
       })
       .then(() => {
         axios
-          .get(`https://hemlock-studio.com/${entityType}/findAll`, {
+          .get(`${process.env.REACT_APP_API_URL}/${entityType}/findAll`, {
             headers: {
               'Authorization': `Bearer ${jwtToken}`
             }
@@ -76,22 +75,19 @@ function Get({ entityType }) {
     }
     
     if (updatedItem.photoReal) {
-      
       updatedItem.photoReal = updatedItem.photoReal.map(photo => photo.photoUrl);
     }
   
     let jwtToken = localStorage.getItem("token");
-    console.log("In the handle update submit with this product", updatedItem)
     axios
-      .put(`https://hemlock-studio.com/${entityType}/update`,  { id: selectedItem.id, ...updatedItem }, {
+      .put(`${process.env.REACT_APP_API_URL}/${entityType}/update`,  { id: selectedItem.id, ...updatedItem }, {
         headers: {
           'Authorization': `Bearer ${jwtToken}`
         }
       })
       .then(() => {
-        console.log("In the handle update submit but now getting all of the products")
         axios
-          .get(`https://hemlock-studio.com/${entityType}/findAll`, {
+          .get(`${process.env.REACT_APP_API_URL}/${entityType}/findAll`, {
             headers: {
               'Authorization': `Bearer ${jwtToken}`
             }

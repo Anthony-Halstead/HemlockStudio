@@ -15,7 +15,7 @@ const UpdateForm = ({ selectedItem, entityType, onUpdate, onCancel }) => {
     setUpdatedValues(selectedItem);
     let jwtToken = localStorage.getItem("token");
     axios
-      .get('https://hemlock-studio.com/enums/findAll', {
+      .get(`${process.env.REACT_APP_API_URL}/enums/findAll`, {
         headers: {
           'Authorization': `Bearer ${jwtToken}`
         }
@@ -94,9 +94,7 @@ const UpdateForm = ({ selectedItem, entityType, onUpdate, onCancel }) => {
   };
 
   const renderFormField = (field) => {
-    // If the field is 'id', do not render anything
     if (field === 'id') return null;
-    
     if (field === 'photoAlbum' || field === 'photoReal') {
       const localHandlePhotoUrlChange = field === 'photoAlbum' ? handlePhotoUrlChange : handlePhotoRealUrlChange;
       const localHandleAddPhoto = field === 'photoAlbum' ? handleAddPhoto : handleAddPhotoReal;
@@ -179,10 +177,8 @@ const UpdateForm = ({ selectedItem, entityType, onUpdate, onCancel }) => {
           value={updatedValues[field] || ''}
           onChange={(e) => handleFieldChange(field, e.target.value)}
         />
-     </div> );
-      
+     </div> ); 
     }
-   
   };
 
   return (

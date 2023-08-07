@@ -3,12 +3,7 @@ import '../../css/pages/header.css';
 import DropdownMenu from "./DropdownMenu";
 import { Link } from 'react-router-dom';
 
-
-
 function Header(props) {
-    console.log("Header:", props.user)
-   
-
     return (
         <div>
             <div className="header">

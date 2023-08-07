@@ -4,7 +4,7 @@ import axios from 'axios';
 import { useNavigate } from 'react-router';
 import { useState } from 'react';
 import SnowMask from '../reusables/SnowMask'
-
+import DOMPurify from 'dompurify';
 
 
 function SignUp(props) {
@@ -27,30 +27,26 @@ function SignUp(props) {
         if (!passwordRegex.test(user.password)) {
             errors.password = "Invalid password";
         }
-
         setErrors(errors);
         return Object.keys(errors).length === 0;
-
     }
 
     const signUpChangeHandler = (event) => {
         const name = event.target.name;
         const value = event.target.value;
         const tempUser = { ...props.user };
-        tempUser[name] = value;
+        tempUser[name] = DOMPurify.sanitize(value); 
         props.setUser(tempUser);
         validate(tempUser);
     };
 
-
     const signUpSubmitHandler = () => {
         if (validate(props.user)) {
-            axios.post("https://hemlock-studio.com/auth/register", props.user)
+            axios.post(`${process.env.REACT_APP_API_URL}/auth/register`, props.user)
                 .then(() => {
                     navigator("/SignIn");
                 })
                 .catch((e) => {
-                    console.log(e);
                 });
         }
     };
@@ -74,7 +70,6 @@ function SignUp(props) {
                 </div>
                 <div >
                     <button className='submit-button' onClick={signUpSubmitHandler}>SUBMIT</button>
-                   
                 </div>
                 <div>already have an account? <a href="/SignIn">Click here</a></div>
             </div>

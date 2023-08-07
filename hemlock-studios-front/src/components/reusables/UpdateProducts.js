@@ -6,5 +6,4 @@ function UpdateProducts() {
       <Get entityType="product" />
   )
 }
-
 export default UpdateProducts

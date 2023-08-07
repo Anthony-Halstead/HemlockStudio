@@ -15,7 +15,7 @@ function News(props) {
 
   useEffect(() => {
     let jwtToken = localStorage.getItem('token');
-    axios.get("https://hemlock-studio.com/news/findAll",
+    axios.get(`${process.env.REACT_APP_API_URL}/news/findAll`,
     {
       headers: {
         Authorization: `Bearer ${jwtToken}`,
@@ -26,7 +26,7 @@ function News(props) {
         setNews(response.data);
       })
       .catch((error) => {
-        console.error('Error fetching news', error);
+        
       });
   }, []);
 
