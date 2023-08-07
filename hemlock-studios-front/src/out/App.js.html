@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>JSDoc: Source: App.js</title>
+
+    <script src="scripts/prettify/prettify.js"> </script>
+    <script src="scripts/prettify/lang-css.js"> </script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc-default.css">
+</head>
+
+<body>
+
+<div id="main">
+
+    <h1 class="page-title">Source: App.js</h1>
+
+    
+
+
+
+    
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>/**
+ * @typedef {Object} User
+ * @property {number} id - The ID of the user.
+ * @property {string} username - The username of the user.
+ * @property {string} email - The email of the user.
+ * @property {Array&lt;string>} roles - The roles of the user.
+ */
+
+/**
+ * The main application component that sets up routes and renders pages based on the current URL.
+ * Manages user authentication and updating user data.
+ * 
+ * @function
+ * @returns {JSX.Element} A JSX element wrapped in a ToastProvider and PageWrapper.
+ */
+import { Route, Routes } from 'react-router';
+import  {useState, useEffect} from 'react'
+import Home from './components/pages/Home';
+import Store from './components/pages/Store';
+import About from './components/pages/About';
+import PageWrapper from './components/reusables/PageWrapper';
+import SignIn from './components/pages/SignIn';
+import SignUp from './components/pages/SignUp';
+import Checkout from './components/pages/Checkout';
+import Account from './components/pages/Account';
+import Favorites from './components/reusables/Favorites';
+import News from './components/pages/News';
+import Cart from './components/reusables/Cart'
+import DropdownMenu from './components/reusables/DropdownMenu';
+import axios from 'axios';
+import { ToastProvider } from '../src/components/reusables/ToastContext';
+import Toast from '../src/components/reusables/Toast'
+import Receipt from './components/pages/Receipt';
+
+/**
+ * The App component. 
+ * Manages routes for the application and provides user authentication.
+ * @function
+ * @returns {JSX.Element} - The rendered component.
+ */
+function App() {
+
+  /**
+   * Represents the user's data.
+   * @name userDataState
+   * @type {User}
+   */
+  const [user, setUser] = useState({
+    id: undefined,
+    username: "",
+    email: "",
+    roles: [],
+  });
+
+  /**
+   * Used to trigger a re-render of the component when updated.
+   * Especially useful for updating user data or triggering other actions in the component.
+   * 
+   * @name updateUserState
+   * @type {Object}
+   */
+  const [updateUser, setUpdateUser] = useState({});
+
+  /**
+   * @name fetchUserDataEffect
+   * @function
+   * Fetches user data from the server and updates the user state variable.
+   */
+  useEffect(() => {
+    let jwtToken = localStorage.getItem("token");
+    if (jwtToken) {
+      axios
+        .get(`${process.env.REACT_APP_API_URL}/user/getUser`, {
+          headers: {
+            'Authorization': `Bearer ${jwtToken}`
+          }
+        })
+        .then(response => {
+          setUser({
+            ...response.data,
+            roles: response.data.roles.map(role => role.authority)
+          });
+        })
+        .catch(e => {
+          localStorage.removeItem("token");
+        });
+    }
+  }, [updateUser]);
+
+  return (
+    &lt;ToastProvider>
+      &lt;PageWrapper user={user} setUser={setUser} setUpdateUser={setUpdateUser}>
+        &lt;Toast />
+        &lt;Routes>
+          &lt;Route path="/" element={&lt;Home user={user} setUser={setUser} />} />
+          &lt;Route path="/store" element={&lt;Store user={user} setUser={setUser} setUpdateUser={setUpdateUser} />} />
+          &lt;Route path="/about" element={&lt;About user={user} setUser={setUser} />} />
+          &lt;Route path="/news" element={&lt;News user={user} setUser={setUser} />} />
+          &lt;Route path="/SignIn" element={&lt;SignIn user={user} setUser={setUser} />} />
+          &lt;Route path="/SignUp" element={&lt;SignUp user={user} setUser={setUser} />} />
+          &lt;Route path="/Account" element={&lt;Account user={user} setUser={setUser} setUpdateUser={setUpdateUser} />} />
+          &lt;Route path="/Checkout" element={&lt;Checkout user={user} setUser={setUser} setUpdateUser={setUpdateUser} />} />
+          &lt;Route path="/Favorites" element={&lt;Favorites user={user} setUser={setUser} setUpdateUser={setUpdateUser} />} />
+          &lt;Route path="/DropDownMenu" element={&lt;DropdownMenu user={user} setUser={setUser} setUpdateUser={setUpdateUser} />} />
+          &lt;Route path="/Cart" element={&lt;Cart user={user} setUser={setUser} setUpdateUser={setUpdateUser} />} />
+          &lt;Route path="/Receipt" element={&lt;Receipt />} />
+        &lt;/Routes>
+      &lt;/PageWrapper>
+    &lt;/ToastProvider>
+  );
+}
+
+export default App;
+</code></pre>
+        </article>
+    </section>
+
+
+
+
+</div>
+
+<nav>
+    <h2><a href="index.html">Home</a></h2><h3>Global</h3><ul><li><a href="global.html#App">App</a></li><li><a href="global.html#Fetchesuserdatafromtheserverandupdatestheuserstatevariable.">Fetches user data from the server and updates the user state variable.</a></li><li><a href="global.html#updateUserState">updateUserState</a></li><li><a href="global.html#userDataState">userDataState</a></li></ul>
+</nav>
+
+<br class="clear">
+
+<footer>
+    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 4.0.2</a> on Mon Aug 07 2023 17:11:46 GMT-0500 (Central Daylight Time)
+</footer>
+
+<script> prettyPrint(); </script>
+<script src="scripts/linenumber.js"> </script>
+</body>
+</html>
