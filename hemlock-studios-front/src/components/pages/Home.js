@@ -1,7 +1,6 @@
 import React, { useState } from "react";
 import "../../css/pages/home.css";
 import Accordion from "../reusables/Accordion";
-import { useSpring, animated } from "react-spring";
 import Story from "./Story";
 import World from "./World";
 import Gameplay from "./Gameplay";
@@ -15,13 +14,6 @@ function Home() {
     setActiveAccordion((prevId) => (prevId === id ? null : id));
   };
 
-  const titleAnimation = useSpring({
-    from: {
-      transform: "translateY(-30px)",
-    },
-    to: [{ transform: "translateY(15px)" }],
-    config: { mass: 3, tension: 500, friction: 25 },
-  });
   return (
     <div className="main">
       <video className='video' src={videoBG} autoPlay loop muted/>

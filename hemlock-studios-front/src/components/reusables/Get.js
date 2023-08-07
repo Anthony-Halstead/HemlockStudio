@@ -25,10 +25,8 @@ function Get({ entityType }) {
   }, [entityType]);
 
   const entityFields = {
-    product: ['id', 'name', 'price', 'category', 'subcategory', 'size', 'discount', 'description'],
     user: ['id', 'username', 'email'],
     news: ['id', 'title', 'description', 'anouncement', 'body', 'datePublished'],
-    coupon: ['id', 'couponCode', 'discountValue'],
   };
 
   const handleDelete = (id) => {

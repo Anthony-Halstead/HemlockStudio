@@ -4,7 +4,6 @@ import Draggable from 'react-draggable'
 import '../../css/pages/news.css'
 import axios from 'axios';
 import Article from '../reusables/Article';
-import ProductOverlay from '../reusables/ProductOverlay';
 import NewsOverlay from '../reusables/NewsOverlay';
 
 function News(props) {

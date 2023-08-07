@@ -14,9 +14,6 @@ function Header(props) {
                 <Link className=' header-link' to="/">GAME</Link>
                 </div>
                 <div>
-                <Link className=' header-link' to="/store">SHOP</Link>    
-                </div>
-                <div>
                 <Link className=' header-link' to="/news">NEWS</Link>
                 </div>
                 <div>
