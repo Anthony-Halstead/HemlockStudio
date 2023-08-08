@@ -1,9 +1,47 @@
-import { v4 as uuidv4 } from "uuid";
-import Card from "../reusables/Card";
-import Carousel from "../reusables/Carousel";
-import TropicalRuins from "../../images/TropicalRuins.png"
-import DwarfStatues from "../../images/DwarfStatues.png"
+/**
+ * @module World
+ */
 
+/** 
+ * UUID generator module, used to generate unique keys for React components.
+ * @external uuid
+ * @see {@link https://www.npmjs.com/package/uuid|UUID}
+ */
+import { v4 as uuidv4 } from "uuid";
+
+/**
+ * Reusable Card component.
+ * @see {@link module:Card|Card}
+ */
+import Card from "../reusables/Card";
+
+/**
+ * Reusable Carousel component.
+ * @see {@link module:Carousel|Carousel}
+ */
+import Carousel from "../reusables/Carousel";
+
+/**
+ * Image representing tropical ruins.
+ * @constant {string}
+ */
+import TropicalRuins from "../../images/TropicalRuins.png";
+
+/**
+ * Image representing dwarf statues.
+ * @constant {string}
+ */
+import DwarfStatues from "../../images/DwarfStatues.png";
+
+/**
+ * The World component displays a carousel of cards with various world-related images.
+ * 
+ * It uses the Card and Carousel components to display these images. The images include
+ * static imports from the local project and external URLs.
+ * 
+ * @function
+ * @returns {JSX.Element} A carousel containing cards with world-related images.
+ */
 function World() {
   let cards = [
     {

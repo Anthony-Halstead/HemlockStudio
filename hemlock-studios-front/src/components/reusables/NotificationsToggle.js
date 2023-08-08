@@ -1,10 +1,27 @@
+/**
+ * @module NotificationsToggle
+ */
+
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import '../../css/reusables/notificationstoggle.css';
 
+/**
+ * NotificationsToggle is a functional component for toggling user's email notification preferences.
+ * 
+ * @param {Object} props - Properties passed to the component.
+ * @param {function} props.setUpdateUser - Function to trigger an update in the parent component/user state.
+ * @returns {JSX.Element} The NotificationsToggle component.
+ */
 function NotificationsToggle(props) {
+  /** 
+   * @type {boolean} notificationStatus - Holds the current status of the user's email notification preference.
+   */
   const [notificationStatus, setNotificationStatus] = useState(false);
 
+  /**
+   * useEffect hook to retrieve the current notification status of the user from the backend when the component mounts.
+   */
   useEffect(() => {
     let jwtToken = localStorage.getItem('token');
     axios
@@ -21,6 +38,9 @@ function NotificationsToggle(props) {
       });
   }, [notificationStatus]);
 
+  /**
+   * Toggles the user's email notification preference when the toggle is changed.
+   */
   const handleToggle = () => {
     let jwtToken = localStorage.getItem('token');
     axios

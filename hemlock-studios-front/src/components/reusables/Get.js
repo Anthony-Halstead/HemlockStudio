@@ -1,15 +1,43 @@
+/**
+ * @module Get
+ * @description This module provides the Get component used for retrieving and displaying entity data.
+ */
+
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import '../../css/reusables/get.css';
-import UpdateForm from './UpdateForm'; // Import the UpdateForm component
+import UpdateForm from './UpdateForm';
 
+/**
+ * Get component that retrieves and renders entity data, such as users or news.
+ * This component provides CRUD operations (Create, Read, Update, Delete) 
+ * on the specified entity type, integrating with an external API.
+ *
+ * @function
+ * @param {Object} props - Properties passed down to the Get component.
+ * @param {string} props.entityType - The type of the entity to manage (e.g., 'user', 'news').
+ * @returns {React.ReactNode} - The rendered Get component.
+ *
+ * @example
+ * <Get entityType="user" />
+ */
 function Get({ entityType }) {
-  const [data, setData] = useState([]);
-  const [selectedItem, setSelectedItem] = useState(null);
+  /**
+ * Local state for managing the retrieved entity data.
+ * @type {[Array, React.Dispatch<React.SetStateAction<Array>>]}
+ */
+const [data, setData] = useState([]);
+
+  /**
+ * Local state for managing the currently selected entity item for CRUD operations.
+ * @type {[Object|null, React.Dispatch<React.SetStateAction<Object|null>>]}
+ */
+const [selectedItem, setSelectedItem] = useState(null);
 
 
   useEffect(() => {
     let jwtToken = localStorage.getItem("token");
+      /** Fetch data from the API and update the local state. */
     axios
       .get(`${process.env.REACT_APP_API_URL}/${entityType}/findAll`, {
         headers: {
@@ -24,11 +52,19 @@ function Get({ entityType }) {
       });
   }, [entityType]);
 
+  /**
+ * Pre-defined fields to display for each entity type.
+ * @type {Object.<string, Array.<string>>}
+ */
   const entityFields = {
     user: ['id', 'username', 'email'],
     news: ['id', 'title', 'description', 'anouncement', 'body', 'datePublished'],
   };
 
+  /**
+ * Delete a specific entity item by its ID.
+ * @param {number} id - The ID of the entity item to delete.
+ */
   const handleDelete = (id) => {
     let jwtToken = localStorage.getItem("token");
     axios
@@ -55,16 +91,26 @@ function Get({ entityType }) {
         console.error('Error deleting object', error);
       });
   };
-
+/**
+ * Update the `selectedItem` state to the entity item with the given ID.
+ * @param {number} id - The ID of the entity item to update.
+ */
   const handleUpdate = (id) => {
     const selectedItem = data.find((item) => item.id === id);
     setSelectedItem(selectedItem);
   };
-
+  
+/**
+ * Reset the `selectedItem` state to null, effectively canceling the update.
+ */
   const handleCancelUpdate = () => {
     setSelectedItem(null);
   };
-  
+
+  /**
+ * Handle the submission of the update form.
+ * @param {Object} updatedItem - The updated entity data.
+ */
   const handleUpdateSubmit = (updatedItem) => {
  
     if (updatedItem.photoAlbum) {

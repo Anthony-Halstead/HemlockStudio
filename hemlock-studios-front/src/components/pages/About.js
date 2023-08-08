@@ -1,25 +1,78 @@
-import React, { useState } from 'react'
-import '../../css/pages/about.css'
-import Draggable from 'react-draggable'
-import AdminPanel from '../reusables/AdminPanel'
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faTwitter, faDiscord, faLinkedin, faYoutube, faTwitch} from '@fortawesome/free-brands-svg-icons'
-import axios from 'axios'
-function About(props) {
+/**
+ * About Component - Provides information about Hemlock Studios and a contact form.
+ * @module About
+ * @requires react
+ * @requires ../../css/pages/about.css
+ * @requires react-draggable
+ * @requires ../reusables/AdminPanel
+ * @requires @fortawesome/react-fontawesome
+ * @requires @fortawesome/free-brands-svg-icons
+ * @requires axios
+ */
 
+import React, { useState } from 'react';
+import '../../css/pages/about.css';
+import Draggable from 'react-draggable';
+import AdminPanel from '../reusables/AdminPanel';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import {
+  faTwitter, faDiscord, faLinkedin, faYoutube, faTwitch
+} from '@fortawesome/free-brands-svg-icons';
+import axios from 'axios';
+
+/**
+ * About component displaying the about information and contact form.
+ *
+ * @function
+ * @param {Object} props - Properties passed down from parent component.
+ * @param {Object} props.user - User information.
+ * @returns {JSX.Element}
+ */
+function About(props) {
 
   const [email, setEmail] = useState('');
   const [subject, setSubject] = useState('');
   const [message, setMessage] = useState('');
 
+  /**
+   * Sanitizes the input by removing any HTML tags.
+   *
+   * @function
+   * @param {string} str - The string to sanitize.
+   * @returns {string} - The sanitized string.
+   */
   const sanitizeInput = (str) => str.replace(/(<([^>]+)>)/gi, "");
 
+  /**
+   * Handles changes to the email input.
+   *
+   * @function
+   * @param {Event} e - The event object.
+   */
   const handleEmailChange = (e) => setEmail(sanitizeInput(e.target.value));
+
+  /**
+   * Handles changes to the subject input.
+   *
+   * @function
+   * @param {Event} e - The event object.
+   */
   const handleSubjectChange = (e) => setSubject(sanitizeInput(e.target.value));
+
+  /**
+   * Handles changes to the message textarea.
+   *
+   * @function
+   * @param {Event} e - The event object.
+   */
   const handleMessageChange = (e) => setMessage(sanitizeInput(e.target.value));
 
-
-
+  /**
+   * Handles the submission of the contact form.
+   *
+   * @function
+   * @param {Event} e - The event object.
+   */
   const handleSubmit = (e) => {
     e.preventDefault();
 
@@ -47,7 +100,6 @@ function About(props) {
         alert('An error occurred while sending the email.',error);
       });
   }
-
 
   if(props.user.roles.includes('ADMIN')){
     return (

@@ -2,6 +2,20 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import '../../css/reusables/get.css'
 
+/**
+ * @module UpdateForm
+ */
+
+/**
+ * UpdateForm is a React functional component used for updating various entity types.
+ * 
+ * @param {Object} props
+ * @param {Object} props.selectedItem - The currently selected entity to be updated.
+ * @param {string} props.entityType - The type of entity being updated.
+ * @param {Function} props.onUpdate - Callback function when an update is submitted.
+ * @param {Function} props.onCancel - Callback function when the update form is canceled.
+ * @returns {JSX.Element} The rendered component.
+ */
 const UpdateForm = ({ selectedItem, entityType, onUpdate, onCancel }) => {
   const [updatedValues, setUpdatedValues] = useState({});
   const [categories, setCategories] = useState([]);
@@ -10,7 +24,10 @@ const UpdateForm = ({ selectedItem, entityType, onUpdate, onCancel }) => {
   const [sizes, setSizes] = useState([]);
   const [newPhotoUrl, setNewPhotoUrl] = useState('');
 
-
+ /**
+   * Effect hook that initializes the form values based on the selected item and fetches
+   * required enumeration values.
+   */
   useEffect(() => {
     setUpdatedValues(selectedItem);
     let jwtToken = localStorage.getItem("token");
@@ -31,7 +48,13 @@ const UpdateForm = ({ selectedItem, entityType, onUpdate, onCancel }) => {
         console.log(error);
       });
   }, [selectedItem]);
-
+/**
+ * Handle changes to generic form fields.
+ * 
+ * @function
+ * @param {string} field - The field name of the entity's attribute.
+ * @param {string|number} value - The updated value for the specified field.
+ */
   const handleFieldChange = (field, value) => {
     setUpdatedValues((prevValues) => ({
       ...prevValues,
@@ -39,7 +62,14 @@ const UpdateForm = ({ selectedItem, entityType, onUpdate, onCancel }) => {
     }));
   };
 
-
+/**
+ * Handle changes to the photo URL within a photo album.
+ * 
+ * @function
+ * @param {string} field - The field name representing the photo album.
+ * @param {number} index - Index of the photo URL in the album to be updated.
+ * @param {string} value - The updated photo URL.
+ */
   const handlePhotoUrlChange = (field, index, value) => {
     setUpdatedValues((prevValues) => {
       const newPhotoAlbum = [...prevValues[field]];
@@ -47,7 +77,13 @@ const UpdateForm = ({ selectedItem, entityType, onUpdate, onCancel }) => {
       return { ...prevValues, [field]: newPhotoAlbum };
     });
   };
-  
+ /**
+ * Remove a photo from the photo album.
+ * 
+ * @function
+ * @param {string} field - The field name representing the photo album.
+ * @param {number} index - Index of the photo in the album to be removed.
+ */ 
   const handleRemovePhoto = (field, index) => {
     setUpdatedValues((prevValues) => {
       const newPhotoAlbum = [...prevValues[field]];
@@ -55,7 +91,14 @@ const UpdateForm = ({ selectedItem, entityType, onUpdate, onCancel }) => {
       return { ...prevValues, [field]: newPhotoAlbum };
     });
   };
-  
+  /**
+ * Handle changes to the photo reel URL.
+ * 
+ * @function
+ * @param {string} field - The field name representing the real photo album.
+ * @param {number} index - Index of the photo URL in the real album to be updated.
+ * @param {string} value - The updated reel photo URL.
+ */
   const handlePhotoRealUrlChange = (field, index, value) => {
     setUpdatedValues((prevValues) => {
       const newPhotoReal = [...prevValues[field]];
@@ -64,6 +107,12 @@ const UpdateForm = ({ selectedItem, entityType, onUpdate, onCancel }) => {
     });
   };
   
+  /**
+ * Add a new photo reel to the entity.
+ * 
+ * @function
+ * @param {string} field - The field name representing the photo reel album.
+ */
   const handleAddPhotoReal = (field) => {
     setUpdatedValues((prevValues) => {
       const newPhotoReal = [...prevValues[field], { photoUrl: newPhotoUrl }];
@@ -72,6 +121,13 @@ const UpdateForm = ({ selectedItem, entityType, onUpdate, onCancel }) => {
     setNewPhotoUrl('');
   };
   
+  /**
+ * Remove a photo reel from the entity.
+ * 
+ * @function
+ * @param {string} field - The field name representing the real photo album.
+ * @param {number} index - Index of the reel photo in the album to be removed.
+ */
   const handleRemovePhotoReal = (field, index) => {
     setUpdatedValues((prevValues) => {
       const newPhotoReal = [...prevValues[field]];
@@ -80,6 +136,12 @@ const UpdateForm = ({ selectedItem, entityType, onUpdate, onCancel }) => {
     });
   };
 
+  /**
+ * Add a new photo to the photo album of the entity.
+ * 
+ * @function
+ * @param {string} field - The field name representing the photo album.
+ */
   const handleAddPhoto = (field) => {
     setUpdatedValues((prevValues) => {
       const newPhotoAlbum = [...prevValues[field], { photoUrl: newPhotoUrl }];
@@ -88,11 +150,23 @@ const UpdateForm = ({ selectedItem, entityType, onUpdate, onCancel }) => {
     setNewPhotoUrl('');
   };
 
+  /**
+ * Handle submission of the update form.
+ * 
+ * @function
+ * @param {Event} event - The form submission event.
+ */
   const handleUpdateSubmit = (event) => {
     event.preventDefault();
     onUpdate(updatedValues);
   };
 
+   /**
+   * Render the appropriate form field based on the entity attribute.
+   * 
+   * @param {string} field - The attribute name of the entity.
+   * @returns {JSX.Element} The appropriate form field.
+   */
   const renderFormField = (field) => {
     if (field === 'id') return null;
     if (field === 'photoAlbum' || field === 'photoReal') {
