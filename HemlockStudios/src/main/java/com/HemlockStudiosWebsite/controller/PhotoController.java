@@ -14,7 +14,6 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.HemlockStudiosWebsite.entity.Photo;
-import com.HemlockStudiosWebsite.entity.Product;
 import com.HemlockStudiosWebsite.service.PhotoService;
 
 // Denotes that this will be a RESTFul
@@ -100,7 +99,6 @@ public class PhotoController {
     public ResponseEntity<Object> deletePhoto(@PathVariable Integer id) {
 
         try {
-            // 
             photoService.deleteById(id);
             return new ResponseEntity<Object>(HttpStatus.NO_CONTENT);
         } catch (Exception e) {

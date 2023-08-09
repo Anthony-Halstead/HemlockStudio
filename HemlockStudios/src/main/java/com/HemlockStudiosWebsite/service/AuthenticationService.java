@@ -13,12 +13,9 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
-
-import com.HemlockStudiosWebsite.entity.Cart;
 import com.HemlockStudiosWebsite.entity.EmailVerificationToken;
 import com.HemlockStudiosWebsite.entity.Role;
 import com.HemlockStudiosWebsite.entity.User;
-
 import com.HemlockStudiosWebsite.repo.RoleRepo;
 import com.HemlockStudiosWebsite.repo.UserRepo;
 import jakarta.transaction.Transactional;
@@ -39,8 +36,6 @@ private TokenService tokenService;
 EmailVerificationTokenService emailVerificationTokenService;
 @Autowired
 EmailSenderService emailSenderService;
-@Autowired
-CartService cartService;
 
 
 public User registerUser(String username, String password, String email){
@@ -52,9 +47,6 @@ public User registerUser(String username, String password, String email){
     User user = new User(0, username, encodedPassword, email, authorities);
     user.setEmailConfirmed(false);
 
-    Cart cart = cartService.createCart();
-    user.setCart(cart);
-
     return userRepo.save(user);
 }
 
@@ -65,24 +57,16 @@ public User registerAdmin(String username, String password, String email){
     Set<Role> authorities = new HashSet<>();
     authorities.add(adminRole);
     authorities.add(userRole);
-
     User user = new User(0, username, encodedPassword, email, authorities);
     user.setEmailConfirmed(true);
     user.setNotificationsEnabled(true);
-   
-
     return userRepo.save(user);
 }
 
 
 public void sendEmailConfirmation(User user) {
-    // create token
     String token = UUID.randomUUID().toString();
-
-    // save token
     EmailVerificationToken emailVerificationToken = emailVerificationTokenService.createToken(user, token);
-    
-    // send confirmation email
     String confirmUrl = "https://hemlock-studio.com/auth/confirm?token=" + emailVerificationToken.getToken();
     emailSenderService.sendEmail(user.getEmail(), "Confirm your email", "Click this link to confirm your email: " + confirmUrl);
 }
@@ -94,13 +78,10 @@ public String loginUser(String username, String password){
         Authentication auth = authenticationManager.authenticate(
             new UsernamePasswordAuthenticationToken(username, password)
         );
-
         User user = userRepo.findByUsername(username).get();
-
         if (!user.getIsEmailConfirmed()) {
             throw new RuntimeException("Email not confirmed check your email and click on the link");
         }
-
         return tokenService.generateJwt(auth);
     }catch(AuthenticationException e){
         System.out.println(e.getMessage());

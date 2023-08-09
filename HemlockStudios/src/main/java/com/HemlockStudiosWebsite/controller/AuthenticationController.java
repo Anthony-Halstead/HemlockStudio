@@ -14,7 +14,6 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.HemlockStudiosWebsite.dto.LoginResponseDTO;
 import com.HemlockStudiosWebsite.dto.RegistrationDTO;
-import com.HemlockStudiosWebsite.entity.CreditCard;
 import com.HemlockStudiosWebsite.entity.EmailVerificationToken;
 import com.HemlockStudiosWebsite.entity.User;
 import com.HemlockStudiosWebsite.service.AuthenticationService;
@@ -56,14 +55,9 @@ public ResponseEntity<?> confirmEmail(@RequestParam String token) {
 
     EmailVerificationToken validToken = optionalToken.get();
     User user = validToken.getUser();
-
- 
         user.setEmailConfirmed(true);
         userService.save(user);
-    
-
     emailVerificationTokenService.delete(validToken);
-
     return ResponseEntity.ok("Email confirmed");
 }
 
@@ -78,6 +72,4 @@ public LoginResponseDTO loginUser(@RequestBody RegistrationDTO body){
 public ResponseEntity<String> healthCheck() {
     return ResponseEntity.ok("Healthy");
 }
-
-
 }

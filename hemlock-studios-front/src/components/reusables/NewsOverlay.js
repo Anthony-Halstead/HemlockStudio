@@ -33,7 +33,6 @@ function NewsOverlay({ news, onClose }) {
       bgClass += ' article-popout-container-with-bg';
     }
 
-
   return (
     <div className="article-popout" onClick={onClose}>
         <div className={bgClass} style={style}>
@@ -44,7 +43,6 @@ function NewsOverlay({ news, onClose }) {
                     </div>
             </div>
         </div>
-    
   );
 }
 

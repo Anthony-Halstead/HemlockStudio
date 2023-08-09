@@ -18,10 +18,7 @@ import '../../css/reusables/get.css'
  */
 const UpdateForm = ({ selectedItem, entityType, onUpdate, onCancel }) => {
   const [updatedValues, setUpdatedValues] = useState({});
-  const [categories, setCategories] = useState([]);
-  const [subcategories, setSubcategories] = useState([]);
   const [anouncement, setAnouncement] = useState([]);
-  const [sizes, setSizes] = useState([]);
   const [newPhotoUrl, setNewPhotoUrl] = useState('');
 
  /**
@@ -38,10 +35,7 @@ const UpdateForm = ({ selectedItem, entityType, onUpdate, onCancel }) => {
         }
       })
       .then((response) => {
-        const { categories, subcategories, sizes, anouncements } = response.data;
-        setCategories(categories);
-        setSubcategories(subcategories);
-        setSizes(sizes);
+        const { anouncements } = response.data;
         setAnouncement(anouncements); 
       })
       .catch((error) => {
@@ -205,32 +199,6 @@ const UpdateForm = ({ selectedItem, entityType, onUpdate, onCancel }) => {
           </div>
         </>
         </div> );
-    }  else if (field === 'subcategory') {
-      return (  <div className='table-container-color'>
-        <select
-          value={updatedValues[field] || ''}
-          onChange={(e) => handleFieldChange(field, e.target.value)}
-        >
-          {subcategories.map((subcategory) => (
-            <option key={subcategory} value={subcategory}>
-              {subcategory}
-            </option>
-          ))}
-        </select>
-        </div>);
-    } else if (field === 'size') {
-      return (<div className='table-container-color'>
-        <select
-          value={updatedValues[field] || ''}
-          onChange={(e) => handleFieldChange(field, e.target.value)}
-        >
-          {sizes.map((size) => (
-            <option key={size} value={size}>
-              {size}
-            </option>
-          ))}
-        </select>
-        </div>);
     } else if (field === 'anouncement') {
       return (<div className='table-container-color'>
         <select

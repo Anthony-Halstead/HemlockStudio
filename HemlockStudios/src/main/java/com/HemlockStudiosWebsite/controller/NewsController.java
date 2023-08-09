@@ -16,7 +16,6 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.HemlockStudiosWebsite.dto.CreateNewsRequest;
 import com.HemlockStudiosWebsite.dto.CreateNewsResponse;
-import com.HemlockStudiosWebsite.dto.DeleteRequest;
 import com.HemlockStudiosWebsite.dto.DeleteResponse;
 import com.HemlockStudiosWebsite.dto.UpdateNewsRequest;
 import com.HemlockStudiosWebsite.entity.News;

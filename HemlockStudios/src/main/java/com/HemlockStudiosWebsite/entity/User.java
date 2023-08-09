@@ -51,29 +51,8 @@ private Integer id;
      @Column(name = "is_signed_up", nullable = false)
     private Boolean isSignedUp = false;
 
-
-
-    @OneToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "cart_id")
-    private Cart cart;
-
     @Column(name = "notifications_enabled", nullable = false)
     private Boolean notificationsEnabled = false;
-
-    @Column(name = "first_time_login", nullable = false)
-    private Boolean firstTimeLogin = true;
-
-@ManyToMany(cascade = CascadeType.REMOVE)
-    @JoinTable(
-        name = "user_favorite_products",
-        joinColumns = @JoinColumn(name = "user_id", referencedColumnName = "id"),
-        inverseJoinColumns = @JoinColumn(name = "product_id", referencedColumnName = "id")
-    )
-    private List<Product> favoriteProducts;
-
-    @OneToMany(cascade = CascadeType.ALL)
-    @JoinColumn(name="user_id")
-    private List<CreditCard> wallet;
 
     @ManyToMany(fetch=FetchType.EAGER)
     @JoinTable(
@@ -83,8 +62,6 @@ private Integer id;
     )
     private Set<Role> authorities;
 
-
-   
     public User() {
         super();
         this.authorities = new HashSet<Role>();
@@ -113,30 +90,6 @@ private Integer id;
         this.isSignedUp = isSignedUp;
     }
 
-    public Cart getCart() {
-        return cart;
-    }
-
-    public void setCart(Cart cart) {
-        this.cart = cart;
-    }
-
-    public List<Product> getFavoriteProducts() {
-        return favoriteProducts;
-    }
-
-    public void setFavoriteProducts(List<Product> favoriteProducts) {
-        this.favoriteProducts = favoriteProducts;
-    }
-
-    public List<CreditCard> getWallet() {
-        return wallet;
-    }
-
-    public void setWallet(List<CreditCard> wallet) {
-        this.wallet = wallet;
-    }
-
     public boolean getIsEmailConfirmed() {
         return emailConfirmed;
     }
@@ -144,8 +97,6 @@ private Integer id;
     public void setEmailConfirmed(boolean emailConfirmed) {
         this.emailConfirmed = emailConfirmed;
     }
-
- 
 
     public Integer getId() {
         return id;
@@ -202,14 +153,10 @@ private Integer id;
     public boolean isEnabled() {
     return true;
     }
-
     public Boolean getNotificationsEnabled() {
         return notificationsEnabled;
     }
-
     public void setNotificationsEnabled(Boolean notificationsEnabled) {
         this.notificationsEnabled = notificationsEnabled;
     }
-
-
 }

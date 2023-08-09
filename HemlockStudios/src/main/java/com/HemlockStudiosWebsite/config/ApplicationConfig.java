@@ -7,7 +7,6 @@ import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 @Configuration
 @EnableJpaRepositories(basePackages = "com.HemlockStudiosWebsite.repo")
 
-
 @EntityScan(basePackages="com.HemlockStudiosWebsite.entity")
 public class ApplicationConfig {
     

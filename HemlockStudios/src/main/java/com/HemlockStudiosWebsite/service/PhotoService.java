@@ -1,13 +1,7 @@
 package com.HemlockStudiosWebsite.service;
-
-
 import com.HemlockStudiosWebsite.repo.PhotoRepo;
-import com.HemlockStudiosWebsite.entity.Product;
 import com.HemlockStudiosWebsite.entity.Photo;
-
-import java.time.LocalDate;
 import java.util.List;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
