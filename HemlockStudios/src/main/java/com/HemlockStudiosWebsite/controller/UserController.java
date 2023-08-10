@@ -1,3 +1,8 @@
+/**
+ * The UserController class is a REST controller that handles user-related operations such as fetching
+ * the current user, finding all users, updating user information, deleting users, and toggling
+ * notification status.
+ */
 package com.HemlockStudiosWebsite.controller;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -35,6 +40,13 @@ public class UserController {
     @Autowired
     TokenService tokenService;
 
+   /**
+    * This function retrieves the currently authenticated user's email from the JWT token and uses it
+    * to fetch the corresponding user details from the UserService, then returns the user details as a
+    * ResponseEntity.
+    * 
+    * @return The method is returning a ResponseEntity<Object> object.
+    */
     @GetMapping("/getUser")
 public ResponseEntity<Object> currentUser() {
     try {
@@ -53,6 +65,12 @@ public ResponseEntity<Object> currentUser() {
     }
 }
 
+/**
+ * The function `findUsers` retrieves all users from the database and converts them into a list of
+ * UserDTO objects, which are then returned as a JSON response.
+ * 
+ * @return The method is returning a ResponseEntity object containing a list of UserDTO objects.
+ */
     @RequestMapping(value = "/findAll", produces = MediaType.APPLICATION_JSON_VALUE, method = RequestMethod.GET)
     public ResponseEntity<List<UserDTO>> findUsers() {
         List<User> users = userService.getAll();
@@ -69,6 +87,15 @@ public ResponseEntity<Object> currentUser() {
         return ResponseEntity.ok(userDTOs);
     }
 
+   /**
+    * The updateUser function in a Java controller updates a user's account information based on a
+    * request object, and returns a response object.
+    * 
+    * @param request The request parameter is of type UpdateUserRequest, which is a custom class that
+    * represents the JSON request body for updating a user. It contains properties such as id,
+    * username, and email.
+    * @return The method is returning a ResponseEntity<Object>.
+    */
     @RequestMapping(value = "/update", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE, method = RequestMethod.PUT)
     public ResponseEntity<Object> updateUser(@RequestBody UpdateUserRequest request) {
         try {
@@ -85,6 +112,14 @@ public ResponseEntity<Object> currentUser() {
         }
     }
 
+   /**
+    * This function handles a DELETE request to delete a user by their ID and returns an appropriate
+    * response.
+    * 
+    * @param id The "id" parameter is the unique identifier of the user that needs to be deleted. It is
+    * passed as a path variable in the URL.
+    * @return The method is returning a ResponseEntity<Object>.
+    */
     @RequestMapping(value = "/delete/{id}", method = RequestMethod.DELETE)
     public ResponseEntity<Object> deleteUser(@PathVariable Integer id) {
         try {
@@ -99,6 +134,11 @@ public ResponseEntity<Object> currentUser() {
         }
     }
 
+    /**
+     * This function sets the notification status for a user.
+     * 
+     * @return The method is returning a ResponseEntity object with a status code of OK (200).
+     */
     @RequestMapping(value = "/toggleNotification", method = RequestMethod.PUT, produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<Object> setNotificationStatus(){
         System.out.println("In the toggle notification");
@@ -106,6 +146,11 @@ public ResponseEntity<Object> currentUser() {
         return ResponseEntity.ok(HttpStatus.OK);
     }
 
+    /**
+     * The function "getStatus" returns the notification status of a user.
+     * 
+     * @return The method is returning a ResponseEntity object containing a Boolean value.
+     */
     @GetMapping("/getNotificationStatus")
     public ResponseEntity<Boolean> getStatus(){
         Boolean notificationStatus = userService.getNotificationStatus();

@@ -1,8 +1,11 @@
+/**
+ * The HemlockStudiosApplication class is the main class for the Hemlock Studios website application,
+ * which sets up initial roles and a default admin user.
+ */
 package com.HemlockStudiosWebsite.HemlockStudios;
 
 import java.util.HashSet;
 import java.util.Set;
-
 
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
@@ -16,8 +19,6 @@ import com.HemlockStudiosWebsite.entity.User;
 import com.HemlockStudiosWebsite.repo.RoleRepo;
 import com.HemlockStudiosWebsite.repo.UserRepo;
 
-
-
 @SpringBootApplication
 @EnableAsync
 @ComponentScan(basePackages = "com.HemlockStudiosWebsite")
@@ -28,6 +29,9 @@ SpringApplication.run(HemlockStudiosApplication.class, args);
 }
 
 @Bean
+// The `CommandLineRunner` bean is a functional interface provided by Spring Boot that allows you to
+// execute code when the application starts up. In this case, the `run` method is defined to perform
+// some initial setup for the application.
 CommandLineRunner run(RoleRepo roleRepo, UserRepo userRepo, PasswordEncoder passwordEncoder ){
 return args ->{
 if(roleRepo.findByAuthority("ADMIN").isPresent()) return;

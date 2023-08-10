@@ -1,3 +1,4 @@
+// The code provided is a Java interface named `PhotoRepo` that extends the `JpaRepository` interface.
 package com.HemlockStudiosWebsite.repo;
 
 import java.util.List;

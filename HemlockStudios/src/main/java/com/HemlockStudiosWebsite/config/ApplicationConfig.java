@@ -1,3 +1,7 @@
+/**
+ * The ApplicationConfig class is a configuration class that enables JPA repositories and scans for
+ * entity classes in the specified packages.
+ */
 package com.HemlockStudiosWebsite.config;
 
 import org.springframework.boot.autoconfigure.domain.EntityScan;

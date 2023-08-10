@@ -1,8 +1,11 @@
+/**
+ * The PhotoController class is a RESTful controller that handles CRUD operations for the Photo entity
+ * in a Hemlock Studios website.
+ */
 package com.HemlockStudiosWebsite.controller;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -16,26 +19,32 @@ import org.springframework.web.bind.annotation.RestController;
 import com.HemlockStudiosWebsite.entity.Photo;
 import com.HemlockStudiosWebsite.service.PhotoService;
 
-// Denotes that this will be a RESTFul
+
 @RestController
 @RequestMapping(value="/photo")
 @CrossOrigin("*")
 
 public class PhotoController {
-    // You can autowire any service you need to get the data from
+  
     @Autowired
     PhotoService photoService;
 
 
+   /**
+    * This function handles a POST request to create a new photo object and returns the saved photo or
+    * an error response.
+    * 
+    * @param photo The "photo" parameter is of type "Photo" and is annotated with "@RequestBody". This
+    * means that the parameter will be populated with the JSON data from the request body. The JSON
+    * data will be deserialized into a "Photo" object.
+    * @return The method is returning a ResponseEntity<Object>.
+    */
     @RequestMapping(
             value = "/create",
             consumes = MediaType.APPLICATION_JSON_VALUE,
             produces = MediaType.APPLICATION_JSON_VALUE,
             method = RequestMethod.POST
     )
-    // We return a ResponseEntity<Object> because the object returned may vary, could be photo, could be an error
-    // The RequestBody is the information sent to us to process, post and put has request body, get and delete do not
-    // Request body is encrypted, always send password through a post request
     public ResponseEntity<Object> create(@RequestBody Photo photo) {
 
         try {
@@ -48,9 +57,14 @@ public class PhotoController {
             System.out.println(e);
             return new ResponseEntity<Object>(e, HttpStatus.INTERNAL_SERVER_ERROR);
         }
-
     }
 
+   /**
+    * The function `findAll` is a GET request handler that retrieves all photos and returns them as a
+    * JSON response.
+    * 
+    * @return The method is returning a ResponseEntity object.
+    */
     @RequestMapping(
         value="/findAll",
         produces = MediaType.APPLICATION_JSON_VALUE,
@@ -71,6 +85,14 @@ public class PhotoController {
 
     }
 
+    /**
+     * The function `updatePhoto` is a POST request handler that updates a photo and returns the
+     * updated photo object or an error message.
+     * 
+     * @param photo The "photo" parameter is of type Photo and is annotated with @RequestBody, which
+     * means it will be deserialized from the request body.
+     * @return The method is returning a ResponseEntity<Object>.
+     */
     @RequestMapping(
         value="/updatePhoto",
         consumes = MediaType.APPLICATION_JSON_VALUE,
@@ -92,6 +114,13 @@ public class PhotoController {
 
     }
 
+   /**
+    * The function `deletePhoto` is a Java method that handles a DELETE request to delete a photo by
+    * its ID, and returns an appropriate response entity.
+    * 
+    * @param id The "id" parameter is the identifier of the photo that needs to be deleted.
+    * @return The deletePhoto method returns a ResponseEntity<Object>.
+    */
     @RequestMapping(
         value="/deletePhoto/{id}",
         method = RequestMethod.DELETE

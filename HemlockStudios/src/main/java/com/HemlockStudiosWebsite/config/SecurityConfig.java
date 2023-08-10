@@ -1,3 +1,7 @@
+/**
+ * The SecurityConfig class is a configuration class for Spring Security that sets up authentication,
+ * authorization, and JWT decoding/encoding.
+ */
 package com.HemlockStudiosWebsite.config;
 import org.springframework.beans.factory.annotation.Autowired;
 import static org.springframework.security.config.Customizer.withDefaults;
@@ -30,14 +34,35 @@ import com.nimbusds.jose.proc.SecurityContext;
 public class SecurityConfig {
 @Autowired
 private final RSAKeyProperties keys;
+// The `public SecurityConfig(RSAKeyProperties keys)` constructor is initializing the `keys` field of
+// the `SecurityConfig` class with the value passed as a parameter. This constructor is used to inject
+// the `RSAKeyProperties` bean into the `SecurityConfig` class.
 public SecurityConfig(RSAKeyProperties keys)
 {
 this.keys = keys;
 }
+/**
+ * The function returns a BCryptPasswordEncoder object to be used as a password encoder in Java.
+ * 
+ * @return The method is returning a new instance of the BCryptPasswordEncoder class, which is a
+ * PasswordEncoder implementation.
+ */
 @Bean
 public PasswordEncoder passwordEncoder(){
 return new BCryptPasswordEncoder();
 }
+/**
+ * The function creates and returns an instance of AuthenticationManager with a
+ * DaoAuthenticationProvider.
+ * 
+ * @param detailsService The UserDetailsService is an interface provided by Spring Security that is
+ * responsible for retrieving user details from a data source. It typically interacts with a database
+ * or any other data source to fetch user information such as username, password, and authorities.
+ * @param passwordEncoder The passwordEncoder parameter is an instance of a class that implements the
+ * PasswordEncoder interface. This interface is used to encode and decode passwords. It is typically
+ * used to securely store and compare passwords in a database.
+ * @return The method is returning an instance of the AuthenticationManager.
+ */
 @Bean
 public AuthenticationManager authManager(UserDetailsService detailsService, PasswordEncoder passwordEncoder){
 DaoAuthenticationProvider daoProvider = new DaoAuthenticationProvider();
@@ -46,6 +71,14 @@ daoProvider.setPasswordEncoder(passwordEncoder);
 return new ProviderManager(daoProvider);
 }
 
+/**
+ * This function configures the security filter chain for an HTTP server, specifying the access rules
+ * for different endpoints based on user roles.
+ * 
+ * @param http The `http` parameter is an instance of `HttpSecurity`, which is used to configure the
+ * security settings for the application.
+ * @return The method is returning a SecurityFilterChain object.
+ */
 @Bean
 public SecurityFilterChain filterChain(HttpSecurity http) throws Exception{
     System.out.println("In the security filter chain");
@@ -86,18 +119,34 @@ http
 return http.build();
 }
 
+/**
+ * The function creates a JwtDecoder object using a public key and returns it.
+ * 
+ * @return The method is returning a JwtDecoder object.
+ */
 @Bean
 public JwtDecoder jwtDecoder(){
     System.out.println("In the jwt decoder");
 return NimbusJwtDecoder.withPublicKey(keys.getPublicKey()).build();
 }
 
+/**
+ * The function creates a JWT encoder using RSA keys.
+ * 
+ * @return The method is returning a JwtEncoder object.
+ */
 @Bean
 public JwtEncoder jwtEncoder(){
 JWK jwk = new RSAKey.Builder(keys.getPublicKey()).privateKey(keys.getPrivateKey()).build();
 JWKSource<SecurityContext> jwks = new ImmutableJWKSet<>(new JWKSet(jwk));
 return new NimbusJwtEncoder(jwks);
 }
+/**
+ * The function returns a JwtAuthenticationConverter object with a JwtGrantedAuthoritiesConverter that
+ * sets the authorities claim name and authority prefix.
+ * 
+ * @return The method is returning an instance of JwtAuthenticationConverter.
+ */
 @Bean
 public JwtAuthenticationConverter jwtAuthenticationConverter(){
 JwtGrantedAuthoritiesConverter jwtGrantedAuthoritiesConverter = new JwtGrantedAuthoritiesConverter();
