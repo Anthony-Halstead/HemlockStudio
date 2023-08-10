@@ -15,7 +15,8 @@ import '../../css/reusables/notificationstoggle.css';
  */
 function NotificationsToggle(props) {
   /** 
-   * @type {boolean} notificationStatus - Holds the current status of the user's email notification preference.
+   * notificationStatus - Holds the current status of the user's email notification preference.
+   * @type {boolean} 
    */
   const [notificationStatus, setNotificationStatus] = useState(false);
 

@@ -51,10 +51,16 @@ import NewsOverlay from '../reusables/NewsOverlay';
  */
 function News(props) {
 
-  /** @type {Array<Object>} news - Array of news articles. */
+  /**
+   * news - Array of news articles.
+   *  @type {Array<Object>} 
+  */
   const [news, setNews] = useState([]);
 
-  /** @type {Object|null} selectedNews - The currently selected news article for detailed view. */
+  /** 
+   * selectedNews - The currently selected news article for detailed view.
+   * @type {Object|null} 
+  */
   const [selectedNews, setSelectedNews] = useState(null);
   
 
@@ -74,7 +80,6 @@ function News(props) {
       setNews(response.data);
     })
     .catch((error) => {
-      // Handle errors if needed.
     });
   }, []);
   

@@ -35,8 +35,6 @@ import axios from 'axios';
 function Analytics() {
     /**
      * State variable to hold the fetched analytics data.
-     * 
-     * @type {[Object, Function]}
      */
     const [analytics, setAnalytics] = useState(null);
 

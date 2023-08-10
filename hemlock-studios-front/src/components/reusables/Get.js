@@ -24,13 +24,11 @@ import UpdateForm from './UpdateForm';
 function Get({ entityType }) {
   /**
  * Local state for managing the retrieved entity data.
- * @type {[Array, React.Dispatch<React.SetStateAction<Array>>]}
  */
 const [data, setData] = useState([]);
 
   /**
  * Local state for managing the currently selected entity item for CRUD operations.
- * @type {[Object|null, React.Dispatch<React.SetStateAction<Object|null>>]}
  */
 const [selectedItem, setSelectedItem] = useState(null);
 
@@ -54,7 +52,6 @@ const [selectedItem, setSelectedItem] = useState(null);
 
   /**
  * Pre-defined fields to display for each entity type.
- * @type {Object.<string, Array.<string>>}
  */
   const entityFields = {
     user: ['id', 'username', 'email'],

@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>JSDoc: Source: components/reusables/ParallaxLayer.js</title>
+
+    <script src="scripts/prettify/prettify.js"> </script>
+    <script src="scripts/prettify/lang-css.js"> </script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc-default.css">
+</head>
+
+<body>
+
+<div id="main">
+
+    <h1 class="page-title">Source: components/reusables/ParallaxLayer.js</h1>
+
+    
+
+
+
+    
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>/**
+ * @module ParallaxLayer
+ */
+
+import React, { useState, useEffect } from 'react';
+import { useSpring, animated } from '@react-spring/web';
+
+/**
+ * ParallaxLayer is a functional component that adds a parallax effect to an image layer as the user scrolls.
+ * 
+ * @param {Object} props - Properties passed to the component.
+ * @param {Object} [props.sticky] - An object containing 'start' and 'end' properties which define when the image should be 'stuck' in viewport as the user scrolls.
+ * @param {number} props.speed - A multiplier affecting the parallax speed.
+ * @param {number} props.offset - Offset of the image from the top of its container in percentages (0 to 1).
+ * @param {string} props.src - Source of the image to be used in the parallax layer.
+ * @param {string} props.alt - Alternative text description of the image.
+ * @param {string} [props.horizontalAlignment='50%'] - Horizontal alignment of the image, default is centered.
+ * @param {number} [props.scaleX=1] - Scale factor in the X-axis for the image.
+ * @param {number} [props.scaleY=1] - Scale factor in the Y-axis for the image.
+ * @param {number} [props.maxOffset=1] - Maximum vertical offset the layer can move.
+ * @returns {JSX.Element} The ParallaxLayer component with parallax effect for the given image.
+ */
+
+
+const ParallaxLayer = ({
+  sticky,
+  speed,
+  offset,
+  src,
+  alt,
+  horizontalAlignment = '50%',
+  scaleX = 1,
+  scaleY = 1,
+  maxOffset = 1,
+}) => {
+
+  /** 
+   * State variable to store the current Y scroll position.
+   * @type {number}
+   */
+  const [scrollY, setScrollY] = useState(0);
+
+   /**
+   * useEffect hook to attach an event listener to the window's scroll event.
+   * The listener updates the scrollY state with the current Y scroll position.
+   * The listener is cleaned up when the component is unmounted.
+   */
+  useEffect(() => {
+     /**
+     * Event listener callback function that sets the current Y scroll position to scrollY state.
+     */
+    const handleScroll = () => setScrollY(window.pageYOffset);
+    window.addEventListener('scroll', handleScroll);
+
+    return () => {
+      window.removeEventListener('scroll', handleScroll);
+    };
+  }, []);
+
+   /** 
+   * Boolean that checks if the current Y scroll position is between the sticky's start and end thresholds.
+   * If true, the parallax layer becomes "sticky".
+   * @type {boolean}
+   */
+  const isSticky =
+    sticky &amp;&amp; scrollY >= sticky.start * window.innerHeight &amp;&amp; scrollY &lt;= sticky.end * window.innerHeight;
+
+     /**
+   * Calculates the Y translation value for the parallax effect.
+   * The value is bound between 0 and maxOffset times the window's inner height.
+   * @type {number}
+   */
+  const translateY = Math.min(Math.max(scrollY * speed, 0), maxOffset * window.innerHeight);
+
+    /** 
+   * Generates spring properties for parallax effect using react-spring.
+   * @type {Object}
+   */
+  const parallaxProps = useSpring({
+    transform: isSticky
+      ? `translateY(${sticky.start * window.innerHeight}px)`
+      : `translateY(${translateY}px)`,
+  });
+
+  return (
+    &lt;animated.div
+      style={{
+        ...parallaxProps,
+        position: isSticky ? 'fixed' : 'absolute',
+        top: isSticky ? 0 : `${offset * 100}%`,
+        left: horizontalAlignment,
+      }}
+    >
+      &lt;animated.img
+        src={src}
+        alt={alt}
+        style={{
+          transform: parallaxProps.transform.to((t) => `${t} translateX(-50%)`),
+          scaleX: scaleX,
+          scaleY: scaleY,
+        }}
+      />
+    &lt;/animated.div>
+  );
+};
+
+export default ParallaxLayer;</code></pre>
+        </article>
+    </section>
+
+
+
+
+</div>
+
+<nav>
+    <h2><a href="index.html">Home</a></h2><h3>Modules</h3><ul><li><a href="module-@react-spring_parallax.html">@react-spring/parallax</a></li><li><a href="module-About.html">About</a></li><li><a href="module-Accordion.html">Accordion</a></li><li><a href="module-Account.html">Account</a></li><li><a href="module-AddAdmin.html">AddAdmin</a></li><li><a href="module-AddNews.html">AddNews</a></li><li><a href="module-AdminModal.html">AdminModal</a></li><li><a href="module-AdminPanel.html">AdminPanel</a></li><li><a href="module-AdminPanelDropdown.html">AdminPanelDropdown</a></li><li><a href="module-Analytics.html">Analytics</a></li><li><a href="module-Article.html">Article</a></li><li><a href="module-Card.html">Card</a></li><li><a href="module-Carroussel.html">Carroussel</a></li><li><a href="module-DropdownMenu.html">DropdownMenu</a></li><li><a href="module-Get.html">Get</a></li><li><a href="module-Header.html">Header</a></li><li><a href="module-Home.html">Home</a></li><li><a href="module-News.html">News</a></li><li><a href="module-NewsOverlay.html">NewsOverlay</a></li><li><a href="module-NotificationsToggle.html">NotificationsToggle</a></li><li><a href="module-PageWrapper.html">PageWrapper</a></li><li><a href="module-ParallaxLayer.html">ParallaxLayer</a></li><li><a href="module-SignIn.html">SignIn</a></li><li><a href="module-SignUp.html">SignUp</a></li><li><a href="module-Toast.html">Toast</a></li><li><a href="module-ToastContext.html">ToastContext</a></li><li><a href="module-UpdateForm.html">UpdateForm</a></li><li><a href="module-UpdateNews.html">UpdateNews</a></li><li><a href="module-UpdateUsers.html">UpdateUsers</a></li><li><a href="module-UseDetectOutsideClick.html">UseDetectOutsideClick</a></li><li><a href="module-World.html">World</a></li></ul><h3>Externals</h3><ul><li><a href="additive.external_css.html">css</a></li><li><a href="addproduct.external_css.html">css</a></li><li><a href="external-Carousel.html">Carousel</a></li><li><a href="external-DOMPurify.html">DOMPurify</a></li><li><a href="external-FontAwesomeIcon.html">FontAwesomeIcon</a></li><li><a href="external-FontAwesomeIcons.html">FontAwesomeIcons</a></li><li><a href="external-React.html">React</a></li><li><a href="external-ToastContext.html">ToastContext</a></li><li><a href="external-axios.html">axios</a></li><li><a href="external-jwt_decode.html">jwt_decode</a></li><li><a href="external-react-spring.html">react-spring</a></li><li><a href="external-useNavigate.html">useNavigate</a></li><li><a href="external-uuid.html">uuid</a></li><li><a href="module-@react-spring_parallax.external_Parallax.html">Parallax</a></li><li><a href="module-@react-spring_parallax.external_ParallaxLayer.html">ParallaxLayer</a></li></ul><h3>Global</h3><ul><li><a href="global.html#App">App</a></li><li><a href="global.html#Characters">Characters</a></li><li><a href="global.html#Fetchesuserdatafromtheserverandupdatestheuserstatevariable.">Fetches user data from the server and updates the user state variable.</a></li><li><a href="global.html#updateUserState">updateUserState</a></li><li><a href="global.html#userDataState">userDataState</a></li></ul>
+</nav>
+
+<br class="clear">
+
+<footer>
+    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 4.0.2</a> on Thu Aug 10 2023 16:41:10 GMT-0500 (Central Daylight Time)
+</footer>
+
+<script> prettyPrint(); </script>
+<script src="scripts/linenumber.js"> </script>
+</body>
+</html>

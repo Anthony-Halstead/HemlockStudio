@@ -1,0 +1,254 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>JSDoc: Source: components/reusables/Get.js</title>
+
+    <script src="scripts/prettify/prettify.js"> </script>
+    <script src="scripts/prettify/lang-css.js"> </script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc-default.css">
+</head>
+
+<body>
+
+<div id="main">
+
+    <h1 class="page-title">Source: components/reusables/Get.js</h1>
+
+    
+
+
+
+    
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>/**
+ * @module Get
+ * @description This module provides the Get component used for retrieving and displaying entity data.
+ */
+
+import React, { useEffect, useState } from 'react';
+import axios from 'axios';
+import '../../css/reusables/get.css';
+import UpdateForm from './UpdateForm';
+
+/**
+ * Get component that retrieves and renders entity data, such as users or news.
+ * This component provides CRUD operations (Create, Read, Update, Delete) 
+ * on the specified entity type, integrating with an external API.
+ *
+ * @function
+ * @param {Object} props - Properties passed down to the Get component.
+ * @param {string} props.entityType - The type of the entity to manage (e.g., 'user', 'news').
+ * @returns {React.ReactNode} - The rendered Get component.
+ *
+ * @example
+ * &lt;Get entityType="user" />
+ */
+function Get({ entityType }) {
+  /**
+ * Local state for managing the retrieved entity data.
+ * @type {[Array, React.Dispatch&lt;React.SetStateAction&lt;Array>>]}
+ */
+const [data, setData] = useState([]);
+
+  /**
+ * Local state for managing the currently selected entity item for CRUD operations.
+ * @type {[Object|null, React.Dispatch&lt;React.SetStateAction&lt;Object|null>>]}
+ */
+const [selectedItem, setSelectedItem] = useState(null);
+
+
+  useEffect(() => {
+    let jwtToken = localStorage.getItem("token");
+      /** Fetch data from the API and update the local state. */
+    axios
+      .get(`${process.env.REACT_APP_API_URL}/${entityType}/findAll`, {
+        headers: {
+          'Authorization': `Bearer ${jwtToken}`
+        }
+      })
+      .then((response) => {
+        setData(response.data);
+      })
+      .catch((error) => {
+        console.error('Error fetching data', error);
+      });
+  }, [entityType]);
+
+  /**
+ * Pre-defined fields to display for each entity type.
+ * @type {Object.&lt;string, Array.&lt;string>>}
+ */
+  const entityFields = {
+    user: ['id', 'username', 'email'],
+    news: ['id', 'title', 'description', 'anouncement', 'body', 'datePublished'],
+  };
+
+  /**
+ * Delete a specific entity item by its ID.
+ * @param {number} id - The ID of the entity item to delete.
+ */
+  const handleDelete = (id) => {
+    let jwtToken = localStorage.getItem("token");
+    axios
+      .delete(`${process.env.REACT_APP_API_URL}/${entityType}/delete/${id}`,{
+        headers: {
+          'Authorization': `Bearer ${jwtToken}`
+        }
+      })
+      .then(() => {
+        axios
+          .get(`${process.env.REACT_APP_API_URL}/${entityType}/findAll`, {
+            headers: {
+              'Authorization': `Bearer ${jwtToken}`
+            }
+          })
+          .then((response) => {
+            setData(response.data);
+          })
+          .catch((error) => {
+            console.error('Error fetching data', error);
+          });
+      })
+      .catch((error) => {
+        console.error('Error deleting object', error);
+      });
+  };
+/**
+ * Update the `selectedItem` state to the entity item with the given ID.
+ * @param {number} id - The ID of the entity item to update.
+ */
+  const handleUpdate = (id) => {
+    const selectedItem = data.find((item) => item.id === id);
+    setSelectedItem(selectedItem);
+  };
+  
+/**
+ * Reset the `selectedItem` state to null, effectively canceling the update.
+ */
+  const handleCancelUpdate = () => {
+    setSelectedItem(null);
+  };
+
+  /**
+ * Handle the submission of the update form.
+ * @param {Object} updatedItem - The updated entity data.
+ */
+  const handleUpdateSubmit = (updatedItem) => {
+ 
+    if (updatedItem.photoAlbum) {
+      updatedItem.imgUrls = updatedItem.photoAlbum.map(photo => photo.photoUrl);
+      delete updatedItem.photoAlbum;
+    }
+    
+    if (updatedItem.photoReal) {
+      updatedItem.photoReal = updatedItem.photoReal.map(photo => photo.photoUrl);
+    }
+  
+    let jwtToken = localStorage.getItem("token");
+    axios
+      .put(`${process.env.REACT_APP_API_URL}/${entityType}/update`,  { id: selectedItem.id, ...updatedItem }, {
+        headers: {
+          'Authorization': `Bearer ${jwtToken}`
+        }
+      })
+      .then(() => {
+        axios
+          .get(`${process.env.REACT_APP_API_URL}/${entityType}/findAll`, {
+            headers: {
+              'Authorization': `Bearer ${jwtToken}`
+            }
+          })
+          .then((response) => {
+            setData(response.data);
+          })
+          .catch((error) => {
+            console.error('Error fetching data', error);
+          });
+      })
+      .catch((error) => {
+        console.error('Error updating object', error);
+      })
+      .finally(() => {
+        setSelectedItem(null);
+      });
+  };
+  const isCouponEntity = entityType === 'coupon';
+
+  return (
+    &lt;div className='table-container-color'>
+    &lt;div >
+      &lt;h2>{entityType.toUpperCase()} List&lt;/h2>
+      &lt;table className="table-container">
+        &lt;thead>
+          &lt;tr>
+            {!isCouponEntity &amp;&amp; &lt;th>&lt;/th>}
+            &lt;th>&lt;/th>
+            {entityFields[entityType].map((field) => (
+              &lt;th key={field}>{field}&lt;/th>
+            ))}
+          &lt;/tr>
+        &lt;/thead>
+        &lt;tbody>
+          {data.map((item) => (
+            &lt;tr key={item.id}>
+              {!isCouponEntity &amp;&amp; (
+                &lt;td>
+                  &lt;button onClick={() => handleUpdate(item.id)}>Update&lt;/button>
+                &lt;/td>
+              )}
+              {entityType !== 'user' &amp;&amp; (
+                &lt;td>
+                  &lt;button onClick={() => handleDelete(item.id)}>Delete&lt;/button>
+                &lt;/td>
+              )}
+              {entityType === 'user' &amp;&amp; &lt;td>&lt;/td>}
+              {entityFields[entityType].map((field) => (
+                &lt;td key={field}>{item[field]}&lt;/td>
+              ))}
+            &lt;/tr>
+          ))}
+        &lt;/tbody>
+      &lt;/table>
+
+      {selectedItem &amp;&amp; (
+        &lt;UpdateForm
+          selectedItem={selectedItem}
+          entityType={entityType}
+          onUpdate={handleUpdateSubmit}
+          onCancel={handleCancelUpdate}
+        />
+      )}
+    &lt;/div>
+    &lt;/div>
+  );
+}
+
+export default Get;</code></pre>
+        </article>
+    </section>
+
+
+
+
+</div>
+
+<nav>
+    <h2><a href="index.html">Home</a></h2><h3>Modules</h3><ul><li><a href="module-@react-spring_parallax.html">@react-spring/parallax</a></li><li><a href="module-About.html">About</a></li><li><a href="module-Accordion.html">Accordion</a></li><li><a href="module-Account.html">Account</a></li><li><a href="module-AddAdmin.html">AddAdmin</a></li><li><a href="module-AddNews.html">AddNews</a></li><li><a href="module-AdminModal.html">AdminModal</a></li><li><a href="module-AdminPanel.html">AdminPanel</a></li><li><a href="module-AdminPanelDropdown.html">AdminPanelDropdown</a></li><li><a href="module-Analytics.html">Analytics</a></li><li><a href="module-Article.html">Article</a></li><li><a href="module-Card.html">Card</a></li><li><a href="module-Carroussel.html">Carroussel</a></li><li><a href="module-DropdownMenu.html">DropdownMenu</a></li><li><a href="module-Get.html">Get</a></li><li><a href="module-Header.html">Header</a></li><li><a href="module-Home.html">Home</a></li><li><a href="module-News.html">News</a></li><li><a href="module-NewsOverlay.html">NewsOverlay</a></li><li><a href="module-NotificationsToggle.html">NotificationsToggle</a></li><li><a href="module-PageWrapper.html">PageWrapper</a></li><li><a href="module-ParallaxLayer.html">ParallaxLayer</a></li><li><a href="module-SignIn.html">SignIn</a></li><li><a href="module-SignUp.html">SignUp</a></li><li><a href="module-Toast.html">Toast</a></li><li><a href="module-ToastContext.html">ToastContext</a></li><li><a href="module-UpdateForm.html">UpdateForm</a></li><li><a href="module-UpdateNews.html">UpdateNews</a></li><li><a href="module-UpdateUsers.html">UpdateUsers</a></li><li><a href="module-UseDetectOutsideClick.html">UseDetectOutsideClick</a></li><li><a href="module-World.html">World</a></li></ul><h3>Externals</h3><ul><li><a href="additive.external_css.html">css</a></li><li><a href="addproduct.external_css.html">css</a></li><li><a href="external-Carousel.html">Carousel</a></li><li><a href="external-DOMPurify.html">DOMPurify</a></li><li><a href="external-FontAwesomeIcon.html">FontAwesomeIcon</a></li><li><a href="external-FontAwesomeIcons.html">FontAwesomeIcons</a></li><li><a href="external-React.html">React</a></li><li><a href="external-ToastContext.html">ToastContext</a></li><li><a href="external-axios.html">axios</a></li><li><a href="external-jwt_decode.html">jwt_decode</a></li><li><a href="external-react-spring.html">react-spring</a></li><li><a href="external-useNavigate.html">useNavigate</a></li><li><a href="external-uuid.html">uuid</a></li><li><a href="module-@react-spring_parallax.external_Parallax.html">Parallax</a></li><li><a href="module-@react-spring_parallax.external_ParallaxLayer.html">ParallaxLayer</a></li></ul><h3>Global</h3><ul><li><a href="global.html#App">App</a></li><li><a href="global.html#Characters">Characters</a></li><li><a href="global.html#Fetchesuserdatafromtheserverandupdatestheuserstatevariable.">Fetches user data from the server and updates the user state variable.</a></li><li><a href="global.html#updateUserState">updateUserState</a></li><li><a href="global.html#userDataState">userDataState</a></li></ul>
+</nav>
+
+<br class="clear">
+
+<footer>
+    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 4.0.2</a> on Thu Aug 10 2023 16:41:10 GMT-0500 (Central Daylight Time)
+</footer>
+
+<script> prettyPrint(); </script>
+<script src="scripts/linenumber.js"> </script>
+</body>
+</html>

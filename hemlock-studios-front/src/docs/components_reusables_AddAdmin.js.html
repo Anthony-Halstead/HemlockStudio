@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>JSDoc: Source: components/reusables/AddAdmin.js</title>
+
+    <script src="scripts/prettify/prettify.js"> </script>
+    <script src="scripts/prettify/lang-css.js"> </script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc-default.css">
+</head>
+
+<body>
+
+<div id="main">
+
+    <h1 class="page-title">Source: components/reusables/AddAdmin.js</h1>
+
+    
+
+
+
+    
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>/**
+ * AddAdmin module.
+ * 
+ * This module provides the AddAdmin component, which allows privileged users
+ * to add new administrator accounts to the application. The component includes
+ * validation for email, username, and password fields.
+ * 
+ * @module AddAdmin
+ */
+
+/**
+ * Axios is a promise-based HTTP client for the browser and Node.js.
+ * 
+ * @see {@link https://github.com/axios/axios|Axios GitHub Documentation}
+ * @external axios
+ */
+import axios from 'axios';
+
+/**
+ * React's default import. Required to define and use React components.
+ * 
+ * @see {@link https://reactjs.org/|React Official Documentation}
+ * @external React
+ */
+import React, { useContext, useState } from 'react';
+
+// CSS styles specific to the AddAdmin component.
+import '../../css/pages/addproduct.css';
+
+/**
+ * Context for displaying toast notifications.
+ * 
+ * @see module:ToastContext
+ */
+import { ToastContext } from '../reusables/ToastContext';
+
+/**
+ * DOMPurify sanitizes HTML and prevents XSS attacks.
+ * 
+ * @see {@link https://github.com/cure53/DOMPurify|DOMPurify GitHub Documentation}
+ * @external DOMPurify
+ */
+import DOMPurify from 'dompurify';
+
+/**
+ * AddAdmin Component.
+ * 
+ * Component that provides an interface for adding a new administrator account.
+ * 
+ * @returns {React.Element} Rendered AddAdmin component.
+ */
+function AddAdmin() {
+      /**
+     * Context function to set messages for toast notifications.
+     * 
+     * @type {Function}
+     */
+    const { setMessage } = useContext(ToastContext);
+
+    const handleAddedMessage = () => {
+      setMessage('A New Admin Profile Was Added');
+  };
+  
+    const [errors, setErrors] = useState({})
+    const [admin, setAdmin] = useState({
+        username: "",
+        email: "",
+        password: "",
+    });
+
+     /**
+     * Validates the provided administrator account details.
+     * 
+     * This function checks the email, username, and password of a potential 
+     * administrator account using regular expressions to ensure they meet the 
+     * required criteria. If any of the checks fail, an error message is set in 
+     * the errors state object for the respective field.
+     * 
+     * @param {Object} admin - The administrator details to validate.
+     * @returns {boolean} - True if validation succeeds, false otherwise.
+     */
+    const validate = (admin) => {
+        const errors = {}
+        const emailRegex = /(?:[a-z0-9+!#$%&amp;'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&amp;'*+/=?^_`{|}~-]+)*|"(?:[\x01-\x08\x0b\x0c\x0e-\x1f\x21\x23-\x5b\x5d-\x7f]|\\[\x01-\x09\x0b\x0c\x0e-\x7f])*")@(?:(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?|\[(?:(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.){3}(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?|[a-z0-9-]*[a-z0-9]:(?:[\x01-\x08\x0b\x0c\x0e-\x1f\x21-\x5a\x53-\x7f]|\\[\x01-\x09\x0b\x0c\x0e-\x7f])+)\])/i;
+        const usernameRegex = /^[A-Za-z][A-Za-z0-9_]{7,29}$/i;
+        const passwordRegex = /^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*[@#$%^&amp;\-+=()])(?=\S+$).{8,20}$/i;
+
+        if (!emailRegex.test(admin.email)) {
+            errors.email = "Invalid email";
+        }
+        if (!usernameRegex.test(admin.username)) {
+            errors.username = "Invalid username";
+        }
+        if (!passwordRegex.test(admin.password)) {
+            errors.password = "Invalid password";
+        }
+
+        setErrors(errors);
+        return Object.keys(errors).length === 0;
+
+    }
+
+      /**
+     * Handles changes on the registration form fields.
+     * 
+     * Captures the input name and value, sanitizes the value, and updates the admin state.
+     * It also calls the validate function to validate the updated admin object.
+     * 
+     * @param {Event} event - The triggered event from the input field.
+     */
+    const registerChangeHandler = (event) => {
+        const { name, value } = event.target;
+        const sanitizedValue = DOMPurify.sanitize(value);
+        const tempAdmin = { ...admin, [name]: sanitizedValue };
+        setAdmin(tempAdmin);
+        validate(tempAdmin);
+    };
+    
+
+  /**
+     * Handles the registration form submission.
+     * 
+     * Sends a POST request to register a new administrator if the input is validated.
+     * If the registration is successful, a toast message is displayed.
+     * 
+     */
+    const registerSubmitHandler = () => {
+        if (validate(admin)) {
+            let jwtToken = localStorage.getItem('token');
+            axios.post(`${process.env.REACT_APP_API_URL}/auth/registerAdmin`, admin,
+            {
+              headers: {
+                Authorization: `Bearer ${jwtToken}`,
+              },
+            }
+          )
+                .then((response) => {
+                    handleAddedMessage();
+                })
+                .catch((e) => {
+    
+                });
+        }
+    };
+    
+    return (
+        &lt;div className='add-product-content'>
+            &lt;div >
+                &lt;h1>Add Admin&lt;/h1>
+                &lt;div className='input-container'>
+                    &lt;input className='input-field' value={admin.email} name='email' type='email' onChange={registerChangeHandler} placeholder='EMAIL'>&lt;/input>
+                    &lt;div className='invalid-input'>{errors.email}&lt;/div>
+                &lt;/div>
+                &lt;div className='input-container'>
+                &lt;input className='input-field' value={admin.username} name='username' type='text' onChange={registerChangeHandler} placeholder='USERNAME'>&lt;/input>
+                    &lt;div className='invalid-input'>{errors.username}&lt;/div>
+                &lt;/div>
+                &lt;div className='input-container'>
+                    &lt;input className='input-field' value={admin.password} name='password' type='password' onChange={registerChangeHandler} placeholder='PASSWORD'>&lt;/input>
+                    &lt;div className='invalid-input'>{errors.password}&lt;/div>
+                &lt;/div>
+                &lt;div >
+                    &lt;button className='submit-button' onClick={registerSubmitHandler}>SUBMIT&lt;/button>
+                &lt;/div>
+            &lt;/div>
+        &lt;/div>
+    )
+}
+export default AddAdmin</code></pre>
+        </article>
+    </section>
+
+
+
+
+</div>
+
+<nav>
+    <h2><a href="index.html">Home</a></h2><h3>Modules</h3><ul><li><a href="module-@react-spring_parallax.html">@react-spring/parallax</a></li><li><a href="module-About.html">About</a></li><li><a href="module-Accordion.html">Accordion</a></li><li><a href="module-Account.html">Account</a></li><li><a href="module-AddAdmin.html">AddAdmin</a></li><li><a href="module-AddNews.html">AddNews</a></li><li><a href="module-AdminModal.html">AdminModal</a></li><li><a href="module-AdminPanel.html">AdminPanel</a></li><li><a href="module-AdminPanelDropdown.html">AdminPanelDropdown</a></li><li><a href="module-Analytics.html">Analytics</a></li><li><a href="module-Article.html">Article</a></li><li><a href="module-Card.html">Card</a></li><li><a href="module-Carroussel.html">Carroussel</a></li><li><a href="module-DropdownMenu.html">DropdownMenu</a></li><li><a href="module-Get.html">Get</a></li><li><a href="module-Header.html">Header</a></li><li><a href="module-Home.html">Home</a></li><li><a href="module-News.html">News</a></li><li><a href="module-NewsOverlay.html">NewsOverlay</a></li><li><a href="module-NotificationsToggle.html">NotificationsToggle</a></li><li><a href="module-PageWrapper.html">PageWrapper</a></li><li><a href="module-ParallaxLayer.html">ParallaxLayer</a></li><li><a href="module-SignIn.html">SignIn</a></li><li><a href="module-SignUp.html">SignUp</a></li><li><a href="module-Toast.html">Toast</a></li><li><a href="module-ToastContext.html">ToastContext</a></li><li><a href="module-UpdateForm.html">UpdateForm</a></li><li><a href="module-UpdateNews.html">UpdateNews</a></li><li><a href="module-UpdateUsers.html">UpdateUsers</a></li><li><a href="module-UseDetectOutsideClick.html">UseDetectOutsideClick</a></li><li><a href="module-World.html">World</a></li></ul><h3>Externals</h3><ul><li><a href="additive.external_css.html">css</a></li><li><a href="addproduct.external_css.html">css</a></li><li><a href="external-Carousel.html">Carousel</a></li><li><a href="external-DOMPurify.html">DOMPurify</a></li><li><a href="external-FontAwesomeIcon.html">FontAwesomeIcon</a></li><li><a href="external-FontAwesomeIcons.html">FontAwesomeIcons</a></li><li><a href="external-React.html">React</a></li><li><a href="external-ToastContext.html">ToastContext</a></li><li><a href="external-axios.html">axios</a></li><li><a href="external-jwt_decode.html">jwt_decode</a></li><li><a href="external-react-spring.html">react-spring</a></li><li><a href="external-useNavigate.html">useNavigate</a></li><li><a href="external-uuid.html">uuid</a></li><li><a href="module-@react-spring_parallax.external_Parallax.html">Parallax</a></li><li><a href="module-@react-spring_parallax.external_ParallaxLayer.html">ParallaxLayer</a></li></ul><h3>Global</h3><ul><li><a href="global.html#App">App</a></li><li><a href="global.html#Characters">Characters</a></li><li><a href="global.html#Fetchesuserdatafromtheserverandupdatestheuserstatevariable.">Fetches user data from the server and updates the user state variable.</a></li><li><a href="global.html#updateUserState">updateUserState</a></li><li><a href="global.html#userDataState">userDataState</a></li></ul>
+</nav>
+
+<br class="clear">
+
+<footer>
+    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 4.0.2</a> on Thu Aug 10 2023 16:41:10 GMT-0500 (Central Daylight Time)
+</footer>
+
+<script> prettyPrint(); </script>
+<script src="scripts/linenumber.js"> </script>
+</body>
+</html>
