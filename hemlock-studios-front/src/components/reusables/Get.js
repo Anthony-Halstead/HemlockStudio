@@ -2,7 +2,6 @@
  * @module Get
  * @description This module provides the Get component used for retrieving and displaying entity data.
  */
-
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import '../../css/reusables/get.css';
