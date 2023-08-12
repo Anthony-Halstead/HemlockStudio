@@ -64,37 +64,16 @@ function Carroussel(props) {
  */
 const [offsetRadius, setOffsetRadius] = useState(2);
 
-/**
- * showArrows - Contains a stateful value and a function to update it.
- * @type {Array} 
- * @property {boolean} showArrows[0] - Indicates if navigation arrows should be displayed on the carousel. Initialized to `false`.
- * @property {function} showArrows[1] - Function to update the state of `showArrows`.
- */
+
 const [showArrows, setShowArrows] = useState(false);
 
-/**
- * goToSlide - Contains a stateful value and a function to update it.
- * @type {Array} 
- * @property {?number} goToSlide[0] - Represents the index of the slide that the carousel should navigate to. `null` indicates no specific navigation request.
- * @property {function} goToSlide[1] - Function to update the state of `goToSlide`.
- */
+
 const [goToSlide, setGoToSlide] = useState(null);
 
-/**
- * cards - Contains a stateful value but lacks a function to update it, as it's initialized and remains constant throughout the component's lifecycle.
- * @type {Array} 
- * @property {Object[]} cards[0] - An array of card objects to be displayed in the carousel, each containing necessary attributes and an additional `onClick` function.
- */
+
 const [cards] = useState(table);
 
-/**
- * Effect hook that updates `offsetRadius` and `showArrows` states based on prop changes.
- * This effect ensures that whenever the `offset` or `showArrows` props change, 
- * the internal state of the component is also updated to reflect these changes.
- * 
- * @listens props.offset - Listens for changes in the `offset` prop.
- * @listens props.showArrows - Listens for changes in the `showArrows` prop.
- */
+
 useEffect(() => {
     setOffsetRadius(props.offset);
     setShowArrows(props.showArrows);

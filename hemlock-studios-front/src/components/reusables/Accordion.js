@@ -44,7 +44,12 @@ function Accordion({ id, title, content, isOpen, toggleAccordion }) {
    * @type {Object}
    */
   const openAnimation = useSpring({
-    // animation details here ...
+    from: { opacity: "0", maxHeight: "40px" },
+    to: {
+      opacity: "1",
+      maxHeight: isOpen ? `850px` : "40px",
+    },
+    config: { duration: "300" },
   });
 
   /**

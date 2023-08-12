@@ -66,14 +66,9 @@
   }
   .menu-trigger:active {
     transform: scale(0.9); /* reduce size to 90% */
-    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.9); /* reduce box-shadow */
+   
 }
-  .menu-trigger:hover {
-     /*The text-shadow property takes four parameters: horizontal offset, vertical offset, blur radius, and color. change the alpha for a darker shadow */
-    box-shadow: 0 1px 10px rgb(245, 245, 245, .7),
-    0 1px 20px rgb(245, 245, 245, .5);
-    scale:1.1;
-  }
+ 
   
   .menu-trigger span {
     font-weight: 700;
@@ -86,15 +81,3 @@
     border-radius: 90px;
   }
 
-  .cart-count {
-   
-
-    padding: 3px 8px 3px 8px;
-    font-size: 14px;
-    font-weight: bold;
-    color: white;
-    background-color: #ff0000;
-    border-radius: 190%;
-    margin-left: 10px;
-  
-}

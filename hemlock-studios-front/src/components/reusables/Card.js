@@ -33,6 +33,9 @@ import { useSpring, animated } from "react-spring";
  * @param {string} props.imagen - URL of the image to be displayed on the card.
  * @returns {React.Element} Rendered Card component.
  */
+
+import '../../css/reusables/image.css'
+
 function Card({ imagen }) {
     /**
      * State variable to track whether the card is currently being hovered over.

@@ -7,9 +7,7 @@
     color: black;
     flex-direction: column;
     overflow: hidden;
-    /*background-image: url('../../SnoweyMountains.png');*/
-   background-repeat: no-repeat;
-
+    background-repeat: no-repeat;
   }
 
 .h1 {
@@ -24,12 +22,11 @@
     flex-direction: column;
     align-items: center;
     justify-content: center;
-
 }
 
 .accordion-item {
     width: 100%;
-    max-height: 25px;
+    max-height: 7%;
     padding: 17px 10px;
     border: 1px solid black;
     color: black;
@@ -40,7 +37,6 @@
 
 .accordion-header {
     display: flex;
-
     color: black;
     justify-content: center;
 }
@@ -48,9 +44,9 @@
 .accordion-header h4 {
  
     transition: 0.2s ease-in-out;
-    font-size: 18px;
+    font-size: 100%;
     font-weight: 500;
-    margin-bottom: 10px;
+    margin-bottom: 3%;
   
 }
 
@@ -58,10 +54,6 @@
     color: black!important;
 }
 
-.accordion-content {
-    margin: 5px;   
- 
-}
 
 @media (max-width:600px) {
     h1 {
@@ -69,7 +61,7 @@
      
     }
     .accordion-item {
-        width: 80%;
+        width: 100%;
         
     }
 }
@@ -77,15 +69,14 @@
 .accordion-content-container {
     display: flex;
     flex-direction: column;
-    max-height: 400px;
     overflow-y: auto;
-  overflow: hidden;
+    overflow: hidden;
     justify-content: center;
   }
 
   .characters-container {
     position: relative;
-    height: 800px;
+    height: 550px;
     overflow-y: auto;
     scrollbar-width: 0;
   }

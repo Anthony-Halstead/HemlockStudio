@@ -1,99 +1,76 @@
+/* Avoided fixed heights for a fluid design */
 .header {
-    position: fixed;
-    top: 20px;
-    left: 0;
-    right: 0;
-    width: 90%;
-    height: 9vh;
-    margin-left: auto;
-    margin-right: auto;
-    background-color: rgba(3, 68, 81, 0.785);
-     /*background-image: url('../../LogoTransparent.png'); Replace with the path to your image */
-    background-size: cover; /* Adjust the image to cover the entire header */
-    background-repeat: no-repeat; /* Prevents the image from repeating */
-    background-position:center 25%;
-    color: rgb(255, 255, 255);
-    justify-content: left;
-    align-items: center;
-    font-size: 30px;
-    display: flex;
-    z-index: 100;
-   
-  
-   
-  }
-  a {
-    text-decoration: none;
-  }
-.header-link{
-
-    width:auto;
-    padding:20px;
-    margin: 10px 90px 10px 90px;
-       cursor: pointer;
-       text-decoration: none;
-       color: rgb(255, 255, 255);
-       font-size: 30px;
-       background-clip: text;
-       -webkit-background-clip: text;
-       color: transparent;
-       background-image: linear-gradient(to left, black 50%, white 50%);
-       background-size: 200% 100%;
-       transition: background-position .8s;
+  position: fixed;
+  justify-content: center;
+  top: 2vh;  /* relative to the viewport height */
+  left: 0;
+  right: 0;
+  width: 90%;
+  margin: 0 auto;
+  background-color: rgba(3, 68, 81, 0.785);
+  color: rgb(255, 255, 255);
+  align-items: center;
+  font-size: 3vw;  /* relative to the viewport width */
+  display: flex;
+  z-index: 100;
 }
 
-.header-link:active {
-    font-weight: 900; 
-}
-  .header-link:hover {
-    background-position: 100% 0;
-  }
-
- 
- 
-
-.header-link-icon{
-    display: flex;
-margin-right: 20px;
-    cursor: pointer;
-    align-items: flex-end;
-    justify-content:flex-end;
+a {
+  text-decoration: none;
 }
 
-.cart-icon{
-    height: 50px;
-    width: 50px;
-}
-.logo{
-    height: 100%;
-    max-width: 300px;
+.header-link {
+  padding: 1vh 3vw;  /* relative to viewport height & width */
+  margin: 0 2vw;  /* relative to the viewport width */
+  cursor: pointer;
+  color: rgb(255, 255, 255);
+  font-size: 3vw;
+  background-clip: text;
+  -webkit-background-clip: text;
+  color: transparent;
+  background-image: linear-gradient(to left, black 50%, white 50%);
+  background-size: 200% 100%;
+  transition: background-position .8s;
 }
 
-.cart-items-count{
-    background-color: red;
-    color: white;
-    font-size: 12px;
-    font-weight: 900;
-    border-radius: 50px;
-    height: 20px;
-    width: 20px;
-    justify-content: center;
-    align-items:center; 
-    position: fixed;
-    margin-left: 35px;
-
+.header-link:hover {
+  background-position: 100% 0;
 }
+
+.header-link-icon {
+  display: flex;
+  margin-right: 2vw;
+  cursor: pointer;
+  align-items: center;
+  justify-content: center;
+}
+
 .logo-container {
-    display: flex;
-    align-items: center;
-    height: 100%;
-    margin-left: 0;
-    padding-left: 0;
-  }
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-grow: 0;
+  padding: 0 4vw;
+  width: 20vw; 
+  background-position: center;
+  position: absolute;
+  left: -2vh;
+  height: 20vh;
+  background-image: url('https://i.imgur.com/dTD6ivm.png');
+  background-size: contain; /* ensure the logo fits within the container */
+  background-repeat: no-repeat; /* ensure the logo isn't repeated */
+}
 
- 
-.icon-dimensions{
-    width:33%;
-  align-items:right;
-    justify-content:right;
-  }
+.icon-dimensions {
+  flex-basis: auto;   /* give it a basis but allow it to grow or shrink */
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+}
+
+.header-elements {
+  display: flex;
+  align-items: center;
+  justify-content: space-between; /* Space out the links */
+  width: 50%;  /* Adjust this value based on your layout requirements */
+}
