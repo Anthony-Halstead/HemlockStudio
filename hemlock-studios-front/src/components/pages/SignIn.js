@@ -53,6 +53,7 @@ import EmberMask from '../reusables/EmberMask';
  */
 import DOMPurify from 'dompurify';
 
+import React, { useState } from 'react';
 /**
  * SignIn Component.
  * 
@@ -71,7 +72,7 @@ function SignIn(props) {
      * @type {Function}
      */
     const navigator = useNavigate();
-
+    const [errorMsg, setErrorMsg] = useState("");
     /**
      * Handler for change events on the sign-in input fields.
      * 
@@ -114,7 +115,7 @@ function SignIn(props) {
 
           })
           .catch((e) => {
-             
+            setErrorMsg("Unable to sign in");
           });
   };
 
@@ -132,6 +133,7 @@ function SignIn(props) {
                 <div >
                     <button className= 'submit-button'onClick={signInSubmitHandler}>SUBMIT</button>
                 </div>
+                {errorMsg && <div className="error-message">{errorMsg}</div>}
                 <div>Don't have an account? <a href="/SignUp">Click here</a></div>
             </div>
             <div className='logo-box'>              

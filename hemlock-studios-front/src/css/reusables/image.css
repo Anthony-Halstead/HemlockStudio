@@ -3,7 +3,6 @@
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    width: 600px;
-    height: 600px;
-
+    width: 100vw;
+    height: 22vh;
 }

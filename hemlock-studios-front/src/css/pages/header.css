@@ -39,10 +39,9 @@ a {
 
 .header-link-icon {
   display: flex;
-  margin-right: 2vw;
   cursor: pointer;
-  align-items: center;
-  justify-content: center;
+  align-items: end;
+  justify-content: end;
 }
 
 .logo-container {
@@ -50,12 +49,13 @@ a {
   align-items: center;
   justify-content: center;
   flex-grow: 0;
-  padding: 0 4vw;
+  padding: 0 6vw;
   width: 20vw; 
   background-position: center;
   position: absolute;
   left: -2vh;
   height: 20vh;
+  margin-left: -2%;
   background-image: url('https://i.imgur.com/dTD6ivm.png');
   background-size: contain; /* ensure the logo fits within the container */
   background-repeat: no-repeat; /* ensure the logo isn't repeated */
@@ -73,4 +73,5 @@ a {
   align-items: center;
   justify-content: space-between; /* Space out the links */
   width: 50%;  /* Adjust this value based on your layout requirements */
+  margin-left: 3%;
 }

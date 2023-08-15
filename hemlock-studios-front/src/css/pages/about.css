@@ -64,7 +64,6 @@ color:black;
     width: 200px; /* you can change this to the desired size */
     height: 200px; /* you can change this to the desired size */
     overflow: hidden;
-    margin-left:40px;
   }
   
   .circle img {
@@ -73,12 +72,12 @@ color:black;
     object-fit: cover; 
   }
   .about-text-field{
-    width:500px;
-    height:35px;
+    width:80%;
+    height:4vh;
    
   }
   .about-textarea {
-    width: 500px; /* adjust this as needed */
-    height: 300px; /* adjust this as needed */
+    width: 80vw; /* adjust this as needed */
+    height: 30vh; /* adjust this as needed */
     padding: 10px;
 }

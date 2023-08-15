@@ -44,10 +44,10 @@ function Accordion({ id, title, content, isOpen, toggleAccordion }) {
    * @type {Object}
    */
   const openAnimation = useSpring({
-    from: { opacity: "0", maxHeight: "40px" },
+    from: { opacity: "0", maxHeight: "0px" },
     to: {
       opacity: "1",
-      maxHeight: isOpen ? `850px` : "40px",
+      maxHeight: isOpen ? `900px` : "40px",
     },
     config: { duration: "300" },
   });
@@ -66,13 +66,11 @@ function Accordion({ id, title, content, isOpen, toggleAccordion }) {
       <div className="accordion-header" onClick={handleToggle}>
         <h4 style={styles.accordionTitle}>{title}</h4>
       </div>
-      {title === "WORLD" ? (
-        <div className="accordion-content">{content}</div>
-      ) : (
+     
         <div className="accordion-content" onClick={handleToggle}>
           {content}
         </div>
-      )}
+      
     </animated.div>
   );
 }
